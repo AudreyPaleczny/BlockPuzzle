@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.810.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlockPuzzle", "BlockPuzzle\BlockPuzzle.csproj", "{40C87557-9577-435F-813F-13D31BF752C4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|anycpu = Debug|anycpu
+		Release|anycpu = Release|anycpu
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{40C87557-9577-435F-813F-13D31BF752C4}.Debug|anycpu.ActiveCfg = Debug|anycpu
+		{40C87557-9577-435F-813F-13D31BF752C4}.Debug|anycpu.Build.0 = Debug|anycpu
+		{40C87557-9577-435F-813F-13D31BF752C4}.Release|anycpu.ActiveCfg = Release|anycpu
+		{40C87557-9577-435F-813F-13D31BF752C4}.Release|anycpu.Build.0 = Release|anycpu
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EC2593CF-027A-4176-A3DC-706DEE4EA447}
+	EndGlobalSection
+EndGlobal
