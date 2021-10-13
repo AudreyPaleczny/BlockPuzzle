@@ -3,7 +3,7 @@
 //using r for row, c for column
 namespace BlockPuzzle
 {
-    class MainClass
+    public partial class MainClass
     {
         public static void sout(String str)
         {
@@ -44,21 +44,6 @@ namespace BlockPuzzle
             }
         }
 
-        public void Draw()
-        {
-            Console.SetCursorPosition(0, 0);
-            for (int r = 0; r < height; r++)
-            {
-                for (int c = 0; c < width; c++)
-                {
-                    Console.Write(board[r][c]);
-                }
-                sout("\n");
-            }
-
-            PrintPiece(piecePosition, tPiece);
-        }
-
         public void GetUserInput()
         {
             if (!Console.KeyAvailable)
@@ -93,62 +78,6 @@ namespace BlockPuzzle
         {
             return piecePosition.x < 0 || piecePosition.y < 0 || piecePosition.x +
                 tPiece.Width > width || piecePosition.y + tPiece.Height > height;
-        }
-
-        public void Update()
-        {
-            Coord oldPiecePos = new Coord(piecePosition.x, piecePosition.y);
-
-            switch (key.Key)
-            {
-                case ConsoleKey.UpArrow:        piecePosition.y--;      break;
-
-                case ConsoleKey.DownArrow:      piecePosition.y++;      break;
-
-                case ConsoleKey.LeftArrow:      piecePosition.x--;      break;
-
-                case ConsoleKey.RightArrow:     piecePosition.x++;      break;
-
-                case ConsoleKey.Spacebar:       imprintPiece();         break;
-
-                case ConsoleKey.H:              tPiece.FlipHorizontal();break;
-
-                case ConsoleKey.V:              tPiece.FlipVertical();  break;
-
-                case ConsoleKey.B:              tPiece.FlipDiagonal();  break;
-
-                case ConsoleKey.O:              tPiece.RotateCCW();     break;
-
-                case ConsoleKey.P:              tPiece.RotateCW();      break;
-
-                default:                                                break;
-            }
-
-            if (isPieceOOB() || isPieceCollidingWithBoard())
-            {
-                //prevent rotating out of bounds (use isPieceOOB as reference)
-                piecePosition.x = oldPiecePos.x;
-                piecePosition.y = oldPiecePos.y;
-            }
-
-            AABB p = new AABB
-            {
-                position = piecePosition,
-                size = tPiece.size
-            };
-
-            Console.SetCursorPosition(0, height);
-
-            //if (p.overlap(test))
-            if(!isPieceOOB() && isPieceCollidingWithBoard())
-            {
-                Console.Write("Overlap");
-            }
-            else
-            {
-                Console.Write("...........");
-            }
-
         }
 
         public bool isPieceCollidingWithBoard()
@@ -206,25 +135,6 @@ namespace BlockPuzzle
             position = new Coord(4, 3),
             size = new Coord(2, 2)
         };
-
-        public void Init()
-        {
-            board = new char[height][];
-
-            for (int i = 0; i < height; i++)
-            {
-                board[i] = new char[width];
-                for (int k = 0; k < width; k++)
-                {
-                    board[i][k] = ',';
-                }
-            }
-
-            board[3][4] = 'X';
-            board[3][5] = 'X';
-            board[4][4] = 'X';
-            board[4][5] = 'X';
-        }
 
         //universal time in miliseconds
         public static long UTCMS()

@@ -76,6 +76,10 @@
     <Compile Include="BlockPuzzle\Coord.cs" />
     <Compile Include="BlockPuzzle\Program.cs" />
     <Compile Include="BlockPuzzle\Properties\AssemblyInfo.cs" />
+    <Compile Include="Piece.cs" />
+    <Compile Include="Program_Draw.cs" />
+    <Compile Include="Program_Init.cs" />
+    <Compile Include="Program_Update.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include=".git\objects\info\" />
