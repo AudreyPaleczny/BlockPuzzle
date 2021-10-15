@@ -4,6 +4,26 @@ namespace BlockPuzzle
 {
     public partial class MainClass
     {
+
+        public void hardDrop(Coord oldPosition)
+        {
+            while (!isPieceCollidingWithBoard())
+            {
+                oldPosition.y = piecePosition.y;
+                oldPosition.x = piecePosition.x;
+                ++piecePosition.y;
+                if (piecePosition.y + tPiece.Height > 20)
+                {
+                    break;
+                }
+
+            }
+            piecePosition.y = oldPosition.y;
+            piecePosition.x = oldPosition.x;
+            imprintPiece();
+            RestartPiece();
+        }
+
         public void Update()
         {
             Coord oldPiecePos = new Coord(piecePosition.x, piecePosition.y);
@@ -20,7 +40,7 @@ namespace BlockPuzzle
 
                 case ConsoleKey.RightArrow: piecePosition.x++;      break;
 
-                case ConsoleKey.Spacebar:   imprintPiece();         break;
+                case ConsoleKey.Spacebar:   hardDrop(oldPiecePos);  break;
 
                 case ConsoleKey.H:          tPiece.FlipHorizontal();break;
 
@@ -68,7 +88,7 @@ namespace BlockPuzzle
             {
                 Console.Write("...........");
             }
-
+            clearLines();
         }
     }
 }

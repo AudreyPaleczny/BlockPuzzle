@@ -40,6 +40,7 @@
     <Compile Include="Program_Draw.cs" />
     <Compile Include="Program_Init.cs" />
     <Compile Include="Program_Update.cs" />
+    <Compile Include="Program_Scoring.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
