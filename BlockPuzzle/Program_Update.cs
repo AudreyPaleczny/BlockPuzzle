@@ -7,6 +7,7 @@ namespace BlockPuzzle
         public void Update()
         {
             Coord oldPiecePos = new Coord(piecePosition.x, piecePosition.y);
+            Piece oldPiece = tPiece.clone();
 
             // pretty switch statement :)
             switch (key.Key)
@@ -41,11 +42,13 @@ namespace BlockPuzzle
                 piecePosition.x = oldPiecePos.x;
                 piecePosition.y = oldPiecePos.y;
 
-                switch (key.Key)
-                {
-                    case ConsoleKey.O: tPiece.RotateCW();   break;
-                    case ConsoleKey.P: tPiece.RotateCCW();  break;
-                }
+                //switch (key.Key)
+                //{
+                //    case ConsoleKey.O: tPiece.RotateCW();   break;
+                //    case ConsoleKey.P: tPiece.RotateCCW();  break;
+                //}
+
+                tPiece = oldPiece;
             }
 
             AABB p = new AABB

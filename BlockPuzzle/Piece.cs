@@ -12,6 +12,8 @@ namespace BlockPuzzle
             map = new char[Height, Width];
             //data = d;
 
+            if (d == null) return;
+
             for (int r = 0; r < Height; ++r)
             {
                 for (int c = 0; c < Width; ++c)
@@ -19,6 +21,22 @@ namespace BlockPuzzle
                     map[r, c] = d[r * Width + c];
                 }
             }
+        }
+
+        public Piece clone()
+        {
+            Piece p = new Piece(this.size, null);
+            p.map = new char[Height, Width];
+
+            for (int r = 0; r < size.y; r++)
+            {
+                for(int c = 0; c < size.x; c++)
+                {
+                    p.map[r, c] = this.map[r, c];
+                }
+            }
+
+            return p;
         }
 
         public void FlipHorizontal()
