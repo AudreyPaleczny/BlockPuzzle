@@ -6,6 +6,7 @@ namespace BlockPuzzle
     {
         public void Init()
         {
+            choosePiece();
             board = new char[height][];
 
             for (int i = 0; i < height; i++)

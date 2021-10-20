@@ -78,9 +78,11 @@
     <Compile Include="BlockPuzzle\Program.cs" />
     <Compile Include="BlockPuzzle\Program_Draw.cs" />
     <Compile Include="BlockPuzzle\Program_Init.cs" />
+    <Compile Include="BlockPuzzle\Program_Pieces.cs" />
     <Compile Include="BlockPuzzle\Program_Scoring.cs" />
     <Compile Include="BlockPuzzle\Program_Update.cs" />
     <Compile Include="BlockPuzzle\Properties\AssemblyInfo.cs" />
+    <Compile Include="BlockPuzzle\RandP.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include=".git\objects\info\" />

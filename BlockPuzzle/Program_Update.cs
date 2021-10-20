@@ -23,9 +23,9 @@ namespace BlockPuzzle
 
             piecePosition = new Coord(dropCalculation(piecePosition));
 
-            tPiece.changeChars('#', 'X');
+            currentPiece.changeChars('#', 'X');
             imprintPiece();
-            tPiece.changeChars('X', '#');
+            currentPiece.changeChars('X', '#');
             RestartPiece();
         }
 
@@ -36,7 +36,7 @@ namespace BlockPuzzle
             while (!isPieceCollidingWithBoard(endPos))
             {
                 ++endPos.y;
-                if (endPos.y + tPiece.Height > height)
+                if (endPos.y + currentPiece.Height > height)
                 {
                     break;
                 }
@@ -50,7 +50,7 @@ namespace BlockPuzzle
         public void Update()
         {
             Coord oldPiecePos = new Coord(piecePosition.x, piecePosition.y);
-            Piece oldPiece = tPiece.clone();
+            Piece oldPiece = currentPiece.clone();
 
             // pretty switch statement :)
             switch (key.Key)
@@ -65,15 +65,15 @@ namespace BlockPuzzle
 
                 case ConsoleKey.Spacebar:   hardDrop(oldPiecePos);  break;
 
-                case ConsoleKey.H:          tPiece.FlipHorizontal();break;
+                case ConsoleKey.H:          currentPiece.FlipHorizontal();break;
 
-                case ConsoleKey.V:          tPiece.FlipVertical();  break;
+                case ConsoleKey.V:          currentPiece.FlipVertical();  break;
 
-                case ConsoleKey.B:          tPiece.FlipDiagonal();  break;
+                case ConsoleKey.B:          currentPiece.FlipDiagonal();  break;
 
-                case ConsoleKey.O:          tPiece.RotateCCW();     break;
+                case ConsoleKey.O:          currentPiece.RotateCCW();     break;
 
-                case ConsoleKey.P:          tPiece.RotateCW();      break;
+                case ConsoleKey.P:          currentPiece.RotateCW();      break;
 
                 default: break;
             }
@@ -91,13 +91,13 @@ namespace BlockPuzzle
                 //    case ConsoleKey.P: tPiece.RotateCCW();  break;
                 //}
 
-                tPiece = oldPiece;
+                currentPiece = oldPiece;
             }
 
             AABB p = new AABB
             {
                 position = piecePosition,
-                size = tPiece.size
+                size = currentPiece.size
             };
 
             Console.SetCursorPosition(0, height);
@@ -113,7 +113,7 @@ namespace BlockPuzzle
             }
             clearLines();
 
-            shadow = tPiece.clone().changeChars('#', '/');
+            shadow = currentPiece.clone().changeChars('#', '/');
             shadowPos = new Coord(dropCalculation(piecePosition));
         }
     }

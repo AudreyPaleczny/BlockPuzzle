@@ -24,7 +24,45 @@ namespace BlockPuzzle
             }
         }
 
-        public void Draw()
+        public void printPieceOutside(Coord p, Piece str)
+        {
+            //int i = 0;
+
+            for (int r = 0; r < str.Height; r++)
+            {
+                for (int c = 0; c < str.Width; c++)
+                {
+                    int x = p.x + c, y = p.y + r;
+
+                    if (str[r, c] != ' ')
+                    {
+                        Console.SetCursorPosition(x, y);
+                        Console.Write(str[r, c]);
+                    }
+                    // i++;
+                }
+            }
+        }
+
+        public void printHoldArea()
+        {
+            for (int row = 0; row < 4; row++)
+            {
+                for (int col = 0; col < 4; col++)
+                {
+                    Console.Write(holdArea[row][col]);
+                }
+                Console.SetCursorPosition(12, row + 4);
+            }
+
+            if (!(holdPiece == null))
+            {
+                // revert orientation -----------------------------------------------------------------------------------------------------------------------------------------------------
+                printPieceOutside(holdCoordinate, holdPiece);
+            }
+        }
+
+    public void Draw()
         {
             Console.SetCursorPosition(0, 0);
             for (int r = 0; r < height; r++)
