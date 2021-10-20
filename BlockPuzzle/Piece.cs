@@ -39,6 +39,22 @@ namespace BlockPuzzle
             return p;
         }
 
+        public Piece changeChars(char target, char replace)
+        {
+            //change targets to replaces
+            for(int r = 0; r < Height; r++)
+            {
+                for(int c = 0; c < Width; c++)
+                {
+                    if(map[r, c] == target)
+                    {
+                        map[r, c] = replace;
+                    }
+                }
+            }
+            return this;
+        }
+
         public void FlipHorizontal()
         {
             for (int r = 0; r < size.y; r++)

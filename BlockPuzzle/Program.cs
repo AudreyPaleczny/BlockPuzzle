@@ -66,13 +66,13 @@ namespace BlockPuzzle
                 tPiece.Width > width || piecePosition.y + tPiece.Height > height;
         }
 
-        public bool isPieceCollidingWithBoard()
+        public bool isPieceCollidingWithBoard(Coord pos)
         {
             for (int r = 0; r < tPiece.Height; r++)
             {
                 for (int c = 0; c < tPiece.Width; c++)
                 {
-                    if (board[piecePosition.y + r][piecePosition.x + c] != ',' && tPiece.map[0 + r, 0 + c] == '#')
+                    if (board[pos.y + r][pos.x + c] != ',' && tPiece.map[0 + r, 0 + c] == '#')
                     {
                         return true;
                     }
@@ -97,6 +97,8 @@ namespace BlockPuzzle
         //Piece tPiece = new Piece(new Coord(3, 2), " # ###");
         //Piece tPiece = new Piece(new Coord(3, 2), " #### ");
         Piece tPiece = new Piece(new Coord(3, 2), "###  #");
+        private Piece shadow;
+        Coord shadowPos;
 
         ConsoleKeyInfo key = new ConsoleKeyInfo();
 
@@ -148,7 +150,7 @@ namespace BlockPuzzle
                     fallCounter -= 1000;
                 }
                 int bottomOfPiece = piecePosition.y + tPiece.Height;
-                if (bottomOfPiece >= 20 || isPieceCollidingWithBoard())
+                if (bottomOfPiece >= 20 || isPieceCollidingWithBoard(piecePosition))
                 {
                     imprintPiece();
                     RestartPiece();

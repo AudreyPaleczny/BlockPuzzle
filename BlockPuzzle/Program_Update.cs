@@ -7,21 +7,44 @@ namespace BlockPuzzle
 
         public void hardDrop(Coord oldPosition)
         {
-            while (!isPieceCollidingWithBoard())
+            //while (!isPieceCollidingWithBoard(piecePosition))
+            //{
+            //    oldPosition.y = piecePosition.y;
+            //    oldPosition.x = piecePosition.x;
+            //    ++piecePosition.y;
+            //    if (piecePosition.y + tPiece.Height > height)
+            //    {
+            //        break;
+            //    }
+
+            //}
+            //piecePosition.y = oldPosition.y;
+            //piecePosition.x = oldPosition.x;
+
+            piecePosition = new Coord(dropCalculation(piecePosition));
+
+            tPiece.changeChars('#', 'X');
+            imprintPiece();
+            tPiece.changeChars('X', '#');
+            RestartPiece();
+        }
+
+        public Coord dropCalculation(Coord oldPos)
+        {
+            Coord endPos = new Coord(oldPos);
+
+            while (!isPieceCollidingWithBoard(endPos))
             {
-                oldPosition.y = piecePosition.y;
-                oldPosition.x = piecePosition.x;
-                ++piecePosition.y;
-                if (piecePosition.y + tPiece.Height > 20)
+                ++endPos.y;
+                if (endPos.y + tPiece.Height > height)
                 {
                     break;
                 }
 
             }
-            piecePosition.y = oldPosition.y;
-            piecePosition.x = oldPosition.x;
-            imprintPiece();
-            RestartPiece();
+
+            endPos.y--;
+            return endPos;
         }
 
         public void Update()
@@ -55,7 +78,7 @@ namespace BlockPuzzle
                 default: break;
             }
 
-            if (isPieceOOB() || isPieceCollidingWithBoard())
+            if (isPieceOOB() || isPieceCollidingWithBoard(piecePosition))
             {
                 //prevent rotating out of bounds (use isPieceOOB as reference)
                 //do the opposite rotation
@@ -80,7 +103,7 @@ namespace BlockPuzzle
             Console.SetCursorPosition(0, height);
 
             //if (p.overlap(test))
-            if (!isPieceOOB() && isPieceCollidingWithBoard())
+            if (!isPieceOOB() && isPieceCollidingWithBoard(piecePosition))
             {
                 Console.Write("Overlap");
             }
@@ -89,6 +112,9 @@ namespace BlockPuzzle
                 Console.Write("...........");
             }
             clearLines();
+
+            shadow = tPiece.clone().changeChars('#', '/');
+            shadowPos = new Coord(dropCalculation(piecePosition));
         }
     }
 }

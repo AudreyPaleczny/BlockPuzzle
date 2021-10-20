@@ -36,6 +36,11 @@ namespace BlockPuzzle
                 sout("\n");
             }
 
+            if (shadow != null)
+            {
+                PrintPiece(shadowPos, shadow);
+            }
+
             PrintPiece(piecePosition, tPiece);
             Console.SetCursorPosition(0, height + 2);
             Console.Write(score);
