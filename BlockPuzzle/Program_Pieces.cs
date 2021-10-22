@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+
 namespace BlockPuzzle
 {
     public partial class MainClass
@@ -13,23 +15,49 @@ namespace BlockPuzzle
         static Piece zPiece = new Piece(new Coord(3, 2), "##  ##");
         static Piece tPiece = new Piece(new Coord(3, 2), " # ###");
 
-        // can wset seed for same random sequence (potentially useful for multiplayer)
-        // Random rand;
         // CURRENT PIECE
         // choosing a random piece
         public Piece currentPiece = null; //new Piece(new Coord(3, 2), " # ###");
         RandP randomGenerator = new RandP(7);
         int counter = 0;
+        int numberInQ = 5;
 
-        public void choosePiece()
+        public List<Piece> queue = new List<Piece>(5);
+
+        public void initQ()
+        {
+            queue.Add(generatePiece());
+            queue.Add(generatePiece());
+            queue.Add(generatePiece());
+            queue.Add(generatePiece());
+            queue.Add(generatePiece());
+        }
+
+        public void updateQ()
+        {
+            queue[4]=generatePiece();
+        }
+
+        public Piece generatePiece()
         {
             if (counter == 7)
             {
                 randomGenerator = new RandP(7);
                 counter = 0;
             }
-            currentPiece = listOfPieces[randomGenerator.nextInt()];
             counter++;
+            return listOfPieces[randomGenerator.nextInt()];
+        }
+
+        public void choosePiece()
+        {
+            for (int i = 0; i < numberInQ -1; i++)
+            {
+                queue[i] = queue[i+1];
+            }
+
+            updateQ();
+            currentPiece = queue[0];
         }
 
         // PIECE IN HOLD

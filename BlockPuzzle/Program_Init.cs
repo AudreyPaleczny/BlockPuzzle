@@ -11,7 +11,6 @@ namespace BlockPuzzle
 
         public void Init()
         {
-            choosePiece();
             board = new char[height][];
 
             for (int i = 0; i < height; i++)
@@ -22,6 +21,33 @@ namespace BlockPuzzle
                     board[i][k] = boardCharacter;
                 }
             }
+
+            // init hold area
+            holdArea = new char[4][];
+            for (int i = 0; i < 4; i++)
+            {
+                holdArea[i] = new char[4];
+                for (int j = 0; j < 4; j++)
+                {
+                    holdArea[i][j] = background;
+                }
+            }
+
+            // init queue area
+            qArea = new char[16][];
+            for (int i = 0; i < 16; i++)
+            {
+                qArea[i] = new char[4];
+                for (int j = 0; j < 4; j++)
+                {
+                    qArea[i][j] = background;
+                }
+            }
+
+            // init the q
+            initQ();
+
+            choosePiece();
         }
     }
 }

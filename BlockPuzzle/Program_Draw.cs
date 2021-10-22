@@ -62,11 +62,50 @@ namespace BlockPuzzle
             }
         }
 
-    public void Draw()
+        public void printQArea()
+        {
+            Console.SetCursorPosition(20, 0);
+            for (int row = 0; row < 16; row++)
+            {
+                for (int col = 0; col < 4; col++)
+                {
+                    Console.Write(qArea[row][col]);
+                }
+                Console.SetCursorPosition(20, row);
+            }
+        }
+
+        public void printBoardArea()
+        {
+            Console.SetCursorPosition(0, 0);
+            for (int r = 0; r < height; r++)
+            {
+                for (int c = 0; c < width; c++)
+                {
+                    Console.Write(board[r][c]);
+                }
+                sout("\n");
+            }
+        }
+
+        public void printQPieces()
+        {
+            for (int i = 0; i < numberInQ; i++)
+            {
+                initialQCoordinate.y = 1 + i * 3;
+                printPieceOutside(initialQCoordinate, queue[i]);
+            }
+            initialQCoordinate = new Coord(20, 1);
+        }
+
+        public void Draw()
         {
             //before drawing something specific, change color
             //ConsoleColor original = Console.ForegroundColor;
             Console.SetCursorPosition(0, 0);
+
+            // for testing nina's queue
+            /*
             for (int r = 0; r < height; r++)
             {
                 for (int c = 0; c < width; c++)
@@ -78,6 +117,12 @@ namespace BlockPuzzle
                 }
                 sout("\n");
             }
+            */
+
+            printBoardArea();
+            printHoldArea();
+            printQArea();
+            printQPieces();
 
             if (shadow != null)
             {
@@ -85,9 +130,11 @@ namespace BlockPuzzle
                 PrintPiece(shadowPos, shadow);
             }
 
+            // for testing nina's queue
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             PrintPiece(piecePosition, currentPiece);
-            Console.ForegroundColor = ConsoleColor.Black;
+            // Window's command line is black so i can't see that's why im commenting this out sorry
+            // Console.ForegroundColor = ConsoleColor.Black;
             Console.SetCursorPosition(0, height + 2);
             Console.Write(score);
 

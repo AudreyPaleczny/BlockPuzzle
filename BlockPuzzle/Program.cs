@@ -85,6 +85,10 @@ namespace BlockPuzzle
         char[][] holdArea;
         Coord holdCoordinate = new Coord(12, 5);
 
+        char[][] qArea;
+
+        Coord initialQCoordinate = new Coord(20, 1);
+
         Coord piecePosition = Coord.ZERO;
         private Piece shadow;
         Coord shadowPos;
