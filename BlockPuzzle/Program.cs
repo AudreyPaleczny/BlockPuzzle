@@ -150,6 +150,7 @@ namespace BlockPuzzle
                 int bottomOfPiece = piecePosition.y + tPiece.Height;
                 if (bottomOfPiece >= 20 || isPieceCollidingWithBoard())
                 {
+                    if (isPieceCollidingWithBoard()) piecePosition.y--;
                     imprintPiece();
                     RestartPiece();
                 }
