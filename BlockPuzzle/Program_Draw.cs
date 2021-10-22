@@ -64,24 +64,40 @@ namespace BlockPuzzle
 
     public void Draw()
         {
+            //before drawing something specific, change color
+            //ConsoleColor original = Console.ForegroundColor;
             Console.SetCursorPosition(0, 0);
             for (int r = 0; r < height; r++)
             {
                 for (int c = 0; c < width; c++)
                 {
-                    Console.Write(board[r][c]);
+                    char ch = board[r][c];
+                    //^^ is for a specific character on the board
+                    //where we left off: if statement to change colors :)
+                    Console.Write(ch);
                 }
                 sout("\n");
             }
 
             if (shadow != null)
             {
+                Console.ForegroundColor = ConsoleColor.Gray;
                 PrintPiece(shadowPos, shadow);
             }
 
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
             PrintPiece(piecePosition, currentPiece);
+            Console.ForegroundColor = ConsoleColor.Black;
             Console.SetCursorPosition(0, height + 2);
             Console.Write(score);
+
+            //for(int i = 0; i < 16; i++)
+            //{
+            //    Console.ForegroundColor = (ConsoleColor)i;
+            //    Console.Write("#####");
+            //    Console.ForegroundColor = ConsoleColor.Black;
+            //    Console.WriteLine(((ConsoleColor)i).ToString());
+            //}
         }
         
     }
