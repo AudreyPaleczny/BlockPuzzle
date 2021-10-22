@@ -17,11 +17,6 @@ namespace BlockPuzzle
                     board[i][k] = ',';
                 }
             }
-
-            //board[3][4] = 'X';
-            //board[3][5] = 'X';
-            //board[4][4] = 'X';
-            //board[4][5] = 'X';
         }
     }
 }

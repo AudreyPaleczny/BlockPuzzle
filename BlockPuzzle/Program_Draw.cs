@@ -79,7 +79,7 @@ namespace BlockPuzzle
                 PrintPiece(shadowPos, shadow);
             }
 
-            PrintPiece(piecePosition, tPiece);
+            PrintPiece(piecePosition, currentPiece);
             Console.SetCursorPosition(0, height + 2);
             Console.Write(score);
         }

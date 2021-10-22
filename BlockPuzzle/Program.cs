@@ -10,20 +10,6 @@ namespace BlockPuzzle
             Console.Write(str);
         }
 
-        public static void FlipHorizontal(int[] nums)
-        {
-            int length = nums.Length;
-            
-            for(int i = 0; i < length/2; i++)
-            {
-                int temp = nums[i];
-                nums[i] = nums[length - i - 1];
-                nums[length - i - 1] = temp;
-
-            }
-
-        }
-
         public void RestartPiece()
         {
             piecePosition.y = 0;
@@ -92,15 +78,7 @@ namespace BlockPuzzle
         char[][] holdArea;
         Coord holdCoordinate = new Coord(12, 5);
 
-        //these are auto-private vars
-        //String tPiece =
-        //        " # " +
-        //        "###";
-        //Coord pieceSize = new Coord(3, 2);
         Coord piecePosition = Coord.ZERO;
-        //Piece tPiece = new Piece(new Coord(3, 2), " # ###");
-        //Piece tPiece = new Piece(new Coord(3, 2), " #### ");
-        // Piece currentPiece = new Piece(new Coord(3, 2), "###  #");
         private Piece shadow;
         Coord shadowPos;
 
@@ -109,13 +87,6 @@ namespace BlockPuzzle
 
         public static void Main(string[] args)
         {
-            //int[] nums = new int[] { 1, 2, 3, 4 };
-            //FlipHorizontal(nums);
-            //for(int i = 0; i < nums.Length; i++)
-            //{
-            //    Console.Write(nums[i] + " ");
-            //}
-            //Console.ReadKey();
             MainClass m = new MainClass();
             m.Init();
             m.Run();
@@ -154,8 +125,9 @@ namespace BlockPuzzle
                     fallCounter -= 1000;
                 }
                 int bottomOfPiece = piecePosition.y + currentPiece.Height;
-                if (bottomOfPiece >= 20 || isPieceCollidingWithBoard(piecePosition))
+                if (bottomOfPiece > 20 || isPieceCollidingWithBoard(piecePosition))
                 {
+                    piecePosition.y--;
                     imprintPiece();
                     RestartPiece();
                 }
@@ -164,8 +136,6 @@ namespace BlockPuzzle
                 Console.Write(fallCounter);
                 GetUserInput();
                 Update();
-                //background++;
-
             }
 
         }

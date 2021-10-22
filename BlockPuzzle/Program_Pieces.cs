@@ -50,7 +50,7 @@ namespace BlockPuzzle
             }
         }
 
-
+        /*
         public void placePiece()
         {
             for (int row = 0; row < currentPiece.Height; ++row)
@@ -66,6 +66,7 @@ namespace BlockPuzzle
                 }
             }
         }
+        */
 
     }
 

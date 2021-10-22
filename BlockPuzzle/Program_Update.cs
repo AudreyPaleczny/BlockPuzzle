@@ -80,17 +80,10 @@ namespace BlockPuzzle
 
             if (isPieceOOB() || isPieceCollidingWithBoard(piecePosition))
             {
-                //prevent rotating out of bounds (use isPieceOOB as reference)
-                //do the opposite rotation
+                // move back to old position
                 piecePosition.x = oldPiecePos.x;
                 piecePosition.y = oldPiecePos.y;
-
-                //switch (key.Key)
-                //{
-                //    case ConsoleKey.O: tPiece.RotateCW();   break;
-                //    case ConsoleKey.P: tPiece.RotateCCW();  break;
-                //}
-
+                // rotate back to old rotation i think
                 currentPiece = oldPiece;
             }
 
@@ -109,12 +102,13 @@ namespace BlockPuzzle
             }
             else
             {
-                Console.Write("...........");
+                Console.Write("Not Overlap");
             }
             clearLines();
 
             shadow = currentPiece.clone().changeChars('#', '/');
             shadowPos = new Coord(dropCalculation(piecePosition));
+            
         }
     }
 }
