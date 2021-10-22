@@ -7,6 +7,20 @@ namespace BlockPuzzle
 
         public void hardDrop(Coord oldPosition)
         {
+            //while (!isPieceCollidingWithBoard(piecePosition))
+            //{
+            //    oldPosition.y = piecePosition.y;
+            //    oldPosition.x = piecePosition.x;
+            //    ++piecePosition.y;
+            //    if (piecePosition.y + tPiece.Height > height)
+            //    {
+            //        break;
+            //    }
+
+            //}
+            //piecePosition.y = oldPosition.y;
+            //piecePosition.x = oldPosition.x;
+
             piecePosition = new Coord(dropCalculation(piecePosition));
 
             imprintPiece(placedCharacter);
@@ -24,7 +38,9 @@ namespace BlockPuzzle
                 {
                     break;
                 }
+
             }
+
             endPos.y--;
             return endPos;
         }
@@ -57,8 +73,6 @@ namespace BlockPuzzle
 
                 case ConsoleKey.P:          currentPiece.RotateCW();      break;
 
-                case ConsoleKey.C:          swapHold();            break;
-
                 default: break;
             }
 
@@ -77,19 +91,17 @@ namespace BlockPuzzle
                 size = currentPiece.size
             };
 
-            /* Console.SetCursorPosition(0, height);
+            Console.SetCursorPosition(0, height);
 
             //if (p.overlap(test))
-            if (!isPieceOOB() && isPieceCollidingWithBoard(piecePosition))
-            {
-                Console.Write("Overlap");
-            }
-            else
-            {
-                Console.Write("Not Overlap");
-            }
-            */
-
+            //if (!isPieceOOB() && isPieceCollidingWithBoard(piecePosition))
+            //{
+            //    Console.Write("Overlap");
+            //}
+            //else
+            //{
+            //    Console.Write("Not Overlap");
+            //}
             clearLines();
 
             shadow = currentPiece.clone().changeChars(pieceCharacter, shadowCharacter);

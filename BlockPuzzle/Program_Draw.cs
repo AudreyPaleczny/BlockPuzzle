@@ -133,10 +133,16 @@ namespace BlockPuzzle
             // for testing nina's queue
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             PrintPiece(piecePosition, currentPiece);
+<<<<<<< Updated upstream
             // Window's command line is black so i can't see that's why im commenting this out sorry
             // Console.ForegroundColor = ConsoleColor.Black;
             Console.SetCursorPosition(0, height + 2);
             Console.Write(score);
+=======
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.SetCursorPosition(0, height + 1);
+            Console.Write("score: " + score);
+>>>>>>> Stashed changes
 
             //for(int i = 0; i < 16; i++)
             //{

@@ -145,7 +145,7 @@ namespace BlockPuzzle
                 }
 
                 Console.SetCursorPosition(0, height + 1);
-                Console.Write(fallCounter);
+                //Console.Write(fallCounter);
                 GetUserInput();
                 Update();
             }
