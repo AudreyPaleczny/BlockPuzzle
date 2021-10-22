@@ -15,6 +15,10 @@ namespace BlockPuzzle
             piecePosition.y = 0;
             piecePosition.x = 4;
             choosePiece();
+            if (isPieceCollidingWithBoard(piecePosition))
+            {
+                gameOver = true;
+            }
         }
 
         public void GetUserInput()
@@ -76,6 +80,7 @@ namespace BlockPuzzle
         private int width = 10;
         private char[][] board;
         private long fallCounter = 0;
+        private bool gameOver = false;
 
         char[][] holdArea;
         Coord holdCoordinate = new Coord(12, 5);
@@ -112,7 +117,7 @@ namespace BlockPuzzle
             //int then = System.Environment.TickCount;
             long then = UTCMS();
 
-            while (key.Key != ConsoleKey.Escape)
+            while (key.Key != ConsoleKey.Escape && gameOver != true)
             {
                 Draw();
                 long now = UTCMS();
@@ -140,7 +145,18 @@ namespace BlockPuzzle
                 GetUserInput();
                 Update();
             }
-
+            Console.Clear();
+            Console.Write("GAME OVER");
+            Console.SetCursorPosition(0, 1);
+            Console.Write("lol u suck");
+            Console.SetCursorPosition(0, 2);
+            Console.Write("PRESS ESCAPE TO LEAVE");
+            do
+            {
+                Console.SetCursorPosition(0, 3);
+                key = Console.ReadKey();
+            }
+            while (key.Key != ConsoleKey.Escape);
         }
     }
 }
