@@ -17,14 +17,16 @@ namespace BlockPuzzle
                     }
 
                 }
+                
                 if (count == 10)
                 {
+                    // Nina: probably unecessary 
                     clearRow = row;
                     for (int col = 0; col < width; ++col)
                     {
                         board[row][col] = ',';
                     }
-
+                    // for everyline under top to shift down by 1 row
                     for (int shiftRow = clearRow; shiftRow > 0; --shiftRow)
                     {
                         for (int shiftCol = 0; shiftCol < width; ++shiftCol)
@@ -32,6 +34,7 @@ namespace BlockPuzzle
                             board[shiftRow][shiftCol] = board[shiftRow - 1][shiftCol];
                         }
                     }
+                    
                     rowCount++;
                 }
                 count = 0;

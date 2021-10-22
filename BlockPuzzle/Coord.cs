@@ -12,6 +12,12 @@ namespace BlockPuzzle
             this.y = y;
         }
 
+        public Coord(Coord copy)
+        {
+            this.x = copy.x;
+            this.y = copy.y;
+        }
+
         public static readonly Coord ZERO = new Coord(0, 0);
     }
 }

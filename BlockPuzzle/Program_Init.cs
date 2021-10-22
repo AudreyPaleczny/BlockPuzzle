@@ -6,6 +6,7 @@ namespace BlockPuzzle
     {
         public void Init()
         {
+            choosePiece();
             board = new char[height][];
 
             for (int i = 0; i < height; i++)
@@ -16,11 +17,6 @@ namespace BlockPuzzle
                     board[i][k] = ',';
                 }
             }
-
-            //board[3][4] = 'X';
-            //board[3][5] = 'X';
-            //board[4][4] = 'X';
-            //board[4][5] = 'X';
         }
     }
 }

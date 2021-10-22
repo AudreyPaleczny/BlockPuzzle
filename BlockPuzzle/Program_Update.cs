@@ -7,27 +7,50 @@ namespace BlockPuzzle
 
         public void hardDrop(Coord oldPosition)
         {
-            while (!isPieceCollidingWithBoard())
+            //while (!isPieceCollidingWithBoard(piecePosition))
+            //{
+            //    oldPosition.y = piecePosition.y;
+            //    oldPosition.x = piecePosition.x;
+            //    ++piecePosition.y;
+            //    if (piecePosition.y + tPiece.Height > height)
+            //    {
+            //        break;
+            //    }
+
+            //}
+            //piecePosition.y = oldPosition.y;
+            //piecePosition.x = oldPosition.x;
+
+            piecePosition = new Coord(dropCalculation(piecePosition));
+
+            currentPiece.changeChars('#', 'X');
+            imprintPiece();
+            currentPiece.changeChars('X', '#');
+            RestartPiece();
+        }
+
+        public Coord dropCalculation(Coord oldPos)
+        {
+            Coord endPos = new Coord(oldPos);
+
+            while (!isPieceCollidingWithBoard(endPos))
             {
-                oldPosition.y = piecePosition.y;
-                oldPosition.x = piecePosition.x;
-                ++piecePosition.y;
-                if (piecePosition.y + tPiece.Height > 20)
+                ++endPos.y;
+                if (endPos.y + currentPiece.Height > height)
                 {
                     break;
                 }
 
             }
-            piecePosition.y = oldPosition.y;
-            piecePosition.x = oldPosition.x;
-            imprintPiece();
-            RestartPiece();
+
+            endPos.y--;
+            return endPos;
         }
 
         public void Update()
         {
             Coord oldPiecePos = new Coord(piecePosition.x, piecePosition.y);
-            Piece oldPiece = tPiece.clone();
+            Piece oldPiece = currentPiece.clone();
 
             // pretty switch statement :)
             switch (key.Key)
@@ -42,53 +65,50 @@ namespace BlockPuzzle
 
                 case ConsoleKey.Spacebar:   hardDrop(oldPiecePos);  break;
 
-                case ConsoleKey.H:          tPiece.FlipHorizontal();break;
+                case ConsoleKey.H:          currentPiece.FlipHorizontal();break;
 
-                case ConsoleKey.V:          tPiece.FlipVertical();  break;
+                case ConsoleKey.V:          currentPiece.FlipVertical();  break;
 
-                case ConsoleKey.B:          tPiece.FlipDiagonal();  break;
+                case ConsoleKey.B:          currentPiece.FlipDiagonal();  break;
 
-                case ConsoleKey.O:          tPiece.RotateCCW();     break;
+                case ConsoleKey.O:          currentPiece.RotateCCW();     break;
 
-                case ConsoleKey.P:          tPiece.RotateCW();      break;
+                case ConsoleKey.P:          currentPiece.RotateCW();      break;
 
                 default: break;
             }
 
-            if (isPieceOOB() || isPieceCollidingWithBoard())
+            if (isPieceOOB() || isPieceCollidingWithBoard(piecePosition))
             {
-                //prevent rotating out of bounds (use isPieceOOB as reference)
-                //do the opposite rotation
+                // move back to old position
                 piecePosition.x = oldPiecePos.x;
                 piecePosition.y = oldPiecePos.y;
-
-                //switch (key.Key)
-                //{
-                //    case ConsoleKey.O: tPiece.RotateCW();   break;
-                //    case ConsoleKey.P: tPiece.RotateCCW();  break;
-                //}
-
-                tPiece = oldPiece;
+                // rotate back to old rotation i think
+                currentPiece = oldPiece;
             }
 
             AABB p = new AABB
             {
                 position = piecePosition,
-                size = tPiece.size
+                size = currentPiece.size
             };
 
             Console.SetCursorPosition(0, height);
 
             //if (p.overlap(test))
-            if (!isPieceOOB() && isPieceCollidingWithBoard())
+            if (!isPieceOOB() && isPieceCollidingWithBoard(piecePosition))
             {
                 Console.Write("Overlap");
             }
             else
             {
-                Console.Write("...........");
+                Console.Write("Not Overlap");
             }
             clearLines();
+
+            shadow = currentPiece.clone().changeChars('#', '/');
+            shadowPos = new Coord(dropCalculation(piecePosition));
+            
         }
     }
 }

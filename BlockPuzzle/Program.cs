@@ -10,24 +10,11 @@ namespace BlockPuzzle
             Console.Write(str);
         }
 
-        public static void FlipHorizontal(int[] nums)
-        {
-            int length = nums.Length;
-            
-            for(int i = 0; i < length/2; i++)
-            {
-                int temp = nums[i];
-                nums[i] = nums[length - i - 1];
-                nums[length - i - 1] = temp;
-
-            }
-
-        }
-
         public void RestartPiece()
         {
             piecePosition.y = 0;
             piecePosition.x = 4;
+            choosePiece();
         }
 
         public void GetUserInput()
@@ -46,15 +33,15 @@ namespace BlockPuzzle
 
         public void imprintPiece()
         {
-            for (int r = 0; r < tPiece.Height; ++r)
+            for (int r = 0; r < currentPiece.Height; ++r)
             {
-                for (int c = 0; c < tPiece.Width; c++)
+                for (int c = 0; c < currentPiece.Width; c++)
                 {
                     int x = piecePosition.x + c, y = piecePosition.y + r;
                     bool oob = x < 0 || y < 0 || x >= width || y >= height;
-                    if (!oob && tPiece[r, c] != ' ')
+                    if (!oob && currentPiece[r, c] != ' ')
                     {
-                        board[y][x] = tPiece[r, c];
+                        board[y][x] = currentPiece[r, c];
                     }
                 }
             }
@@ -63,16 +50,16 @@ namespace BlockPuzzle
         public bool isPieceOOB()
         {
             return piecePosition.x < 0 || piecePosition.y < 0 || piecePosition.x +
-                tPiece.Width > width || piecePosition.y + tPiece.Height > height;
+                currentPiece.Width > width || piecePosition.y + currentPiece.Height > height;
         }
 
-        public bool isPieceCollidingWithBoard()
+        public bool isPieceCollidingWithBoard(Coord pos)
         {
-            for (int r = 0; r < tPiece.Height; r++)
+            for (int r = 0; r < currentPiece.Height; r++)
             {
-                for (int c = 0; c < tPiece.Width; c++)
+                for (int c = 0; c < currentPiece.Width; c++)
                 {
-                    if (board[piecePosition.y + r][piecePosition.x + c] != ',' && tPiece.map[0 + r, 0 + c] == '#')
+                    if (board[pos.y + r][pos.x + c] != ',' && currentPiece.map[0 + r, 0 + c] == '#')
                     {
                         return true;
                     }
@@ -88,28 +75,18 @@ namespace BlockPuzzle
         private char[][] board;
         private long fallCounter = 0;
 
-        //these are auto-private vars
-        //String tPiece =
-        //        " # " +
-        //        "###";
-        //Coord pieceSize = new Coord(3, 2);
+        char[][] holdArea;
+        Coord holdCoordinate = new Coord(12, 5);
+
         Coord piecePosition = Coord.ZERO;
-        //Piece tPiece = new Piece(new Coord(3, 2), " # ###");
-        //Piece tPiece = new Piece(new Coord(3, 2), " #### ");
-        Piece tPiece = new Piece(new Coord(3, 2), "###  #");
+        private Piece shadow;
+        Coord shadowPos;
 
         ConsoleKeyInfo key = new ConsoleKeyInfo();
 
 
         public static void Main(string[] args)
         {
-            //int[] nums = new int[] { 1, 2, 3, 4 };
-            //FlipHorizontal(nums);
-            //for(int i = 0; i < nums.Length; i++)
-            //{
-            //    Console.Write(nums[i] + " ");
-            //}
-            //Console.ReadKey();
             MainClass m = new MainClass();
             m.Init();
             m.Run();
@@ -147,8 +124,8 @@ namespace BlockPuzzle
                     piecePosition.y++;
                     fallCounter -= 1000;
                 }
-                int bottomOfPiece = piecePosition.y + tPiece.Height;
-                if (bottomOfPiece >= 20 || isPieceCollidingWithBoard())
+                int bottomOfPiece = piecePosition.y + currentPiece.Height;
+                if (bottomOfPiece > 20 || isPieceCollidingWithBoard(piecePosition))
                 {
                     if (isPieceCollidingWithBoard()) piecePosition.y--;
                     imprintPiece();
@@ -159,8 +136,6 @@ namespace BlockPuzzle
                 Console.Write(fallCounter);
                 GetUserInput();
                 Update();
-                //background++;
-
             }
 
         }
