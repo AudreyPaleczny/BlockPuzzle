@@ -41,6 +41,8 @@
     <Compile Include="Program_Init.cs" />
     <Compile Include="Program_Update.cs" />
     <Compile Include="Program_Scoring.cs" />
+    <Compile Include="RandP.cs" />
+    <Compile Include="Program_Pieces.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

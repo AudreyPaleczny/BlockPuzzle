@@ -127,7 +127,8 @@ namespace BlockPuzzle
                 int bottomOfPiece = piecePosition.y + currentPiece.Height;
                 if (bottomOfPiece > 20 || isPieceCollidingWithBoard(piecePosition))
                 {
-                    if (isPieceCollidingWithBoard()) piecePosition.y--;
+                    //if (isPieceCollidingWithBoard(piecePosition)) piecePosition.y--;
+                    piecePosition.y--;
                     imprintPiece();
                     RestartPiece();
                 }
