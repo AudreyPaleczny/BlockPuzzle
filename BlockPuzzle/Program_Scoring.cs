@@ -11,20 +11,20 @@ namespace BlockPuzzle
             {
                 for (int col = 0; col < width; ++col)
                 {
-                    if (board[row][col] == '#')
+                    if (board[row][col] != boardCharacter)
                     {
                         ++count;
                     }
 
                 }
                 
-                if (count == 10)
+                if (count == width)
                 {
                     // Nina: probably unecessary 
                     clearRow = row;
                     for (int col = 0; col < width; ++col)
                     {
-                        board[row][col] = ',';
+                        board[row][col] = boardCharacter;
                     }
                     // for everyline under top to shift down by 1 row
                     for (int shiftRow = clearRow; shiftRow > 0; --shiftRow)

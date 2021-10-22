@@ -31,8 +31,9 @@ namespace BlockPuzzle
             //Console.WriteLine(key.Key);
         }
 
-        public void imprintPiece()
+        public void imprintPiece(char replace)
         {
+            currentPiece.changeChars(pieceCharacter, replace);
             for (int r = 0; r < currentPiece.Height; ++r)
             {
                 for (int c = 0; c < currentPiece.Width; c++)
@@ -45,6 +46,7 @@ namespace BlockPuzzle
                     }
                 }
             }
+            currentPiece.changeChars(replace, pieceCharacter);
         }
 
         public bool isPieceOOB()
@@ -59,7 +61,7 @@ namespace BlockPuzzle
             {
                 for (int c = 0; c < currentPiece.Width; c++)
                 {
-                    if (board[pos.y + r][pos.x + c] != ',' && currentPiece.map[0 + r, 0 + c] == '#')
+                    if (board[pos.y + r][pos.x + c] != boardCharacter && currentPiece.map[0 + r, 0 + c] == pieceCharacter)
                     {
                         return true;
                     }
@@ -125,11 +127,11 @@ namespace BlockPuzzle
                     fallCounter -= 1000;
                 }
                 int bottomOfPiece = piecePosition.y + currentPiece.Height;
-                if (bottomOfPiece > 20 || isPieceCollidingWithBoard(piecePosition))
+                if (bottomOfPiece > height || isPieceCollidingWithBoard(piecePosition))
                 {
                     //if (isPieceCollidingWithBoard(piecePosition)) piecePosition.y--;
                     piecePosition.y--;
-                    imprintPiece();
+                    imprintPiece(placedCharacter);
                     RestartPiece();
                 }
 

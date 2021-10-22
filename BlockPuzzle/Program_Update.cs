@@ -23,9 +23,7 @@ namespace BlockPuzzle
 
             piecePosition = new Coord(dropCalculation(piecePosition));
 
-            currentPiece.changeChars('#', 'X');
-            imprintPiece();
-            currentPiece.changeChars('X', '#');
+            imprintPiece(placedCharacter);
             RestartPiece();
         }
 
@@ -106,7 +104,7 @@ namespace BlockPuzzle
             }
             clearLines();
 
-            shadow = currentPiece.clone().changeChars('#', '/');
+            shadow = currentPiece.clone().changeChars(pieceCharacter, shadowCharacter);
             shadowPos = new Coord(dropCalculation(piecePosition));
             
         }
