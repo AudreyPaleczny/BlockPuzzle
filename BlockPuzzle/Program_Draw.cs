@@ -88,6 +88,7 @@ namespace BlockPuzzle
             }
         }
 
+        // stop it from rotating or smth
         public void printQPieces()
         {
             for (int i = 0; i < numberInQ; i++)
@@ -133,16 +134,12 @@ namespace BlockPuzzle
             // for testing nina's queue
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             PrintPiece(piecePosition, currentPiece);
-<<<<<<< Updated upstream
             // Window's command line is black so i can't see that's why im commenting this out sorry
-            // Console.ForegroundColor = ConsoleColor.Black;
-            Console.SetCursorPosition(0, height + 2);
-            Console.Write(score);
-=======
+            // the following line makes sure nina can see things
+            Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
             Console.SetCursorPosition(0, height + 1);
-            Console.Write("score: " + score);
->>>>>>> Stashed changes
+            Console.Write(score);
 
             //for(int i = 0; i < 16; i++)
             //{

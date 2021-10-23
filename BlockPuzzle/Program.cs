@@ -144,8 +144,8 @@ namespace BlockPuzzle
                     RestartPiece();
                 }
 
-                Console.SetCursorPosition(0, height + 1);
-                //Console.Write(fallCounter);
+                // Console.SetCursorPosition(0, height + 1);
+                // Console.Write(fallCounter);
                 GetUserInput();
                 Update();
             }

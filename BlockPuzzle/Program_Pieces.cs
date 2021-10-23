@@ -24,6 +24,7 @@ namespace BlockPuzzle
 
         public List<Piece> queue = new List<Piece>(5);
 
+        // make sure first piece of queue isn't the one on board
         public void initQ()
         {
             queue.Add(generatePiece());
