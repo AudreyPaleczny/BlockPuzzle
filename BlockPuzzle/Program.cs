@@ -19,6 +19,7 @@ namespace BlockPuzzle
             {
                 gameOver = true;
             }
+            canhold = true;
         }
 
         public void GetUserInput()

@@ -47,6 +47,8 @@ namespace BlockPuzzle
             // init the q
             initQ();
 
+            canhold = true;
+
             choosePiece();
         }
     }

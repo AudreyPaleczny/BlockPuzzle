@@ -32,11 +32,12 @@ namespace BlockPuzzle
             queue.Add(generatePiece());
             queue.Add(generatePiece());
             queue.Add(generatePiece());
+            queue.Add(generatePiece());
         }
 
         public void updateQ()
         {
-            queue[4]=generatePiece();
+            queue[5]=generatePiece();
         }
 
         public Piece generatePiece()
@@ -52,7 +53,7 @@ namespace BlockPuzzle
 
         public void choosePiece()
         {
-            for (int i = 0; i < numberInQ -1; i++)
+            for (int i = 0; i < numberInQ; i++)
             {
                 queue[i] = queue[i+1];
             }
@@ -64,19 +65,24 @@ namespace BlockPuzzle
         // PIECE IN HOLD
         Piece holdPiece = null;
 
+        public bool canhold;
+
         public void swapHold()
         {
-            if (holdPiece == null)
-            {
-                holdPiece = currentPiece;
-                choosePiece();
+            if (canhold) {
+                if (holdPiece == null)
+                {
+                    holdPiece = currentPiece;
+                    choosePiece();
+                }
+                else
+                {
+                    Piece temp = holdPiece;
+                    holdPiece = currentPiece;
+                    currentPiece = temp;
+                }
             }
-            else
-            {
-                Piece temp = holdPiece;
-                holdPiece = currentPiece;
-                currentPiece = temp;
-            }
+            canhold = false;
         }
 
         /*

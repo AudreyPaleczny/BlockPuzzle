@@ -94,7 +94,7 @@ namespace BlockPuzzle
             for (int i = 0; i < numberInQ; i++)
             {
                 initialQCoordinate.y = 1 + i * 3;
-                printPieceOutside(initialQCoordinate, queue[i]);
+                printPieceOutside(initialQCoordinate, queue[i+1]);
             }
             initialQCoordinate = new Coord(20, 1);
         }
