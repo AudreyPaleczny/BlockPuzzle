@@ -9,6 +9,17 @@ namespace BlockPuzzle
         char placedCharacter = 'X';
         char shadowCharacter = '/';
 
+        ConsoleColor backgroundColor;
+        ConsoleColor shadowColor;
+        ConsoleColor LpieceColor;
+        ConsoleColor IpieceColor;
+        ConsoleColor JpieceColor;
+        ConsoleColor OpieceColor;
+        ConsoleColor SpieceColor;
+        ConsoleColor ZpieceColor;
+        ConsoleColor TpieceColor;
+
+
         public void Init()
         {
             board = new char[height][];

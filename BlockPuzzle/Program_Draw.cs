@@ -82,7 +82,13 @@ namespace BlockPuzzle
             {
                 for (int c = 0; c < width; c++)
                 {
-                    Console.Write(board[r][c]);
+                    char ch = board[r][c];
+                    if(ch == boardCharacter)
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    Console.Write(ch);
+                    Console.ForegroundColor = ConsoleColor.Black;
                 }
                 sout("\n");
             }
@@ -141,13 +147,22 @@ namespace BlockPuzzle
             Console.SetCursorPosition(0, height + 1);
             Console.Write(score);
 
-            //for(int i = 0; i < 16; i++)
+            //for (int i = 0; i < 16; i++)
             //{
             //    Console.ForegroundColor = (ConsoleColor)i;
             //    Console.Write("#####");
             //    Console.ForegroundColor = ConsoleColor.Black;
             //    Console.WriteLine(((ConsoleColor)i).ToString());
             //}
+
+            //int i = 10;
+            //Console.ForegroundColor = (ConsoleColor)i;
+            //Console.Write("#####");
+            //Console.ForegroundColor = (ConsoleColor)i - 8;
+            //Console.Write("#####");
+            //Console.ForegroundColor = ConsoleColor.Black;
+
+
         }
         
     }
