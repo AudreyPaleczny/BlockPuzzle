@@ -155,12 +155,14 @@ namespace BlockPuzzle
             Console.Clear();
             Console.Write("GAME OVER");
             Console.SetCursorPosition(0, 1);
-            Console.Write("lol u suck");
-            Console.SetCursorPosition(0, 2);
+            Console.Write("---------");
+            Console.SetCursorPosition(0, 3);
+            Console.Write("your score was: " + score);
+            Console.SetCursorPosition(0, 5);
             Console.Write("PRESS ESCAPE TO LEAVE");
             do
             {
-                Console.SetCursorPosition(0, 3);
+                Console.SetCursorPosition(0, 6);
                 key = Console.ReadKey();
             }
             while (key.Key != ConsoleKey.Escape);

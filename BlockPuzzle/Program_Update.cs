@@ -29,6 +29,12 @@ namespace BlockPuzzle
             return endPos;
         }
 
+        public void softDrop()
+        {
+            piecePosition.y++;
+            ++score;
+        }
+
         public void Update()
         {
             Coord oldPiecePos = new Coord(piecePosition.x, piecePosition.y);
@@ -37,15 +43,15 @@ namespace BlockPuzzle
             // pretty switch statement :)
             switch (key.Key)
             {
-                case ConsoleKey.UpArrow:    piecePosition.y--;      break;
+                case ConsoleKey.UpArrow:    piecePosition.y--;            break;
 
-                case ConsoleKey.DownArrow:  piecePosition.y++;      break;
+                case ConsoleKey.DownArrow:  softDrop();                   break;
 
-                case ConsoleKey.LeftArrow:  piecePosition.x--;      break;
+                case ConsoleKey.LeftArrow:  piecePosition.x--;            break;
 
-                case ConsoleKey.RightArrow: piecePosition.x++;      break;
+                case ConsoleKey.RightArrow: piecePosition.x++;            break;
 
-                case ConsoleKey.Spacebar:   hardDrop(oldPiecePos);  break;
+                case ConsoleKey.Spacebar:   hardDrop(oldPiecePos);        break;
 
                 case ConsoleKey.H:          currentPiece.FlipHorizontal();break;
 
@@ -56,10 +62,8 @@ namespace BlockPuzzle
                 case ConsoleKey.O:          currentPiece.RotateCCW();     break;
 
                 case ConsoleKey.P:          currentPiece.RotateCW();      break;
-
-                case ConsoleKey.C:          swapHold();            break;
-
-                default: break;
+                    
+                case ConsoleKey.C:          swapHold();                   break;
             }
 
             if (isPieceOOB() || isPieceCollidingWithBoard(piecePosition))
