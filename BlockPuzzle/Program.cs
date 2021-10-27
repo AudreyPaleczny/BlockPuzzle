@@ -120,6 +120,8 @@ namespace BlockPuzzle
         public void Run()
         {
             //int then = System.Environment.TickCount;
+            startGame();
+
             long then = UTCMS();
 
             while (key.Key != ConsoleKey.Escape && gameOver != true)

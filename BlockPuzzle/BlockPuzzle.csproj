@@ -43,6 +43,7 @@
     <Compile Include="Program_Scoring.cs" />
     <Compile Include="RandP.cs" />
     <Compile Include="Program_Pieces.cs" />
+    <Compile Include="Start_Screen.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
