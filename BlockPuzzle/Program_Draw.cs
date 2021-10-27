@@ -46,9 +46,9 @@ namespace BlockPuzzle
 
         public void printHoldArea()
         {
-            for (int row = 0; row < 4; row++)
+            for (int row = 0; row < 5; row++)
             {
-                for (int col = 0; col < 4; col++)
+                for (int col = 0; col < 5; col++)
                 {
                     Console.Write(holdArea[row][col]);
                 }
@@ -65,9 +65,9 @@ namespace BlockPuzzle
         public void printQArea()
         {
             Console.SetCursorPosition(20, 0);
-            for (int row = 0; row < 16; row++)
+            for (int row = 0; row < 21; row++)
             {
-                for (int col = 0; col < 4; col++)
+                for (int col = 0; col < 5; col++)
                 {
                     Console.Write(qArea[row][col]);
                 }
@@ -99,7 +99,7 @@ namespace BlockPuzzle
         {
             for (int i = 0; i < numberInQ; i++)
             {
-                initialQCoordinate.y = 1 + i * 3;
+                initialQCoordinate.y = 1 + i * 4;
                 printPieceOutside(initialQCoordinate, queue[i+1]);
             }
             initialQCoordinate = new Coord(20, 1);
