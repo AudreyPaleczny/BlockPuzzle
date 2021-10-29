@@ -9,15 +9,15 @@ namespace BlockPuzzle
         char placedCharacter = 'X';
         char shadowCharacter = '/';
 
-        ConsoleColor backgroundColor;
-        ConsoleColor shadowColor;
-        ConsoleColor LpieceColor;
-        ConsoleColor IpieceColor;
-        ConsoleColor JpieceColor;
-        ConsoleColor OpieceColor;
-        ConsoleColor SpieceColor;
-        ConsoleColor ZpieceColor;
-        ConsoleColor TpieceColor;
+        ConsoleColor backgroundColor = ConsoleColor.White;
+        ConsoleColor shadowColor = ConsoleColor.DarkGray;
+        ConsoleColor LpieceColor = ConsoleColor.DarkYellow;
+        ConsoleColor IpieceColor = ConsoleColor.Cyan;
+        ConsoleColor JpieceColor = ConsoleColor.DarkBlue;
+        ConsoleColor OpieceColor = ConsoleColor.Yellow;
+        ConsoleColor SpieceColor = ConsoleColor.Green;
+        ConsoleColor ZpieceColor = ConsoleColor.Red;
+        ConsoleColor TpieceColor = ConsoleColor.Magenta;
 
 
         public void Init()

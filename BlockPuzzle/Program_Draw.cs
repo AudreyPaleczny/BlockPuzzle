@@ -133,16 +133,16 @@ namespace BlockPuzzle
 
             if (shadow != null)
             {
-                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.ForegroundColor = shadowColor;
                 PrintPiece(shadowPos, shadow);
             }
 
             // for testing nina's queue
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.ForegroundColor = ConsoleColor.DarkCyan; //need to change to the piece color
             PrintPiece(piecePosition, currentPiece);
             // Window's command line is black so i can't see that's why im commenting this out sorry
             // the following line makes sure nina can see things
-            Console.BackgroundColor = ConsoleColor.White;
+            Console.BackgroundColor = backgroundColor;
             Console.ForegroundColor = ConsoleColor.Black;
             Console.SetCursorPosition(0, height + 1);
             Console.Write(score);
