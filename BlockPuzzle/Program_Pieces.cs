@@ -61,7 +61,7 @@ namespace BlockPuzzle
             }
 
             updateQ();
-            currentPiece = queue[0];
+            currentPiece = queue[0].clone();
         }
 
         // PIECE IN HOLD
@@ -74,13 +74,13 @@ namespace BlockPuzzle
             if (canhold) {
                 if (holdPiece == null)
                 {
-                    holdPiece = currentPiece;
+                    holdPiece = queue[0];
                     choosePiece();
                 }
                 else
                 {
                     Piece temp = holdPiece;
-                    holdPiece = currentPiece;
+                    holdPiece = queue[0];
                     currentPiece = temp;
                 }
             }
