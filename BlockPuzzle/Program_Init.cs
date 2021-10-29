@@ -11,14 +11,7 @@ namespace BlockPuzzle
 
         ConsoleColor backgroundColor = ConsoleColor.White;
         ConsoleColor shadowColor = ConsoleColor.DarkGray;
-        ConsoleColor LpieceColor = ConsoleColor.DarkYellow;
-        ConsoleColor IpieceColor = ConsoleColor.Cyan;
-        ConsoleColor JpieceColor = ConsoleColor.DarkBlue;
-        ConsoleColor OpieceColor = ConsoleColor.Yellow;
-        ConsoleColor SpieceColor = ConsoleColor.Green;
-        ConsoleColor ZpieceColor = ConsoleColor.Red;
-        ConsoleColor TpieceColor = ConsoleColor.Magenta;
-
+        ConsoleColor placedColor = ConsoleColor.Black;
 
         public void Init()
         {

@@ -1,3 +1,5 @@
+using System;
+
 namespace BlockPuzzle
 {
     public class Piece
@@ -5,8 +7,9 @@ namespace BlockPuzzle
         public Coord size = Coord.ZERO;
         //public string data;
         public char[,] map;
+        public ConsoleColor color;
 
-        public Piece(Coord s, string d)
+        public Piece(Coord s, string d, ConsoleColor color)
         {
             size = s;
             map = new char[Height, Width];
@@ -21,11 +24,13 @@ namespace BlockPuzzle
                     map[r, c] = d[r * Width + c];
                 }
             }
+
+            this.color = color;
         }
 
         public Piece clone()
         {
-            Piece p = new Piece(this.size, null);
+            Piece p = new Piece(this.size, null, this.color);
             p.map = new char[Height, Width];
 
             for (int r = 0; r < size.y; r++)
