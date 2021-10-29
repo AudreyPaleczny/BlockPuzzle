@@ -34,22 +34,22 @@ namespace BlockPuzzle
             }
 
             // init hold area
-            holdArea = new char[4][];
-            for (int i = 0; i < 4; i++)
+            holdArea = new char[5][];
+            for (int i = 0; i < 5; i++)
             {
-                holdArea[i] = new char[4];
-                for (int j = 0; j < 4; j++)
+                holdArea[i] = new char[5];
+                for (int j = 0; j < 5; j++)
                 {
                     holdArea[i][j] = background;
                 }
             }
 
             // init queue area
-            qArea = new char[16][];
-            for (int i = 0; i < 16; i++)
+            qArea = new char[21][];
+            for (int i = 0; i < 21; i++)
             {
-                qArea[i] = new char[4];
-                for (int j = 0; j < 4; j++)
+                qArea[i] = new char[5];
+                for (int j = 0; j < 5; j++)
                 {
                     qArea[i][j] = background;
                 }

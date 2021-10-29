@@ -6,6 +6,7 @@ namespace BlockPuzzle
     public partial class MainClass
     {
         public Piece[] listOfPieces = { zPiece, sPiece, jPiece, lPiece, oPiece, iPiece, tPiece };
+        public String[] namesOfPieces = {"zPiece", "sPiece", "jPiece", "lPiece", "oPiece", "iPiece", "tPiece"};
 
         static Piece sPiece = new Piece(new Coord(3, 2), " #### ");
         static Piece jPiece = new Piece(new Coord(3, 2), "###  #");
@@ -48,6 +49,7 @@ namespace BlockPuzzle
                 counter = 0;
             }
             counter++;
+            
             return listOfPieces[randomGenerator.nextInt()];
         }
 
@@ -83,6 +85,7 @@ namespace BlockPuzzle
                 }
             }
             canhold = false;
+            piecePosition = new Coord(4, 0);
         }
 
         /*
