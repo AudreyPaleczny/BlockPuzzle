@@ -35,6 +35,16 @@ namespace BlockPuzzle
 
             Console.Clear();
         }
+
+        public void singlePlayer()
+        {
+            players = 1;
+        }
+
+        public void multiplayer()
+        {
+            players = 2;
+        }
     }
 
 }

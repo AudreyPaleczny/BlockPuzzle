@@ -7,8 +7,8 @@ namespace BlockPuzzle
 
         public void hardDrop(Coord oldPosition)
         {
+            score += dropCalculation(piecePosition).y - piecePosition.y;
             piecePosition = new Coord(dropCalculation(piecePosition));
-
             imprintPiece(placedCharacter);
             RestartPiece();
         }
@@ -73,6 +73,11 @@ namespace BlockPuzzle
                 piecePosition.y = oldPiecePos.y;
                 // rotate back to old rotation i think
                 currentPiece = oldPiece;
+                if(key.Key == ConsoleKey.DownArrow)
+                {
+                --score;
+
+                }
             }
 
             AABB p = new AABB
