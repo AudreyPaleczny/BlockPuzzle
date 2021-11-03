@@ -139,7 +139,7 @@ namespace BlockPuzzle
 
             // for testing nina's queue
             
-            Console.ForegroundColor = currentPiece.color;
+            Console.ForegroundColor = queue[0].color;
             //BUG: WHEN I TOUCH ANY END OF THE BOARD IT LOSES ITS COLOR (turns black)
             //ONLY HAPPENS WHEN YOU MOVE THE PIECE SO THAT IT WOULD BE OOB
             PrintPiece(piecePosition, currentPiece);
