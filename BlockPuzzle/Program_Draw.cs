@@ -146,8 +146,8 @@ namespace BlockPuzzle
             // Window's command line is black so i can't see that's why im commenting this out sorry
             // the following line makes sure nina can see things
             Console.BackgroundColor = backgroundColor;
-            Console.ForegroundColor = placedColor;
             Console.SetCursorPosition(0, height + 1);
+            Console.ForegroundColor = placedColor;
             Console.Write(score);
 
             //for (int i = 0; i < 16; i++)
