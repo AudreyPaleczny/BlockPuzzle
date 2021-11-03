@@ -44,16 +44,30 @@ namespace BlockPuzzle
             }
         }
 
-        public void printHoldArea()
+        public void printHoldArea(int p)
         {
-            for (int row = 0; row < 5; row++)
+            if (p == 1)
             {
-                for (int col = 0; col < 5; col++)
+                for (int row = 0; row < 5; row++)
                 {
-                    Console.Write(holdArea[row][col]);
+                    for (int col = 0; col < 5; col++)
+                    {
+                        Console.Write(holdArea[row][col]);
+                    }
+                    Console.SetCursorPosition(12, row + 4);
                 }
-                Console.SetCursorPosition(12, row + 4);
+            } else
+            {
+                for (int row = 0; row < 5; row++)
+                {
+                    for (int col = 0; col < 5; col++)
+                    {
+                        Console.Write(holdArea2[row][col]);
+                    }
+                    Console.SetCursorPosition(32, row + 4);
+                }
             }
+            
 
             if (!(holdPiece == null))
             {
@@ -62,16 +76,28 @@ namespace BlockPuzzle
             }
         }
 
-        public void printQArea()
+        public void printQArea(int p)
         {
-            Console.SetCursorPosition(20, 0);
-            for (int row = 0; row < 21; row++)
+            if (p == 1)
             {
-                for (int col = 0; col < 5; col++)
+                for (int row = 0; row < 21; row++)
                 {
-                    Console.Write(qArea[row][col]);
+                    Console.SetCursorPosition(20, row);
+                    for (int col = 0; col < 5; col++)
+                    {
+                        Console.Write(qArea[row][col]);
+                    }
                 }
-                Console.SetCursorPosition(20, row);
+            } else
+            {
+                for (int row = 0; row < 21; row++)
+                {
+                    Console.SetCursorPosition(40, row);
+                    for (int col = 0; col < 5; col++)
+                    {
+                        Console.Write(qArea2[row][col]);
+                    }
+                }
             }
         }
 
@@ -83,7 +109,7 @@ namespace BlockPuzzle
                 for (int c = 0; c < width; c++)
                 {
                     char ch = board[r][c];
-                    if(ch == boardCharacter)
+                    if (ch == boardCharacter)
                     {
                         Console.ForegroundColor = backgroundColor;
                     }
@@ -95,14 +121,25 @@ namespace BlockPuzzle
         }
 
         // stop it from rotating or smth
-        public void printQPieces()
+        public void printQPieces(int p)
         {
-            for (int i = 0; i < numberInQ; i++)
+            if (p == 1)
             {
-                initialQCoordinate.y = 1 + i * 4;
-                printPieceOutside(initialQCoordinate, queue[i+1]);
+                for (int i = 0; i < numberInQ; i++)
+                {
+                    initialQCoordinate.y = 1 + i * 4;
+                    printPieceOutside(initialQCoordinate, queue[i + 1]);
+                }
+                initialQCoordinate = new Coord(20, 1);
+            } else
+            {
+                for (int i = 0; i < numberInQ; i++)
+                {
+                    initialQCoordinate2.y = 1 + i * 4;
+                    printPieceOutside(initialQCoordinate2, queue2[i + 1]);
+                }
+                initialQCoordinate2 = new Coord(35, 1);
             }
-            initialQCoordinate = new Coord(20, 1);
         }
 
         public void Draw()
@@ -111,25 +148,10 @@ namespace BlockPuzzle
             //ConsoleColor original = Console.ForegroundColor;
             Console.SetCursorPosition(0, 0);
 
-            // for testing nina's queue
-            /*
-            for (int r = 0; r < height; r++)
-            {
-                for (int c = 0; c < width; c++)
-                {
-                    char ch = board[r][c];
-                    //^^ is for a specific character on the board
-                    //where we left off: if statement to change colors :)
-                    Console.Write(ch);
-                }
-                sout("\n");
-            }
-            */
-
             printBoardArea();
-            printHoldArea();
-            printQArea();
-            printQPieces();
+            printHoldArea(1);
+            printQArea(1);
+            printQPieces(1);
 
             if (shadow != null)
             {
@@ -137,14 +159,28 @@ namespace BlockPuzzle
                 PrintPiece(shadowPos, shadow);
             }
 
+            if (players ==2)
+            {
+                printHoldArea(2);
+                printQArea(2);
+                printQPieces(2);
+
+                if (shadow2 != null)
+                {
+                    Console.ForegroundColor = shadowColor;
+                    PrintPiece(shadowPos2, shadow2);
+                }
+            }
+
+
             // for testing nina's queue
             
             Console.ForegroundColor = queue[0].color;
-            //BUG: WHEN I TOUCH ANY END OF THE BOARD IT LOSES ITS COLOR (turns black)
-            //ONLY HAPPENS WHEN YOU MOVE THE PIECE SO THAT IT WOULD BE OOB
             PrintPiece(piecePosition, currentPiece);
-            // Window's command line is black so i can't see that's why im commenting this out sorry
-            // the following line makes sure nina can see things
+            Console.ForegroundColor = queue2[0].color;
+            PrintPiece(piecePosition2, currentPiece2);
+
+
             Console.BackgroundColor = backgroundColor;
             Console.SetCursorPosition(0, height + 1);
             Console.ForegroundColor = placedColor;

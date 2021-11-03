@@ -18,74 +18,146 @@ namespace BlockPuzzle
 
         // CURRENT PIECE
         // choosing a random piece
-        public Piece currentPiece = null; //new Piece(new Coord(3, 2), " # ###");
+        public Piece currentPiece = null;
+        public Piece currentPiece2 = null;
         RandP randomGenerator = new RandP(7);
+
+        // this can be ignored if we want both players to have the same random pieces
+        RandP randomGenerator2 = new RandP(7);
         int counter = 0;
+        int counter2 = 0;
         int numberInQ = 5;
 
         public List<Piece> queue = new List<Piece>(5);
+        public List<Piece> queue2 = new List<Piece>(5);
 
         // make sure first piece of queue isn't the one on board
         public void initQ()
         {
-            queue.Add(generatePiece());
-            queue.Add(generatePiece());
-            queue.Add(generatePiece());
-            queue.Add(generatePiece());
-            queue.Add(generatePiece());
-            queue.Add(generatePiece());
+            queue.Add(generatePiece(1));
+            queue.Add(generatePiece(1));
+            queue.Add(generatePiece(1));
+            queue.Add(generatePiece(1));
+            queue.Add(generatePiece(1));
+            queue.Add(generatePiece(1));
+        }
+        public void initQ2()
+        {
+            queue2.Add(generatePiece(2));
+            queue2.Add(generatePiece(2));
+            queue2.Add(generatePiece(2));
+            queue2.Add(generatePiece(2));
+            queue2.Add(generatePiece(2));
+            queue2.Add(generatePiece(2));
         }
 
-        public void updateQ()
+        public void updateQ(int p)
         {
-            queue[5]=generatePiece();
-        }
-
-        public Piece generatePiece()
-        {
-            if (counter == 7)
+            if (p == 1)
             {
-                randomGenerator = new RandP(7);
-                counter = 0;
+                queue[5] = generatePiece(1);
+            } else
+            {
+                queue2[5] = generatePiece(2);
             }
-            counter++;
+        }
+
+        public Piece generatePiece(int p)
+        {
+            if (p == 1)
+            {
+                if (counter == 7)
+                {
+                    randomGenerator = new RandP(7);
+                    counter = 0;
+                }
+                counter++;
+
+                return listOfPieces[randomGenerator.nextInt()];
+            } else
+            {
+                if (counter2 == 7)
+                {
+                    randomGenerator2 = new RandP(7);
+                    counter2 = 0;
+                }
+                counter2++;
+
+                return listOfPieces[randomGenerator2.nextInt()];
+            }
             
-            return listOfPieces[randomGenerator.nextInt()];
         }
 
-        public void choosePiece()
+        public void choosePiece(int p)
         {
-            for (int i = 0; i < numberInQ; i++)
+            if (p == 1)
             {
-                queue[i] = queue[i+1];
-            }
+                for (int i = 0; i < numberInQ; i++)
+                {
+                    queue[i] = queue[i + 1];
+                }
 
-            updateQ();
-            currentPiece = queue[0].clone();
+                updateQ(1);
+                currentPiece = queue[0].clone();
+            } else
+            {
+                for (int i = 0; i < numberInQ; i++)
+                {
+                    queue2[i] = queue2[i + 1];
+                }
+
+                updateQ(2);
+                currentPiece2 = queue2[0].clone();
+            }
         }
 
         // PIECE IN HOLD
         Piece holdPiece = null;
+        Piece holdPiece2 = null;
 
         public bool canhold;
+        public bool canhold2;
 
-        public void swapHold()
+        public void swapHold(int p)
         {
-            if (canhold) {
-                if (holdPiece == null)
+            if (p == 1)
+            {
+                if (canhold)
                 {
-                    holdPiece = queue[0];
-                    choosePiece();
+                    if (holdPiece == null)
+                    {
+                        holdPiece = queue[0];
+                        choosePiece(1);
+                    }
+                    else
+                    {
+                        Piece temp = holdPiece;
+                        holdPiece = queue[0];
+                        currentPiece = temp;
+                    }
                 }
-                else
+                canhold = false;
+                piecePosition = new Coord(4, 0);
+            } else
+            {
+                if (canhold2)
                 {
-                    Piece temp = holdPiece;
-                    holdPiece = queue[0];
-                    currentPiece = temp;
+                    if (holdPiece2 == null)
+                    {
+                        holdPiece2 = queue2[0];
+                        choosePiece(2);
+                    }
+                    else
+                    {
+                        Piece temp = holdPiece2;
+                        holdPiece2 = queue2[0];
+                        currentPiece2 = temp;
+                    }
                 }
+                canhold2 = false;
+                piecePosition = new Coord(4, 0);
             }
-            canhold = false;
-            piecePosition = new Coord(4, 0);
+            
         }
 
         /*

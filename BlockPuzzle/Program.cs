@@ -10,16 +10,30 @@ namespace BlockPuzzle
             Console.Write(str);
         }
 
-        public void RestartPiece()
+        public void RestartPiece(int p)
         {
-            piecePosition.y = 0;
-            piecePosition.x = 4;
-            choosePiece();
-            if (isPieceCollidingWithBoard(piecePosition))
+            if (p == 1)
             {
-                gameOver = true;
+                piecePosition.y = 0;
+                piecePosition.x = 2;
+                choosePiece(1);
+                if (isPieceCollidingWithBoard(piecePosition))
+                {
+                    gameOver = true;
+                }
+                canhold = true;
+            } else
+            {
+                piecePosition2.y = 0;
+                piecePosition2.x = 6;
+                choosePiece(2);
+                if (isPieceCollidingWithBoard(piecePosition2))
+                {
+                    gameOver = true;
+                }
+                canhold = true;
             }
-            canhold = true;
+            
         }
 
         public void GetUserInput()
@@ -36,28 +50,41 @@ namespace BlockPuzzle
             //Console.WriteLine(key.Key);
         }
 
-        public void imprintPiece(char replace)
+        public void imprintPiece(char replace, int p)
         {
-            currentPiece.changeChars(pieceCharacter, replace);
-            for (int r = 0; r < currentPiece.Height; ++r)
+            Piece cp = currentPiece;
+            Coord pp = piecePosition;
+            if (p == 2) { 
+                cp = currentPiece2;
+                pp = piecePosition2;
+            }
+            cp.changeChars(pieceCharacter, replace);
+            for (int r = 0; r < cp.Height; ++r)
             {
-                for (int c = 0; c < currentPiece.Width; c++)
+                for (int c = 0; c < cp.Width; c++)
                 {
-                    int x = piecePosition.x + c, y = piecePosition.y + r;
+                    int x = pp.x + c, y = pp.y + r;
                     bool oob = x < 0 || y < 0 || x >= width || y >= height;
-                    if (!oob && currentPiece[r, c] != ' ')
+                    if (!oob && cp[r, c] != ' ')
                     {
-                        board[y][x] = currentPiece[r, c];
+                        board[y][x] = cp[r, c];
                     }
                 }
             }
-            currentPiece.changeChars(replace, pieceCharacter);
+            cp.changeChars(replace, pieceCharacter);
         }
 
-        public bool isPieceOOB()
+        public bool isPieceOOB(int p)
         {
-            return piecePosition.x < 0 || piecePosition.y < 0 || piecePosition.x +
-                currentPiece.Width > width || piecePosition.y + currentPiece.Height > height;
+            Coord pp = piecePosition;
+            Piece cp = currentPiece;
+            if (p == 2)
+            {
+                pp = piecePosition2;
+                cp = currentPiece2;
+            }
+            return pp.x < 0 || pp.y < 0 || pp.x +
+                cp.Width > width || pp.y + cp.Height > height;
         }
 
         public bool isPieceCollidingWithBoard(Coord pos)
@@ -79,20 +106,28 @@ namespace BlockPuzzle
         private char background = '.';
         private int height = 20;
         private int width = 10;
-        private char[][] board;
         private long fallCounter = 0;
         private bool gameOver = false;
 
-        char[][] holdArea;
-        Coord holdCoordinate = new Coord(12, 5);
+        private char[][] board;
+        private char[][] board2;
 
+        char[][] holdArea;
+        char[][] holdArea2;
+        Coord holdCoordinate = new Coord(12, 5);
+        Coord holdCoordinate2 = new Coord(25, 5);
         char[][] qArea;
+        char[][] qArea2;
 
         Coord initialQCoordinate = new Coord(20, 1);
+        Coord initialQCoordinate2 = new Coord(35, 1);
 
         Coord piecePosition = Coord.ZERO;
+        Coord piecePosition2 = Coord.ZERO;
         private Piece shadow;
+        private Piece shadow2;
         Coord shadowPos;
+        Coord shadowPos2;
 
         ConsoleKeyInfo key = new ConsoleKeyInfo();
 
@@ -117,10 +152,22 @@ namespace BlockPuzzle
             return System.DateTime.Now.Ticks / System.TimeSpan.TicksPerMillisecond;
         }
 
+        public void fallCounterUpdate()
+        {
+            if (fallCounter >= 1000)
+            {
+                piecePosition.y++;
+                if (players == 2)
+                {
+                    piecePosition2.y++;
+                }
+                fallCounter -= 1000;
+            }
+        }
+
         public void Run()
         {
             //int then = System.Environment.TickCount;
-            startGame();
 
             long then = UTCMS();
 
@@ -133,22 +180,27 @@ namespace BlockPuzzle
                 then = now;
                 fallCounter += passed;
 
-                if(fallCounter >= 1000)
-                {
-                    piecePosition.y++;
-                    fallCounter -= 1000;
-                }
+                fallCounterUpdate();
+                
                 int bottomOfPiece = piecePosition.y + currentPiece.Height;
                 if (bottomOfPiece > height || isPieceCollidingWithBoard(piecePosition))
                 {
-                    //if (isPieceCollidingWithBoard(piecePosition)) piecePosition.y--;
                     piecePosition.y--;
-                    imprintPiece(placedCharacter);
-                    RestartPiece();
+                    imprintPiece(placedCharacter, 1);
+                    RestartPiece(1);
                 }
 
-                // Console.SetCursorPosition(0, height + 1);
-                // Console.Write(fallCounter);
+                if (players ==2)
+                {
+                    int bottomOfPiece2 = piecePosition2.y + currentPiece2.Height;
+                    if (bottomOfPiece2 > height || isPieceCollidingWithBoard(piecePosition2))
+                    {
+                        piecePosition2.y--;
+                        imprintPiece(placedCharacter, 2);
+                        RestartPiece(2);
+                    }
+                }
+                
                 GetUserInput();
                 Update();
             }
