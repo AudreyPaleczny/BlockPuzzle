@@ -85,7 +85,7 @@ namespace BlockPuzzle
                     char ch = board[r][c];
                     if(ch == boardCharacter)
                     {
-                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.ForegroundColor = backgroundColor;
                     }
                     Console.Write(ch);
                     Console.ForegroundColor = ConsoleColor.Black;

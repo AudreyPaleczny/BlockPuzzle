@@ -9,7 +9,8 @@ namespace BlockPuzzle
         char placedCharacter = 'X';
         char shadowCharacter = '/';
 
-        ConsoleColor backgroundColor = ConsoleColor.White;
+        //ConsoleColor backgroundColor = ConsoleColor.White;
+        ConsoleColor backgroundColor = ConsoleColor.Gray;
         ConsoleColor shadowColor = ConsoleColor.DarkGray;
         ConsoleColor placedColor = ConsoleColor.Black;
 
