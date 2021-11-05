@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace BlockPuzzle
 {
@@ -51,6 +52,26 @@ namespace BlockPuzzle
             }
         }
 
+        Dictionary<ConsoleKey,Action> SinglePlayerControls()
+        {
+            Dictionary<ConsoleKey, Action> c = new Dictionary<ConsoleKey, Action>(){
+                [ConsoleKey.DownArrow] = () =>
+                {
+                    softDrop(1);
+                },
+                [ConsoleKey.LeftArrow] = () =>
+                {
+                    piecePosition.x--;
+                },
+                [ConsoleKey.RightArrow] = () =>
+                {
+                    piecePosition.x++;
+                }
+            };
+            return c;
+        }
+
+
         public void Update()
         {
             Coord oldPiecePos = new Coord(piecePosition.x, piecePosition.y);
@@ -58,16 +79,22 @@ namespace BlockPuzzle
             Piece oldPiece = currentPiece.clone();
             Piece oldPiece2 = currentPiece2 != null ? currentPiece2.clone() : null;
 
+            Dictionary<ConsoleKey, Action> Controls = SinglePlayerControls();
+            if(Controls.TryGetValue(key.Key, out Action thingToDo))
+            {
+                thingToDo();
+            }
+
             // pretty switch statement :)
             switch (key.Key)
             {
                 //case ConsoleKey.UpArrow:    piecePosition.y--;          break;
 
-                case ConsoleKey.DownArrow:  softDrop(1);                   break;
+                //case ConsoleKey.DownArrow:  softDrop(1);                   break;
 
-                case ConsoleKey.LeftArrow:  piecePosition.x--;            break;
+                //case ConsoleKey.LeftArrow:  piecePosition.x--;            break;
 
-                case ConsoleKey.RightArrow: piecePosition.x++;            break;
+                //case ConsoleKey.RightArrow: piecePosition.x++;            break;
 
                 case ConsoleKey.Backspace:   hardDrop(oldPiecePos, 1);        break;
 
