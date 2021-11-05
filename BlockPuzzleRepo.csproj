@@ -76,6 +76,7 @@
     <Compile Include="BlockPuzzle\Coord.cs" />
     <Compile Include="BlockPuzzle\Piece.cs" />
     <Compile Include="BlockPuzzle\Program.cs" />
+    <Compile Include="BlockPuzzle\Program_Controls.cs" />
     <Compile Include="BlockPuzzle\Program_Draw.cs" />
     <Compile Include="BlockPuzzle\Program_Init.cs" />
     <Compile Include="BlockPuzzle\Program_Pieces.cs" />

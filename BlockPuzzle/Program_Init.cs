@@ -55,6 +55,7 @@ namespace BlockPuzzle
             initQ();
             canhold = true;
             choosePiece(1);
+            Controls = SinglePlayerControls();
 
             if (players == 2)
             {
@@ -95,6 +96,7 @@ namespace BlockPuzzle
                 initQ2();
                 canhold2 = true;
                 choosePiece(2);
+                Controls = MultiPlayerControls();
             }
         }
     }

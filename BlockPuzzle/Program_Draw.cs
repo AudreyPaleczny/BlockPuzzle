@@ -138,7 +138,7 @@ namespace BlockPuzzle
                     initialQCoordinate2.y = 1 + i * 4;
                     printPieceOutside(initialQCoordinate2, queue2[i + 1]);
                 }
-                initialQCoordinate2 = new Coord(35, 1);
+                initialQCoordinate2 = new Coord(40, 1);
             }
         }
 

@@ -10,27 +10,31 @@ namespace BlockPuzzle
         {
             if (p == 1)
             {
-                score += dropCalculation(piecePosition).y - piecePosition.y;
-                piecePosition = new Coord(dropCalculation(piecePosition));
+                score += dropCalculation(piecePosition, 1).y - piecePosition.y;
+                piecePosition = new Coord(dropCalculation(piecePosition, 1));
                 imprintPiece(placedCharacter, 1);
                 RestartPiece(1);
             } else
             {
-                score += dropCalculation(piecePosition2).y - piecePosition2.y;
-                piecePosition2 = new Coord(dropCalculation(piecePosition2));
+                score += dropCalculation(piecePosition2, 2).y - piecePosition2.y;
+                piecePosition2 = new Coord(dropCalculation(piecePosition2, 2));
                 imprintPiece(placedCharacter, 2);
                 RestartPiece(2);
             }
         }
 
-        public Coord dropCalculation(Coord oldPos)
+        public Coord dropCalculation(Coord oldPos, int p)
         {
             Coord endPos = new Coord(oldPos);
-
+            Piece cp = currentPiece;
+            if (p == 2)
+            {
+                cp = currentPiece2;
+            }
             while (!isPieceCollidingWithBoard(endPos))
             {
                 ++endPos.y;
-                if (endPos.y + currentPiece.Height > height)
+                if (endPos.y + cp.Height > height)
                 {
                     break;
                 }
@@ -51,122 +55,6 @@ namespace BlockPuzzle
                 ++score;
             }
         }
-
-        Dictionary<ConsoleKey,Action> SinglePlayerControls()
-        {
-            Dictionary<ConsoleKey, Action> c = new Dictionary<ConsoleKey, Action>(){
-                [ConsoleKey.DownArrow] = () =>
-                {
-                    softDrop(1);
-                },
-                [ConsoleKey.LeftArrow] = () =>
-                {
-                    piecePosition.x--;
-                },
-                [ConsoleKey.RightArrow] = () =>
-                {
-                    piecePosition.x++;
-                },
-                [ConsoleKey.Spacebar] = () =>
-                {
-                    hardDrop(1);
-                },
-                [ConsoleKey.Z] = () =>
-                {
-                    currentPiece.RotateCCW();
-                },
-                [ConsoleKey.UpArrow] = () =>
-                {
-                    currentPiece.RotateCW();
-                },
-                [ConsoleKey.A] = () =>
-                {
-                    currentPiece.RotateCCW();
-                    currentPiece.RotateCCW();
-                },
-                [ConsoleKey.C] = () =>
-                {
-                    swapHold(1);
-                }
-            };
-            return c;
-        }
-
-        Dictionary<ConsoleKey, Action> MultiPlayerControls()
-        {
-            Dictionary<ConsoleKey, Action> c = new Dictionary<ConsoleKey, Action>()
-            {
-                [ConsoleKey.S] = () =>
-                {
-                    softDrop(1);
-                },
-                [ConsoleKey.A] = () =>
-                {
-                    piecePosition.x--;
-                },
-                [ConsoleKey.D] = () =>
-                {
-                    piecePosition.x++;
-                },
-                [ConsoleKey.Spacebar] = () =>
-                {
-                    hardDrop(1);
-                },
-                [ConsoleKey.Q] = () =>
-                {
-                    currentPiece.RotateCCW();
-                },
-                [ConsoleKey.E] = () =>
-                {
-                    currentPiece.RotateCW();
-                },
-                [ConsoleKey.F] = () =>
-                {
-                    currentPiece.RotateCCW();
-                    currentPiece.RotateCCW();
-                },
-                [ConsoleKey.C] = () =>
-                {
-                    swapHold(1);
-                }, // first player above, second player below
-                [ConsoleKey.DownArrow] = () =>
-                {
-                    softDrop(2);
-                },
-                [ConsoleKey.LeftArrow] = () =>
-                {
-                    piecePosition2.x--;
-                },
-                [ConsoleKey.RightArrow] = () =>
-                {
-                    piecePosition2.x++;
-                },
-                [ConsoleKey.OemPeriod] = () =>
-                {
-                    hardDrop(2);
-                },
-                [ConsoleKey.K] = () =>
-                {
-                    currentPiece2.RotateCCW();
-                },
-                [ConsoleKey.L] = () =>
-                {
-                    currentPiece2.RotateCW();
-                },
-                [ConsoleKey.O] = () =>
-                {
-                    currentPiece2.RotateCCW();
-                    currentPiece2.RotateCCW();
-                },
-                [ConsoleKey.OemComma] = () =>
-                {
-                    swapHold(2);
-                }
-            };
-            return c;
-        }
-
-
         public void Update()
         {
             Coord oldPiecePos = new Coord(piecePosition.x, piecePosition.y);
@@ -174,20 +62,9 @@ namespace BlockPuzzle
             Piece oldPiece = currentPiece.clone();
             Piece oldPiece2 = currentPiece2 != null ? currentPiece2.clone() : null;
 
-            if (players == 1)
+            if (Controls.TryGetValue(key.Key, out Action thingToDo))
             {
-                Dictionary<ConsoleKey, Action> Controls = SinglePlayerControls();
-                if (Controls.TryGetValue(key.Key, out Action thingToDo))
-                {
-                    thingToDo();
-                }
-            } else
-            {
-                Dictionary<ConsoleKey, Action> Controls = MultiPlayerControls();
-                if (Controls.TryGetValue(key.Key, out Action thingToDo))
-                {
-                    thingToDo();
-                }
+                thingToDo();
             }
             
 
@@ -278,11 +155,11 @@ namespace BlockPuzzle
             clearLines();
 
             shadow = currentPiece.clone().changeChars(pieceCharacter, shadowCharacter);
-            shadowPos = new Coord(dropCalculation(piecePosition));
+            shadowPos = new Coord(dropCalculation(piecePosition,1));
             if (currentPiece2 != null)
             {
                 shadow2 = currentPiece2.clone().changeChars(pieceCharacter, shadowCharacter);
-                shadowPos2 = new Coord(dropCalculation(piecePosition2));
+                shadowPos2 = new Coord(dropCalculation(piecePosition2,2));
             }
 
         }
