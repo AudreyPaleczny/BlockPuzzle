@@ -61,7 +61,7 @@ namespace BlockPuzzle
             // pretty switch statement :)
             switch (key.Key)
             {
-                case ConsoleKey.UpArrow:    piecePosition.y--;            break;
+                //case ConsoleKey.UpArrow:    piecePosition.y--;          break;
 
                 case ConsoleKey.DownArrow:  softDrop(1);                   break;
 
@@ -72,27 +72,15 @@ namespace BlockPuzzle
                 case ConsoleKey.Backspace:   hardDrop(oldPiecePos, 1);        break;
 
 
-                case ConsoleKey.W:          piecePosition2.y--;            break;
+                //case ConsoleKey.H:        currentPiece.FlipHorizontal();break;
 
-                case ConsoleKey.S:          softDrop(2);                   break;
+                //case ConsoleKey.V:        currentPiece.FlipVertical();  break;
 
-                case ConsoleKey.A:          piecePosition2.x--;            break;
+                //case ConsoleKey.B:        currentPiece.FlipDiagonal();  break;
 
-                case ConsoleKey.D:          piecePosition2.x++;            break;
+                case ConsoleKey.Z:          currentPiece.RotateCCW();     break;
 
-                case ConsoleKey.Spacebar:   hardDrop(oldPiecePos2, 2);          break;
-
-                /*
-                case ConsoleKey.H:          currentPiece.FlipHorizontal();break;
-
-                case ConsoleKey.V:          currentPiece.FlipVertical();  break;
-                
-                case ConsoleKey.B:          currentPiece.FlipDiagonal();  break;
-                */
-
-                case ConsoleKey.G:          currentPiece2.RotateCCW();     break;
-
-                case ConsoleKey.H:          currentPiece2.RotateCW();      break;
+                case ConsoleKey.X:          currentPiece.RotateCW();      break;
                     
                 case ConsoleKey.C:          swapHold(2);                   break;
 
@@ -118,7 +106,7 @@ namespace BlockPuzzle
                 }
             }
 
-            if (players == 2 && (isPieceOOB(2) || isPieceCollidingWithBoard(piecePosition2)))
+            if (currentPiece2 != null && (isPieceOOB(2) || isPieceCollidingWithBoard(piecePosition2)))
             {
                 // move back to old position
                 piecePosition2.x = oldPiecePos2.x;
@@ -156,7 +144,7 @@ namespace BlockPuzzle
 
             shadow = currentPiece.clone().changeChars(pieceCharacter, shadowCharacter);
             shadowPos = new Coord(dropCalculation(piecePosition));
-            if (players == 2)
+            if (currentPiece2 != null)
             {
                 shadow2 = currentPiece2.clone().changeChars(pieceCharacter, shadowCharacter);
                 shadowPos2 = new Coord(dropCalculation(piecePosition2));
