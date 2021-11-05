@@ -135,9 +135,10 @@ namespace BlockPuzzle
                         holdPiece = queue[0];
                         currentPiece = temp;
                     }
+
+                    canhold = false;
+                    piecePosition = new Coord(4, 0);
                 }
-                canhold = false;
-                piecePosition = new Coord(4, 0);
             } else
             {
                 if (canhold2)
@@ -153,9 +154,10 @@ namespace BlockPuzzle
                         holdPiece2 = queue2[0];
                         currentPiece2 = temp;
                     }
+
+                    canhold2 = false;
+                    piecePosition = new Coord(4, 0);
                 }
-                canhold2 = false;
-                piecePosition = new Coord(4, 0);
             }
             
         }
