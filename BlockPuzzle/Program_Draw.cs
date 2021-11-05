@@ -177,8 +177,11 @@ namespace BlockPuzzle
             
             Console.ForegroundColor = queue[0].color;
             PrintPiece(piecePosition, currentPiece);
-            Console.ForegroundColor = queue2[0].color;
-            PrintPiece(piecePosition2, currentPiece2);
+            if (players == 2)
+            {
+                Console.ForegroundColor = queue2[0].color;
+                PrintPiece(piecePosition2, currentPiece2);
+            }
 
 
             Console.BackgroundColor = backgroundColor;

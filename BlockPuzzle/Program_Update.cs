@@ -56,7 +56,7 @@ namespace BlockPuzzle
             Coord oldPiecePos = new Coord(piecePosition.x, piecePosition.y);
             Coord oldPiecePos2 = new Coord(piecePosition2.x, piecePosition2.y);
             Piece oldPiece = currentPiece.clone();
-            Piece oldPiece2 = currentPiece2.clone();
+            Piece oldPiece2 = currentPiece2 != null ? currentPiece2.clone() : null;
 
             // pretty switch statement :)
             switch (key.Key)
@@ -118,7 +118,7 @@ namespace BlockPuzzle
                 }
             }
 
-            if (isPieceOOB(2) || isPieceCollidingWithBoard(piecePosition2))
+            if (players == 2 && (isPieceOOB(2) || isPieceCollidingWithBoard(piecePosition2)))
             {
                 // move back to old position
                 piecePosition2.x = oldPiecePos2.x;
@@ -156,8 +156,11 @@ namespace BlockPuzzle
 
             shadow = currentPiece.clone().changeChars(pieceCharacter, shadowCharacter);
             shadowPos = new Coord(dropCalculation(piecePosition));
-            shadow2 = currentPiece2.clone().changeChars(pieceCharacter, shadowCharacter);
-            shadowPos2 = new Coord(dropCalculation(piecePosition2));
+            if (players == 2)
+            {
+                shadow2 = currentPiece2.clone().changeChars(pieceCharacter, shadowCharacter);
+                shadowPos2 = new Coord(dropCalculation(piecePosition2));
+            }
 
         }
     }
