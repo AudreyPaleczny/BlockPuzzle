@@ -113,6 +113,12 @@ namespace BlockPuzzle
                     {
                         Console.ForegroundColor = backgroundColor;
                     }
+                    else
+                    {
+                        Console.ForegroundColor = (ConsoleColor)ch;
+                    }
+                    ch = placedCharacter;
+                    //ch = (char)('A' + (int)ch);
                     Console.Write(ch);
                     Console.ForegroundColor = ConsoleColor.Black;
                 }

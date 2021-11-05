@@ -12,13 +12,13 @@ namespace BlockPuzzle
             {
                 score += dropCalculation(piecePosition, 1).y - piecePosition.y;
                 piecePosition = new Coord(dropCalculation(piecePosition, 1));
-                imprintPiece(placedCharacter, 1);
+                imprintPiece((char)currentPiece.color, 1);
                 RestartPiece(1);
             } else
             {
                 score += dropCalculation(piecePosition2, 2).y - piecePosition2.y;
                 piecePosition2 = new Coord(dropCalculation(piecePosition2, 2));
-                imprintPiece(placedCharacter, 2);
+                imprintPiece((char)currentPiece2.color, 2);
                 RestartPiece(2);
             }
         }

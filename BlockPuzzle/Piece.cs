@@ -14,7 +14,7 @@ namespace BlockPuzzle
             size = s;
             map = new char[Height, Width];
             //data = d;
-
+            this.color = color;
             if (d == null) return;
 
             for (int r = 0; r < Height; ++r)
@@ -25,7 +25,7 @@ namespace BlockPuzzle
                 }
             }
 
-            this.color = color;
+            
         }
 
         public Piece clone()

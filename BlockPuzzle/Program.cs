@@ -186,7 +186,7 @@ namespace BlockPuzzle
                 if (bottomOfPiece > height || isPieceCollidingWithBoard(piecePosition))
                 {
                     piecePosition.y--;
-                    imprintPiece(placedCharacter, 1);
+                    imprintPiece((char)currentPiece.color, 1); 
                     RestartPiece(1);
                 }
 
@@ -196,7 +196,7 @@ namespace BlockPuzzle
                     if (bottomOfPiece2 > height || isPieceCollidingWithBoard(piecePosition2))
                     {
                         piecePosition2.y--;
-                        imprintPiece(placedCharacter, 2);
+                        imprintPiece((char)currentPiece2.color, 2);
                         RestartPiece(2);
                     }
                 }
