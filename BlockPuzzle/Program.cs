@@ -17,7 +17,7 @@ namespace BlockPuzzle
                 piecePosition.y = 0;
                 piecePosition.x = 2;
                 choosePiece(1);
-                if (isPieceCollidingWithBoard(piecePosition))
+                if (isPieceCollidingWithBoard(piecePosition,1))
                 {
                     gameOver = true;
                 }
@@ -27,7 +27,7 @@ namespace BlockPuzzle
                 piecePosition2.y = 0;
                 piecePosition2.x = 6;
                 choosePiece(2);
-                if (isPieceCollidingWithBoard(piecePosition2))
+                if (isPieceCollidingWithBoard(piecePosition2,2))
                 {
                     gameOver = true;
                 }
@@ -87,13 +87,17 @@ namespace BlockPuzzle
                 cp.Width > width || pp.y + cp.Height > height;
         }
 
-        public bool isPieceCollidingWithBoard(Coord pos)
+        public bool isPieceCollidingWithBoard(Coord pos, int p)
         {
-            for (int r = 0; r < currentPiece.Height; r++)
+            Piece cp = currentPiece;
+            if (p == 2) {
+                cp = currentPiece2;
+            }
+            for (int r = 0; r < cp.Height; r++)
             {
-                for (int c = 0; c < currentPiece.Width; c++)
+                for (int c = 0; c < cp.Width; c++)
                 {
-                    if (board[pos.y + r][pos.x + c] != boardCharacter && currentPiece.map[0 + r, 0 + c] == pieceCharacter)
+                    if (board[pos.y + r][pos.x + c] != boardCharacter && cp.map[0 + r, 0 + c] == pieceCharacter)
                     {
                         return true;
                     }
@@ -103,7 +107,7 @@ namespace BlockPuzzle
         }
     
 
-        private char background = '.';
+        private char background = ':';
         private int height = 20;
         private int width = 10;
         private long fallCounter = 0;
@@ -170,6 +174,8 @@ namespace BlockPuzzle
             //int then = System.Environment.TickCount;
 
             long then = UTCMS();
+            int bottomOfPiece;
+            int bottomOfPiece2;
 
             while (key.Key != ConsoleKey.Escape && gameOver != true)
             {
@@ -182,8 +188,8 @@ namespace BlockPuzzle
 
                 fallCounterUpdate();
                 
-                int bottomOfPiece = piecePosition.y + currentPiece.Height;
-                if (bottomOfPiece > height || isPieceCollidingWithBoard(piecePosition))
+                bottomOfPiece = piecePosition.y + currentPiece.Height;
+                if (bottomOfPiece > height || isPieceCollidingWithBoard(piecePosition,1))
                 {
                     piecePosition.y--;
                     imprintPiece((char)currentPiece.color, 1); 
@@ -192,8 +198,8 @@ namespace BlockPuzzle
 
                 if (players ==2)
                 {
-                    int bottomOfPiece2 = piecePosition2.y + currentPiece2.Height;
-                    if (bottomOfPiece2 > height || isPieceCollidingWithBoard(piecePosition2))
+                    bottomOfPiece2 = piecePosition2.y + currentPiece2.Height;
+                    if (bottomOfPiece2 > height || isPieceCollidingWithBoard(piecePosition2,2))
                     {
                         piecePosition2.y--;
                         imprintPiece((char)currentPiece2.color, 2);

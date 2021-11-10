@@ -31,7 +31,7 @@ namespace BlockPuzzle
             {
                 cp = currentPiece2;
             }
-            while (!isPieceCollidingWithBoard(endPos))
+            while (!isPieceCollidingWithBoard(endPos,p))
             {
                 ++endPos.y;
                 if (endPos.y + cp.Height > height)
@@ -55,56 +55,26 @@ namespace BlockPuzzle
                 ++score;
             }
         }
+
+        Coord oldPiecePos;
+        Coord oldPiecePos2;
+        Piece oldPiece;
+        Piece oldPiece2;
+
         public void Update()
         {
-            Coord oldPiecePos = new Coord(piecePosition.x, piecePosition.y);
-            Coord oldPiecePos2 = new Coord(piecePosition2.x, piecePosition2.y);
-            Piece oldPiece = currentPiece.clone();
-            Piece oldPiece2 = currentPiece2 != null ? currentPiece2.clone() : null;
+            oldPiecePos = new Coord(piecePosition.x, piecePosition.y);
+            oldPiecePos2 = new Coord(piecePosition2.x, piecePosition2.y);
+            oldPiece = currentPiece.clone();
+            oldPiece2 = currentPiece2 != null ? currentPiece2.clone() : null;
 
+            // this is the controls dictionary 
             if (Controls.TryGetValue(key.Key, out Action thingToDo))
             {
                 thingToDo();
             }
-            
 
-            // pretty switch statement :)
-            /* 
-             * switch (key.Key)
-            {
-                //case ConsoleKey.UpArrow:    piecePosition.y--;          break;
-
-                //case ConsoleKey.DownArrow:  softDrop(1);                   break;
-
-                //case ConsoleKey.LeftArrow:  piecePosition.x--;            break;
-
-                //case ConsoleKey.RightArrow: piecePosition.x++;            break;
-
-                // case ConsoleKey.Backspace:   hardDrop(oldPiecePos, 1);        break;
-
-
-                //case ConsoleKey.H:        currentPiece.FlipHorizontal();break;
-
-                //case ConsoleKey.V:        currentPiece.FlipVertical();  break;
-
-                //case ConsoleKey.B:        currentPiece.FlipDiagonal();  break;
-
-                // case ConsoleKey.Z:          currentPiece.RotateCCW();     break;
-
-                // case ConsoleKey.X:          currentPiece.RotateCW();      break;
-                    
-                case ConsoleKey.C:          swapHold(2);                   break;
-
-
-                case ConsoleKey.I:          currentPiece.RotateCCW();      break;
-
-                case ConsoleKey.O:          currentPiece.RotateCW();       break;
-
-                // case ConsoleKey.OemComma:   swapHold(1); break;
-            }
-            */
-
-            if (isPieceOOB(1) || isPieceCollidingWithBoard(piecePosition))
+            if (isPieceOOB(1) || isPieceCollidingWithBoard(piecePosition,1))
             {
                 // move back to old position
                 piecePosition.x = oldPiecePos.x;
@@ -118,7 +88,7 @@ namespace BlockPuzzle
                 }
             }
 
-            if (currentPiece2 != null && (isPieceOOB(2) || isPieceCollidingWithBoard(piecePosition2)))
+            if (currentPiece2 != null && (isPieceOOB(2) || isPieceCollidingWithBoard(piecePosition2,2)))
             {
                 // move back to old position
                 piecePosition2.x = oldPiecePos2.x;
@@ -127,30 +97,10 @@ namespace BlockPuzzle
                 currentPiece2 = oldPiece2;
                 if (key.Key == ConsoleKey.S)
                 {
-                    --score;
+                --score;
 
                 }
             }
-
-            /*
-            AABB p = new AABB
-            {
-                position = piecePosition,
-                size = currentPiece.size
-            };
-
-            Console.SetCursorPosition(0, height);
-
-            //if (p.overlap(test))
-            if (!isPieceOOB() && isPieceCollidingWithBoard(piecePosition))
-            {
-                Console.Write("Overlap");
-            }
-            else
-            {
-                Console.Write("Not Overlap");
-            }
-            */
 
             clearLines();
 
