@@ -10,7 +10,7 @@ namespace BlockPuzzle
         {
             if (p == 1)
             {
-                score += dropCalculation(piecePosition, 1).y - piecePosition.y;
+                score += (dropCalculation(piecePosition, 1).y - piecePosition.y)*2;
                 piecePosition = new Coord(dropCalculation(piecePosition, 1));
                 imprintPiece((char)currentPiece.color, 1);
                 RestartPiece(1);
@@ -73,6 +73,44 @@ namespace BlockPuzzle
             {
                 thingToDo();
             }
+            
+
+            // pretty switch statement :)
+            // you will live on in our hearts and memories :( -evan
+            /* 
+             * switch (key.Key)
+            {
+                //case ConsoleKey.UpArrow:    piecePosition.y--;          break;
+
+                //case ConsoleKey.DownArrow:  softDrop(1);                   break;
+
+                //case ConsoleKey.LeftArrow:  piecePosition.x--;            break;
+
+                //case ConsoleKey.RightArrow: piecePosition.x++;            break;
+
+                // case ConsoleKey.Backspace:   hardDrop(oldPiecePos, 1);        break;
+
+
+                //case ConsoleKey.H:        currentPiece.FlipHorizontal();break;
+
+                //case ConsoleKey.V:        currentPiece.FlipVertical();  break;
+
+                //case ConsoleKey.B:        currentPiece.FlipDiagonal();  break;
+
+                // case ConsoleKey.Z:          currentPiece.RotateCCW();     break;
+
+                // case ConsoleKey.X:          currentPiece.RotateCW();      break;
+                    
+                case ConsoleKey.C:          swapHold(2);                   break;
+
+
+                case ConsoleKey.I:          currentPiece.RotateCCW();      break;
+
+                case ConsoleKey.O:          currentPiece.RotateCW();       break;
+
+                // case ConsoleKey.OemComma:   swapHold(1); break;
+            }
+            */
 
             if (isPieceOOB(1) || isPieceCollidingWithBoard(piecePosition,1))
             {
@@ -102,7 +140,27 @@ namespace BlockPuzzle
                 }
             }
 
-            clearLines();
+            /*
+            AABB p = new AABB
+            {
+                position = piecePosition,
+                size = currentPiece.size
+            };
+
+            Console.SetCursorPosition(0, height);
+
+            //if (p.overlap(test))
+            if (!isPieceOOB() && isPieceCollidingWithBoard(piecePosition))
+            {
+                Console.Write("Overlap");
+            }
+            else
+            {
+                Console.Write("Not Overlap");
+            }
+            */
+
+            ClearLines();
 
             shadow = currentPiece.clone().changeChars(pieceCharacter, shadowCharacter);
             shadowPos = new Coord(dropCalculation(piecePosition,1));

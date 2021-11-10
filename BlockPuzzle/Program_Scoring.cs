@@ -4,7 +4,19 @@ namespace BlockPuzzle
     public partial class MainClass
     {
         int score = 0;
-        public void clearLines()
+        int linesCleared = 0;
+        int maxLevel = 10;
+        int level = 1;
+
+        public void ChangeLevel()
+        {
+            if(level <= maxLevel)
+            {
+                level = (linesCleared / 10) + 1; // magic number here: 10 lines to go to next level, i assumed we wouldn't change that
+            }
+        }
+
+        public void ClearLines()
         {
             int count = 0, clearRow, rowCount = 0;
             for (int row = 0; row < height; ++row)
@@ -56,6 +68,7 @@ namespace BlockPuzzle
             {
                 score += 1600;
             }
+            linesCleared += rowCount;
         }
     }
 }

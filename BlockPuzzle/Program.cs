@@ -158,15 +158,21 @@ namespace BlockPuzzle
 
         public void fallCounterUpdate()
         {
-            if (fallCounter >= 1000)
+            double iterationDelay = ((11 - level) * 0.1)*1000;  // [seconds] used to be 0.05
+
+            if (fallCounter >= iterationDelay)
             {
                 piecePosition.y++;
                 if (players == 2)
                 {
                     piecePosition2.y++;
                 }
-                fallCounter -= 1000;
+                fallCounter -= (long)iterationDelay;
             }
+            Console.SetCursorPosition(0, height + 2);
+            Console.Write("level: " + level);
+            Console.SetCursorPosition(0, height + 3);
+            Console.Write("iteration delay: " + iterationDelay);
         }
 
         public void Run()
@@ -185,7 +191,9 @@ namespace BlockPuzzle
                 long passed = now - then;
                 then = now;
                 fallCounter += passed;
+                Console.SetCursorPosition(0, height + 3);
 
+                ChangeLevel();
                 fallCounterUpdate();
                 
                 bottomOfPiece = piecePosition.y + currentPiece.Height;
