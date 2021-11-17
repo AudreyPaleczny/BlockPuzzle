@@ -58,7 +58,12 @@ namespace BlockPuzzle
             }
             */
 
-            ClearLines();
+            if(p1.justPlacedPiece || p2.justPlacedPiece)
+            {
+                ClearLines();
+                p1.justPlacedPiece = false;
+                p2.justPlacedPiece = false;
+            }
             p1.updateShadow(this);
             p1.placePieceDownWhatever(this);
             if (players == 2) {

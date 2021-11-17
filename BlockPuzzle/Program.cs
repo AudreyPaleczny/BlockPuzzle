@@ -62,6 +62,7 @@ namespace BlockPuzzle
             }
             Console.SetCursorPosition(0, height + 2);
             Console.Write("level: " + level);
+
         }
 
         public void Run()

@@ -20,6 +20,7 @@ namespace BlockPuzzle {
         public int bottomOfPiece;
         public int numberInQ = 5;
         public Random r;
+        public bool justPlacedPiece = false;
 
         public Player(Coord hc, Coord ic, Coord rp) {
             holdCoordinate = hc;
@@ -240,6 +241,7 @@ namespace BlockPuzzle {
                 }
             }
             currentPiece.changeChars(replace, Game.pieceCharacter);
+            justPlacedPiece = true;
         }
         
     }
