@@ -85,12 +85,16 @@ namespace BlockPuzzle
                 ChangeLevel();
                 fallCounterUpdate();
                 
-                // Todo: make p2 work 
+                /*
                 p1.bottomOfPiece = p1.piecePosition.y + p1.currentPiece.Height;
                 if (p1.bottomOfPiece > height || p1.isPieceCollidingWithBoardAtSpecificPos(p1.piecePosition, this))
                 {
                     p1.fallCounterUpdate(this);
-                    if (players == 2)
+                }
+                if (players == 2)
+                {
+                    p2.bottomOfPiece = p2.piecePosition.y + p2.currentPiece.Height;
+                    if (p2.bottomOfPiece > height || p2.isPieceCollidingWithBoardAtSpecificPos(p2.piecePosition, this))
                     {
                         p2.fallCounterUpdate(this);
                     }
@@ -99,6 +103,7 @@ namespace BlockPuzzle
                 if (players == 2) {
                     p2.idkhowthisisdifferentbutitsoksothisissoftdropplacedownthinginprogramdotcs(this);
                 }
+                */
 
                 GetUserInput();
                 Update();
