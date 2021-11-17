@@ -7,6 +7,8 @@ namespace BlockPuzzle
         int linesCleared = 0;
         int maxLevel = 10;
         int level = 1;
+        int comboCount = 0;
+        int previousLinesCleared = 0;
 
         public void ChangeLevel()
         {
@@ -18,6 +20,7 @@ namespace BlockPuzzle
 
         public void ClearLines()
         {
+
             int count = 0, clearRow, rowCount = 0;
             for (int row = 0; row < height; ++row)
             {
@@ -48,27 +51,40 @@ namespace BlockPuzzle
                     }
                     
                     rowCount++;
+
                 }
+
                 count = 0;
 
             }
-            if (rowCount == 1)
+            if(rowCount > 0)
             {
-                score += 100;
+                if(previousLinesCleared > 0 && previousLinesCleared < 4) // combo
+                {
+                    comboCount++;
+                    score += rowCount * rowCount * 100 * level;
+                    score += 50 * comboCount * level;
+                }
+                else if (rowCount == 4 && previousLinesCleared == 4) // double tetris - special case because more points than regular combo
+                {
+                    comboCount++;
+                    score += rowCount * rowCount * 100 * level * 3/2;
+                }
+                else // not a combo
+                {
+                    score += rowCount * rowCount * 100*level;
+                    previousLinesCleared = rowCount;
+                    comboCount++;
+                }
             }
-            else if (rowCount == 2)
+            else // no lines cleared
             {
-                score += 400;
+                previousLinesCleared = 0;
+                comboCount = 0;
             }
-            else if (rowCount == 3)
-            {
-                score += 900;
-            }
-            else if (rowCount == 4)
-            {
-                score += 1600;
-            }
+
             linesCleared += rowCount;
+
         }
     }
 }

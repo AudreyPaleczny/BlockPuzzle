@@ -62,7 +62,6 @@ namespace BlockPuzzle
                         Console.ForegroundColor = (ConsoleColor)ch;
                     }
                     ch = placedCharacter;
-                    //ch = (char)('A' + (int)ch);
                     Console.Write(ch);
                     Console.ForegroundColor = ConsoleColor.Black;
                 }

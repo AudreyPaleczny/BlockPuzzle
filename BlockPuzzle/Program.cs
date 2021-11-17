@@ -62,8 +62,6 @@ namespace BlockPuzzle
             }
             Console.SetCursorPosition(0, height + 2);
             Console.Write("level: " + level);
-            Console.SetCursorPosition(0, height + 3);
-            Console.Write("iteration delay: " + iterationDelay);
         }
 
         public void Run()
