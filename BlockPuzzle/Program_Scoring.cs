@@ -3,7 +3,7 @@ namespace BlockPuzzle
 {
     public partial class MainClass
     {
-        int score = 0;
+        public int score = 0;
         int linesCleared = 0;
         int maxLevel = 10;
         int level = 1;

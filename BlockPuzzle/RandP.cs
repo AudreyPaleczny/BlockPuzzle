@@ -3,13 +3,14 @@ namespace BlockPuzzle
 {
     public class RandP
     {
-        public Random rand = new Random();
+        public Random rand = null; //new Random()
 
         public int[] nums;
         public int numsLeft;
 
-        public RandP(int n)
+        public RandP(int n, Random r)
         {
+            rand = r;
             initNums(n);
         }
 

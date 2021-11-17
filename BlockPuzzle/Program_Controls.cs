@@ -11,36 +11,36 @@ namespace BlockPuzzle
             {
                 [ConsoleKey.DownArrow] = () =>
                 {
-                    softDrop(1);
+                    p1.softDrop(this);
                 },
                 [ConsoleKey.LeftArrow] = () =>
                 {
-                    piecePosition.x--;
+                    p1.piecePosition.x--;
                 },
                 [ConsoleKey.RightArrow] = () =>
                 {
-                    piecePosition.x++;
+                    p1.piecePosition.x++;
                 },
                 [ConsoleKey.Spacebar] = () =>
                 {
-                    hardDrop(1);
+                    p1.hardDrop(this);
                 },
                 [ConsoleKey.Z] = () =>
                 {
-                    currentPiece.RotateCCW();
+                    p1.currentPiece.RotateCCW();
                 },
                 [ConsoleKey.UpArrow] = () =>
                 {
-                    currentPiece.RotateCW();
+                    p1.currentPiece.RotateCW();
                 },
                 [ConsoleKey.A] = () =>
                 {
-                    currentPiece.RotateCCW();
-                    currentPiece.RotateCCW();
+                    p1.currentPiece.RotateCCW();
+                    p1.currentPiece.RotateCCW();
                 },
                 [ConsoleKey.C] = () =>
                 {
-                    swapHold(1);
+                    p1.swapHold(this);
                 }
             };
             return c;
@@ -52,69 +52,69 @@ namespace BlockPuzzle
             {
                 [ConsoleKey.S] = () =>
                 {
-                    softDrop(1);
+                    p1.softDrop(this);
                 },
                 [ConsoleKey.A] = () =>
                 {
-                    piecePosition.x--;
+                    p1.piecePosition.x--;
                 },
                 [ConsoleKey.D] = () =>
                 {
-                    piecePosition.x++;
+                    p1.piecePosition.x++;
                 },
                 [ConsoleKey.Spacebar] = () =>
                 {
-                    hardDrop(1);
+                    p1.hardDrop(this);
                 },
                 [ConsoleKey.Q] = () =>
                 {
-                    currentPiece.RotateCCW();
+                    p1.currentPiece.RotateCCW();
                 },
                 [ConsoleKey.E] = () =>
                 {
-                    currentPiece.RotateCW();
+                    p1.currentPiece.RotateCW();
                 },
                 [ConsoleKey.F] = () =>
                 {
-                    currentPiece.RotateCCW();
-                    currentPiece.RotateCCW();
+                    p1.currentPiece.RotateCCW();
+                    p1.currentPiece.RotateCCW();
                 },
                 [ConsoleKey.C] = () =>
                 {
-                    swapHold(1);
+                    p1.swapHold(this);
                 }, // first player above, second player below
                 [ConsoleKey.DownArrow] = () =>
                 {
-                    softDrop(2);
+                    p2.softDrop(this);
                 },
                 [ConsoleKey.LeftArrow] = () =>
                 {
-                    piecePosition2.x--;
+                    p2.piecePosition.x--;
                 },
                 [ConsoleKey.RightArrow] = () =>
                 {
-                    piecePosition2.x++;
+                    p2.piecePosition.x++;
                 },
                 [ConsoleKey.OemPeriod] = () =>
                 {
-                    hardDrop(2);
+                    p2.hardDrop(this);
                 },
                 [ConsoleKey.K] = () =>
                 {
-                    currentPiece2.RotateCCW();
+                    p2.currentPiece.RotateCCW();
                 },
                 [ConsoleKey.L] = () =>
                 {
-                    currentPiece2.RotateCW();
+                    p2.currentPiece.RotateCW();
                 },
                 [ConsoleKey.O] = () =>
                 {
-                    currentPiece2.RotateCCW();
-                    currentPiece2.RotateCCW();
+                    p2.currentPiece.RotateCCW();
+                    p2.currentPiece.RotateCCW();
                 },
                 [ConsoleKey.OemComma] = () =>
                 {
-                    swapHold(2);
+                    p2.swapHold(this);
                 }
             };
             return c;

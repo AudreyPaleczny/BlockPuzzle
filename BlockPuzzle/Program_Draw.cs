@@ -26,8 +26,9 @@ namespace BlockPuzzle
 
         public void printPieceOutside(Coord p, Piece str)
         {
-            //int i = 0;
-
+            if (str == null) {
+                return;
+            }
             for (int r = 0; r < str.Height; r++)
             {
                 for (int c = 0; c < str.Width; c++)
@@ -40,63 +41,6 @@ namespace BlockPuzzle
                         Console.Write(str[r, c]);
                     }
                     // i++;
-                }
-            }
-        }
-
-        public void printHoldArea(int p)
-        {
-            if (p == 1)
-            {
-                for (int row = 0; row < 5; row++)
-                {
-                    for (int col = 0; col < 5; col++)
-                    {
-                        Console.Write(holdArea[row][col]);
-                    }
-                    Console.SetCursorPosition(12, row + 4);
-                }
-            } else
-            {
-                for (int row = 0; row < 5; row++)
-                {
-                    for (int col = 0; col < 5; col++)
-                    {
-                        Console.Write(holdArea2[row][col]);
-                    }
-                    Console.SetCursorPosition(32, row + 4);
-                }
-            }
-            
-
-            if (!(holdPiece == null))
-            {
-                // revert orientation -----------------------------------------------------------------------------------------------------------------------------------------------------
-                printPieceOutside(holdCoordinate, holdPiece);
-            }
-        }
-
-        public void printQArea(int p)
-        {
-            if (p == 1)
-            {
-                for (int row = 0; row < 21; row++)
-                {
-                    Console.SetCursorPosition(20, row);
-                    for (int col = 0; col < 5; col++)
-                    {
-                        Console.Write(qArea[row][col]);
-                    }
-                }
-            } else
-            {
-                for (int row = 0; row < 21; row++)
-                {
-                    Console.SetCursorPosition(40, row);
-                    for (int col = 0; col < 5; col++)
-                    {
-                        Console.Write(qArea2[row][col]);
-                    }
                 }
             }
         }
@@ -127,27 +71,7 @@ namespace BlockPuzzle
         }
 
         // stop it from rotating or smth
-        public void printQPieces(int p)
-        {
-            if (p == 1)
-            {
-                for (int i = 0; i < numberInQ; i++)
-                {
-                    initialQCoordinate.y = 1 + i * 4;
-                    printPieceOutside(initialQCoordinate, queue[i + 1]);
-                }
-                initialQCoordinate = new Coord(20, 1);
-            } else
-            {
-                for (int i = 0; i < numberInQ; i++)
-                {
-                    initialQCoordinate2.y = 1 + i * 4;
-                    printPieceOutside(initialQCoordinate2, queue2[i + 1]);
-                }
-                initialQCoordinate2 = new Coord(40, 1);
-            }
-        }
-
+       
         public void Draw()
         {
             //before drawing something specific, change color
@@ -155,38 +79,35 @@ namespace BlockPuzzle
             Console.SetCursorPosition(0, 0);
 
             printBoardArea();
-            printHoldArea(1);
-            printQArea(1);
-            printQPieces(1);
+            p1.printHoldArea(this);
+            p1.printQArea(this);
+            p1.printQPieces(this);
 
-            if (shadow != null)
+            if (p1.shadow != null)
             {
                 Console.ForegroundColor = shadowColor;
-                PrintPiece(shadowPos, shadow);
+                PrintPiece(p1.shadowPos, p1.shadow);
             }
 
             if (players ==2)
             {
-                printHoldArea(2);
-                printQArea(2);
-                printQPieces(2);
+                p2.printHoldArea(this);
+                p2.printQArea(this);
+                p2.printQPieces(this);
 
-                if (shadow2 != null)
+                if (p2.shadow != null)
                 {
                     Console.ForegroundColor = shadowColor;
-                    PrintPiece(shadowPos2, shadow2);
+                    PrintPiece(p2.shadowPos, p2.shadow);
                 }
             }
-
-
-            // for testing nina's queue
             
-            Console.ForegroundColor = queue[0].color;
-            PrintPiece(piecePosition, currentPiece);
-            if(queue2.Count > 0)
+            Console.ForegroundColor = p1.queue[0].color;
+            PrintPiece(p1.piecePosition, p1.currentPiece);
+            if(p2.queue.Count > 0)
             {
-                Console.ForegroundColor = queue2[0].color;
-                PrintPiece(piecePosition2, currentPiece2);
+                Console.ForegroundColor = p2.queue[0].color;
+                PrintPiece(p2.piecePosition, p2.currentPiece);
             }
             
             Console.BackgroundColor = backgroundColor;

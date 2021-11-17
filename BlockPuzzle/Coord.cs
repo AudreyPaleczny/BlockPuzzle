@@ -1,7 +1,7 @@
 ﻿using System;
 namespace BlockPuzzle
 {
-    public class Coord
+    public struct Coord
     {
         public int x, y;
         public static int numOfDimensions = 2;
