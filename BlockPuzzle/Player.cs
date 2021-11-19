@@ -8,6 +8,7 @@ namespace BlockPuzzle {
         public Coord initialQCoordinate;
         public Coord restartPos;
         public Coord piecePosition = Coord.ZERO;
+        public Coord initPos;
         public Piece holdPiece;
         public Piece shadow;
         public Coord shadowPos;
@@ -22,10 +23,12 @@ namespace BlockPuzzle {
         public Random r;
         public bool justPlacedPiece = false;
 
-        public Player(Coord hc, Coord ic, Coord rp) {
+        public Player(Coord hc, Coord ic, Coord rp, Coord ip) {
             holdCoordinate = hc;
             initialQCoordinate = ic;
             restartPos = rp;
+            initPos = ip;
+            piecePosition = initPos;
         }
 
         public void printHoldArea(MainClass Game)

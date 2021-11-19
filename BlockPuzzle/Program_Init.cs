@@ -8,6 +8,7 @@ namespace BlockPuzzle
         public char pieceCharacter = '#';
         public char placedCharacter = 'X';
         public char shadowCharacter = '/';
+        public Random R = new Random();
 
         ConsoleColor backgroundColor = ConsoleColor.Gray;
         ConsoleColor shadowColor = ConsoleColor.DarkGray;
@@ -30,13 +31,13 @@ namespace BlockPuzzle
             }
 
             // init the q
-            p1.initQ(this, 1);
+            p1.initQ(this, R.Next());
             p1.choosePiece(this);
             Controls = SinglePlayerControls();
 
             if (players == 2)
             {
-                p2.initQ(this, 2);
+                p2.initQ(this, R.Next());
                 p2.choosePiece(this);
                 Controls = MultiPlayerControls();
             }

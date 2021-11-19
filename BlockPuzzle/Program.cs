@@ -31,8 +31,8 @@ namespace BlockPuzzle
         public char[][] board;
         public bool gameOver = false;
         public ConsoleKeyInfo key = new ConsoleKeyInfo();
-        Player p1 = new Player(new Coord(12,5), new Coord(20,1), new Coord(2, 0));
-        Player p2 = new Player(new Coord(25,5), new Coord(35,1), new Coord(6, 0));
+        Player p1 = new Player(new Coord(12,5), new Coord(20,1), new Coord(2, 0), new Coord (1,0));
+        Player p2 = new Player(new Coord(25,5), new Coord(35,1), new Coord(6, 0), new Coord (5,0));
 
         public static void Main(string[] args)
         {
@@ -83,26 +83,6 @@ namespace BlockPuzzle
 
                 ChangeLevel();
                 fallCounterUpdate();
-                
-                /*
-                p1.bottomOfPiece = p1.piecePosition.y + p1.currentPiece.Height;
-                if (p1.bottomOfPiece > height || p1.isPieceCollidingWithBoardAtSpecificPos(p1.piecePosition, this))
-                {
-                    p1.fallCounterUpdate(this);
-                }
-                if (players == 2)
-                {
-                    p2.bottomOfPiece = p2.piecePosition.y + p2.currentPiece.Height;
-                    if (p2.bottomOfPiece > height || p2.isPieceCollidingWithBoardAtSpecificPos(p2.piecePosition, this))
-                    {
-                        p2.fallCounterUpdate(this);
-                    }
-                }
-                p1.idkhowthisisdifferentbutitsoksothisissoftdropplacedownthinginprogramdotcs(this);
-                if (players == 2) {
-                    p2.idkhowthisisdifferentbutitsoksothisissoftdropplacedownthinginprogramdotcs(this);
-                }
-                */
 
                 GetUserInput();
                 Update();
