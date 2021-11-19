@@ -82,7 +82,8 @@ namespace BlockPuzzle
             p1.printQArea(this);
             p1.printQPieces(this);
 
-            if (p1.shadow != null)
+            
+            if (p1.shadow != null && !p1.isShadowOOB(this))
             {
                 Console.ForegroundColor = shadowColor;
                 PrintPiece(p1.shadowPos, p1.shadow);
@@ -94,7 +95,7 @@ namespace BlockPuzzle
                 p2.printQArea(this);
                 p2.printQPieces(this);
 
-                if (p2.shadow != null)
+                if (p2.shadow != null && !p2.isShadowOOB(this))
                 {
                     Console.ForegroundColor = shadowColor;
                     PrintPiece(p2.shadowPos, p2.shadow);

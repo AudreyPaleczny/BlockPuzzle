@@ -228,7 +228,14 @@ namespace BlockPuzzle {
                 currentPiece.Width > Game.width || piecePosition.y + currentPiece.Height > Game.height;
         }
 
-         public void imprintPiece(char replace, MainClass Game)
+        public bool isShadowOOB(MainClass Game)
+        {
+            return shadowPos.x < 0 || shadowPos.y < 0 ||
+                shadowPos.x + currentPiece.Width > Game.width ||
+                shadowPos.y + currentPiece.Height > Game.height;
+        }
+
+        public void imprintPiece(char replace, MainClass Game)
         {
             currentPiece.changeChars(Game.pieceCharacter, replace);
             for (int r = 0; r < currentPiece.Height; ++r)
