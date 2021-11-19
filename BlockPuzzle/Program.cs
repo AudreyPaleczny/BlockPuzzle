@@ -86,7 +86,10 @@ namespace BlockPuzzle
 
                 // this is fixing the soft drop bug i was stupid and i deleted it earlier - Nina
                 p1.idkhowthisisdifferentbutitsoksothisissoftdropplacedownthinginprogramdotcs(this);
-                p2.idkhowthisisdifferentbutitsoksothisissoftdropplacedownthinginprogramdotcs(this);
+                if (players == 2)
+                {
+                    p2.idkhowthisisdifferentbutitsoksothisissoftdropplacedownthinginprogramdotcs(this);
+                }
 
                 GetUserInput();
                 Update();
