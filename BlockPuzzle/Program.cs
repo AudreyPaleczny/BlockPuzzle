@@ -32,7 +32,7 @@ namespace BlockPuzzle
         public bool gameOver = false;
         public ConsoleKeyInfo key = new ConsoleKeyInfo();
         Player p1 = new Player(new Coord(12,5), new Coord(20,1), new Coord(2, 0), new Coord (1,0));
-        Player p2 = new Player(new Coord(25,5), new Coord(35,1), new Coord(6, 0), new Coord (5,0));
+        Player p2 = new Player(new Coord(27,5), new Coord(35,1), new Coord(6, 0), new Coord (5,0));
 
         public static void Main(string[] args)
         {

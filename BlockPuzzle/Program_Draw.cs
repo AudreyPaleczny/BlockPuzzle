@@ -113,23 +113,6 @@ namespace BlockPuzzle
             Console.SetCursorPosition(0, height + 1);
             Console.ForegroundColor = placedColor;
             Console.Write("score: " + score);
-
-            //for (int i = 0; i < 16; i++)
-            //{
-            //    Console.ForegroundColor = (ConsoleColor)i;
-            //    Console.Write("#####");
-            //    Console.ForegroundColor = ConsoleColor.Black;
-            //    Console.WriteLine(((ConsoleColor)i).ToString());
-            //}
-
-            //int i = 10;
-            //Console.ForegroundColor = (ConsoleColor)i;
-            //Console.Write("#####");
-            //Console.ForegroundColor = (ConsoleColor)i - 8;
-            //Console.Write("#####");
-            //Console.ForegroundColor = ConsoleColor.Black;
-
-
         }
         
     }
