@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -70,13 +71,33 @@ public class Board : MonoBehaviour
                 
             }
         }
+
+        controls[KeyCode.Escape] = () =>
+        {
+            Application.Quit();
+            UnityEditor.EditorApplication.isPlaying = false;
+            //this is how you quit in the editor
+        };
+
+        //controls[KeyCode.LeftArrow] = () =>
+        //{
+        //    Debug.Log("Go left");
+        //};
     }
 
+    Dictionary<KeyCode, Action> controls = new Dictionary<KeyCode, Action>();
 
 
     // Update is called once per frame
     void Update()
     {
-        
+        foreach(KeyValuePair<KeyCode, Action> kvp in controls)
+        {
+            //see if the key is being pressed
+            if (Input.GetKey(kvp.Key))
+            {
+                kvp.Value();
+            }
+        }
     }
 }
