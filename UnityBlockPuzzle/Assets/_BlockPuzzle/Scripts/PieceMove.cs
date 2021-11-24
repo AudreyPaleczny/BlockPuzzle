@@ -5,7 +5,7 @@ using UnityEngine;
 public class PieceMove : MonoBehaviour
 {
     float keyTimer = 0.0f;
-    const float keyDelay = 0.25f;
+    const float keyDelay = 1f/8;
 
     // Start is called before the first frame update
     void Start()
