@@ -137,12 +137,32 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 572926523710269630, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
       propertyPath: shiftTime
-      value: 0.25
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 584219332683334496, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
       propertyPath: m_Name
       value: mino (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3403669754943417690, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3403669754943417690, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3403669754943417690, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5075269494915584349, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -3033667219593020291, guid: fb332b64dcbc8d24b80ff6035845098e, type: 3}
+    - target: {fileID: 5371972670411985111, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -2432090755550338912, guid: fb332b64dcbc8d24b80ff6035845098e, type: 3}
     - target: {fileID: 7054396711065582399, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -260,6 +280,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: mino (0)
       objectReference: {fileID: 0}
+    - target: {fileID: 3403669754943417690, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3403669754943417690, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3403669754943417690, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5075269494915584349, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -3033667219593020291, guid: fb332b64dcbc8d24b80ff6035845098e, type: 3}
+    - target: {fileID: 5371972670411985111, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -2432090755550338912, guid: fb332b64dcbc8d24b80ff6035845098e, type: 3}
     - target: {fileID: 7054396711065582399, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -429,12 +469,32 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 572926523710269630, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
       propertyPath: shiftTime
-      value: 0.125
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 584219332683334496, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
       propertyPath: m_Name
       value: mino (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3403669754943417690, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3403669754943417690, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3403669754943417690, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5075269494915584349, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -3033667219593020291, guid: fb332b64dcbc8d24b80ff6035845098e, type: 3}
+    - target: {fileID: 5371972670411985111, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -2432090755550338912, guid: fb332b64dcbc8d24b80ff6035845098e, type: 3}
     - target: {fileID: 7054396711065582399, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -795,12 +855,32 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 572926523710269630, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
       propertyPath: shiftTime
-      value: 0.0625
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 584219332683334496, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
       propertyPath: m_Name
       value: mino (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3403669754943417690, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3403669754943417690, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3403669754943417690, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5075269494915584349, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -3033667219593020291, guid: fb332b64dcbc8d24b80ff6035845098e, type: 3}
+    - target: {fileID: 5371972670411985111, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -2432090755550338912, guid: fb332b64dcbc8d24b80ff6035845098e, type: 3}
     - target: {fileID: 7054396711065582399, guid: 1e852b78859d4244eb8e48f9fa5a96aa, type: 3}
       propertyPath: m_RootOrder
       value: 1
