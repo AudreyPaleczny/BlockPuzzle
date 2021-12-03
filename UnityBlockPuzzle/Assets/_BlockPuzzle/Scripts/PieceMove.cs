@@ -30,7 +30,7 @@ public class PieceMove : MonoBehaviour
             new KeyValuePair<KeyCode, Vector3> (KeyCode.DownArrow, Vector3.down),
             new KeyValuePair<KeyCode, Vector3> (KeyCode.UpArrow, Vector3.up),
             new KeyValuePair<KeyCode, Vector3> (KeyCode.LeftArrow, Vector3.left),
-            new KeyValuePair<KeyCode, Vector3> (KeyCode.RightArrow, Vector3.right)
+            new KeyValuePair<KeyCode, Vector3> (KeyCode.RightArrow, Vector3.right),
         };
 
         for(int i = 0; i < keyMoves.Length; i++)
@@ -48,6 +48,12 @@ public class PieceMove : MonoBehaviour
             {
                 Debug.Log("Child " + i + " " + transform.GetChild(i).position);
             }
+            keyTimer = keyDelay;
+        }
+        if (Input.GetKey(KeyCode.Z))
+        {
+            transform.Rotate(0, 0, -90);
+            keyTimer = keyDelay;
         }
     }
 }
