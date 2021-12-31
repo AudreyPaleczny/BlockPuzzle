@@ -1,16 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PieceMove : MonoBehaviour
 {
     float keyTimer = 0.0f;
     const float keyDelay = 1f/8;
+    public Text debugText;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        debugText = GameObject.Find("Debug Text")?.GetComponent<Text>();
+        //debugText ??= GameObject.Find("Debug Text")?.GetComponent<Text>();
+        //if(debugText==null) debugText = GameObject.Find("Debug Text")?.GetComponent<Text>();
+        //debugText = GameObject.Find("Debug Text") != null
+        //    ? GameObject.Find("Debug Text").GetComponent<Text>()
+        //    : null;
     }
 
     // Update is called once per frame
@@ -44,10 +52,15 @@ public class PieceMove : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space))
         {
+            StringBuilder sb = new StringBuilder();
             for(int i = 0; i < transform.childCount; i++)
             {
-                Debug.Log("Child " + i + " " + transform.GetChild(i).position);
+                //Debug.Log("Child " + i + " " + transform.GetChild(i).position);
+                sb.Append("Child " + i + " board xPos: " + (transform.GetChild(i).position.x - 0.5) +
+                    " board yPos:" + (transform.GetChild(i).position.y - 3.5)*-1).Append("\n");
             }
+            Debug.Log(sb);
+            if(debugText) debugText.text = sb.ToString();
             keyTimer = keyDelay;
         }
         if (Input.GetKey(KeyCode.Z))
