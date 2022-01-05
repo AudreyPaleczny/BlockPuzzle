@@ -141,7 +141,7 @@ Transform:
   m_Children:
   - {fileID: 1773043618654832006}
   m_Father: {fileID: 1773043618498676237}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1773043617563622658
 GameObject:
@@ -334,7 +334,7 @@ Transform:
   m_Children:
   - {fileID: 1773043617563622659}
   m_Father: {fileID: 1773043618498676237}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1773043617779976041
 GameObject:
@@ -365,7 +365,7 @@ Transform:
   m_Children:
   - {fileID: 1773043617744212069}
   m_Father: {fileID: 1773043618498676237}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1773043618498676235
 GameObject:
@@ -395,10 +395,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1773043617779976042}
-  - {fileID: 1773043617346886328}
-  - {fileID: 1773043617766954799}
   - {fileID: 1773043617520325322}
+  - {fileID: 1773043617346886328}
+  - {fileID: 1773043617779976042}
+  - {fileID: 1773043617766954799}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -414,6 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19c477896e05641ec9165c7f86a95977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugText: {fileID: 0}
 --- !u!1 &1773043618654832005
 GameObject:
   m_ObjectHideFlags: 0
