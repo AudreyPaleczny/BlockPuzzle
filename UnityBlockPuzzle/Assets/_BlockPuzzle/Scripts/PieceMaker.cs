@@ -33,6 +33,9 @@ public class PieceMaker : MonoBehaviour
         listOfObjects.Add(newOne);
         board.pieceLight.transform.SetParent(newOne.transform);
         board.pieceLight.transform.localPosition = Vector3.zero;
+
+        PieceMove pm = newOne.GetComponent<PieceMove>();
+        pm.board = board;
     }
 
     // Start is called before the first frame update

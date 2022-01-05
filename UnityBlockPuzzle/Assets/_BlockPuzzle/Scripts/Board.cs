@@ -16,9 +16,16 @@ public class Board : MonoBehaviour
     [TextArea(10, 20)]
     public string initial;
 
+    public GameObject[][] objectMatrix;
+
     // Start is called before the first frame update
     void Start()
     {
+        objectMatrix = new GameObject[height][];
+
+        for (int i = 0; i < objectMatrix.Length; ++i) objectMatrix[i] = new GameObject[width];
+
+
         array = new char[height][];
 
         for(int i = 0; i<array.Length; ++i)

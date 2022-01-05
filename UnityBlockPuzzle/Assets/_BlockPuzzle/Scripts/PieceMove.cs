@@ -9,6 +9,7 @@ public class PieceMove : MonoBehaviour
     float keyTimer = 0.0f;
     const float keyDelay = 1f/8;
     public Text debugText;
+    public Board board;
 
     // Start is called before the first frame update
     void Start()
@@ -67,6 +68,20 @@ public class PieceMove : MonoBehaviour
         {
             transform.Rotate(0, 0, -90);
             keyTimer = keyDelay;
+        }
+        if (Input.GetKey(KeyCode.P))
+        {
+            for(int i = 0; i < transform.childCount; ++i)
+            {
+                Transform mino = transform.GetChild(i);
+
+                if (mino.GetComponent<Light>()) continue; // if it's the light, go away
+
+                int boardXPos = (int)(mino.position.x - 0.5f), boardYPos = (int)((mino.position.y - 3.5f)*-1);
+                board.objectMatrix[boardYPos][boardXPos] = mino.gameObject;
+                mino.SetParent(board.transform);
+            }
+
         }
     }
 }
