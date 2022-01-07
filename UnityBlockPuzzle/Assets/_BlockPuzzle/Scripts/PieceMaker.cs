@@ -9,7 +9,7 @@ public class PieceMaker : MonoBehaviour
     public float delay;
     public List<GameObject> listOfObjects = new List<GameObject>();
     public Board board;
-    public Light pieceLight;
+    public Light[] pieceLight = new Light[4];
 
     public class LightUnattacher : MonoBehaviour
     {
@@ -29,15 +29,19 @@ public class PieceMaker : MonoBehaviour
 
     public void makeAnotherOne()
     {
-        int p = 3;
-        //Random.Range(0, prefabsOfPieces.Count);
+        int p = Random.Range(0, prefabsOfPieces.Count);
 
         GameObject newOne = Instantiate(prefabsOfPieces[p]);
         newOne.transform.position = transform.position;
         newOne.transform.SetParent(transform);
         listOfObjects.Add(newOne);
-        pieceLight.transform.SetParent(newOne.transform);
-        pieceLight.transform.localPosition = Vector3.zero;
+
+        for (int i = 0; i < 4; i++)
+        {
+            pieceLight[i].transform.SetParent(newOne.transform.GetChild(i));
+            pieceLight[i].transform.localPosition = Vector3.zero;
+            pieceLight[i].transform.SetParent(newOne.transform);
+        }
 
         PieceMove pm = newOne.GetComponent<PieceMove>();
         pm.board = board;
