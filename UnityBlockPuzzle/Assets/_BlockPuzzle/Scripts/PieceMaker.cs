@@ -9,6 +9,7 @@ public class PieceMaker : MonoBehaviour
     public float delay;
     public List<GameObject> listOfObjects = new List<GameObject>();
     public Board board;
+    public Light pieceLight;
 
     public class LightUnattacher : MonoBehaviour
     {
@@ -35,8 +36,8 @@ public class PieceMaker : MonoBehaviour
         newOne.transform.position = transform.position;
         newOne.transform.SetParent(transform);
         listOfObjects.Add(newOne);
-        board.pieceLight.transform.SetParent(newOne.transform);
-        board.pieceLight.transform.localPosition = Vector3.zero;
+        pieceLight.transform.SetParent(newOne.transform);
+        pieceLight.transform.localPosition = Vector3.zero;
 
         PieceMove pm = newOne.GetComponent<PieceMove>();
         pm.board = board;

@@ -10,8 +10,6 @@ public class Board : MonoBehaviour
     public GameObject normalBlock;
     public Vector3 blockSize = Vector3.one;
 
-    public Light pieceLight;
-
     char[][] array;
     [TextArea(10, 20)]
     public string initial;
