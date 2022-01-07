@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class PieceMaker : MonoBehaviour
 {
-    [Tooltip("Put a thing in here to create!"), ContextMenuItem("Spawn","makeAnotherOne"), ContextMenuItem("DESTROY THE LAST THING", "destroyTheLastOne")]
-    public GameObject prefab;
+    [Tooltip("Put a thing in here to create!"), ContextMenuItem("Spawn", "makeAnotherOne"), ContextMenuItem("DESTROY THE LAST THING", "destroyTheLastOne")]
+    public List<GameObject> prefabsOfPieces = new List<GameObject>();
     public float delay;
     public List<GameObject> listOfObjects = new List<GameObject>();
     public Board board;
+
     public class LightUnattacher : MonoBehaviour
     {
         public Light light;
@@ -27,7 +28,10 @@ public class PieceMaker : MonoBehaviour
 
     public void makeAnotherOne()
     {
-        GameObject newOne = Instantiate(prefab);
+        int p = 3;
+        //Random.Range(0, prefabsOfPieces.Count);
+
+        GameObject newOne = Instantiate(prefabsOfPieces[p]);
         newOne.transform.position = transform.position;
         newOne.transform.SetParent(transform);
         listOfObjects.Add(newOne);
@@ -41,6 +45,7 @@ public class PieceMaker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         makeAnotherOne();
     }
 
