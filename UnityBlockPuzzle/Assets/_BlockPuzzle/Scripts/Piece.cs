@@ -4,7 +4,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PieceMove : MonoBehaviour
+public class Piece : MonoBehaviour
 {
     float keyTimer = 0.0f;
     const float keyDelay = 1f/8;

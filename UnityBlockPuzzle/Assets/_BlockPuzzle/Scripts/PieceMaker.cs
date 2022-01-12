@@ -15,7 +15,7 @@ public class PieceMaker : MonoBehaviour
     float keyTimer = 0.0f;
     const float keyDelay = 1f / 8;
     public Text debugText;
-    public PieceMove currentPiece;
+    public Piece currentPiece;
 
     public class LightUnattacher : MonoBehaviour
     {
@@ -49,7 +49,7 @@ public class PieceMaker : MonoBehaviour
             pieceLight[i].transform.SetParent(newOne.transform);
         }
 
-        currentPiece = newOne.GetComponent<PieceMove>();
+        currentPiece = newOne.GetComponent<Piece>();
         //currentPiece.board = board;
     }
 
