@@ -15,7 +15,7 @@ public class PieceMaker : MonoBehaviour
     float keyTimer = 0.0f;
     const float keyDelay = 1f / 8;
     public Text debugText;
-    public Piece currentPiece;
+    public GameObject currentPiece;
 
     public class LightUnattacher : MonoBehaviour
     {
@@ -49,14 +49,14 @@ public class PieceMaker : MonoBehaviour
             pieceLight[i].transform.SetParent(newOne.transform);
         }
 
-        currentPiece = newOne.GetComponent<Piece>();
+        currentPiece = newOne;
         //currentPiece.board = board;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-
+        debugText = GameObject.Find("Debug Text")?.GetComponent<Text>();
         makeAnotherOne();
     }
 
