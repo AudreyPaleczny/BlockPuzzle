@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -35,7 +36,7 @@ public class PieceMaker : MonoBehaviour
 
     public void makeAnotherOne()
     {
-        int p = Random.Range(0, prefabsOfPieces.Count);
+        int p = UnityEngine.Random.Range(0, prefabsOfPieces.Count);
 
         GameObject newOne = Instantiate(prefabsOfPieces[p]);
         newOne.transform.position = transform.position;
@@ -51,6 +52,44 @@ public class PieceMaker : MonoBehaviour
 
         currentPiece = newOne;
         //currentPiece.board = board;
+    }
+
+    public bool isPieceOOB(GameObject piece)
+    {
+        for (int i = 0; i < piece.transform.childCount; ++i)
+        {
+            Transform mino = piece.transform.GetChild(i);
+            int minoXPos = (int)(mino.position.x - 0.5f),
+                minoYPos = (int)((mino.position.y - 3.5f) * -1);
+            if (isMinoOOB(minoXPos, minoYPos)) return true;
+        }
+        return false;
+    }
+
+    public bool isMinoOOB(int boardXPos, int boardYPos)
+    {
+        return boardXPos < 0 ||
+            boardYPos < 0 ||
+            boardXPos >= board.width||
+            boardYPos >= board.height;
+    }
+
+    void ImprintPiece()
+    {
+        if (isPieceOOB(currentPiece)) return;
+        while (currentPiece.transform.childCount > 0)
+        {
+            Transform mino = currentPiece.transform.GetChild(0);
+            if (!mino.GetComponent<Light>())
+            {
+                int boardXPos = (int)(mino.position.x - 0.5f), boardYPos = (int)((mino.position.y - 3.5f) * -1);
+                board.objectMatrix[boardYPos][boardXPos] = mino.gameObject;
+            }
+
+            mino.SetParent(board.transform);
+        }
+        Destroy(currentPiece.gameObject);
+        makeAnotherOne();
     }
 
     // Start is called before the first frame update
@@ -80,6 +119,31 @@ public class PieceMaker : MonoBehaviour
             new KeyValuePair<KeyCode, Vector3> (KeyCode.RightArrow, Vector3.right),
         };
 
+        Dictionary<KeyCode, Action> controls = new Dictionary<KeyCode, Action>()
+        {
+            [KeyCode.P] = () =>
+            {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < currentPiece.transform.childCount; i++)
+                {
+                    //Debug.Log("Child " + i + " " + transform.GetChild(i).position);
+                    sb.Append("Child " + i + " board xPos: " + (currentPiece.transform.GetChild(i).position.x - 0.5) +
+                        " board yPos:" + (currentPiece.transform.GetChild(i).position.y - 3.5) * -1).Append("\n");
+                }
+                Debug.Log(sb);
+                if (debugText) debugText.text = sb.ToString();
+            },
+            [KeyCode.Z] = () =>
+            {
+                currentPiece.transform.Rotate(0, 0, 90);
+            },
+            [KeyCode.X] = () =>
+            {
+                currentPiece.transform.Rotate(0, 0, -90);
+            },
+            [KeyCode.Space] = ImprintPiece // <- thats a function
+        };
+
         for (int i = 0; i < keyMoves.Length; i++)
         {
             if (Input.GetKey(keyMoves[i].Key))
@@ -89,40 +153,13 @@ public class PieceMaker : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.Space))
+        foreach(KeyValuePair<KeyCode, Action> kvp in controls)
         {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < currentPiece.transform.childCount; i++)
+            if (Input.GetKey(kvp.Key))
             {
-                //Debug.Log("Child " + i + " " + transform.GetChild(i).position);
-                sb.Append("Child " + i + " board xPos: " + (currentPiece.transform.GetChild(i).position.x - 0.5) +
-                    " board yPos:" + (currentPiece.transform.GetChild(i).position.y - 3.5) * -1).Append("\n");
+                kvp.Value.Invoke();
+                keyTimer = keyDelay;
             }
-            Debug.Log(sb);
-            if (debugText) debugText.text = sb.ToString();
-            keyTimer = keyDelay;
-        }
-        if (Input.GetKey(KeyCode.Z))
-        {
-            currentPiece.transform.Rotate(0, 0, -90);
-            keyTimer = keyDelay;
-        }
-        if (Input.GetKey(KeyCode.P))
-        {
-            while(currentPiece.transform.childCount > 0)
-            {
-                Transform mino = currentPiece.transform.GetChild(0);
-
-                if (!mino.GetComponent<Light>()) {
-                    int boardXPos = (int)(mino.position.x - 0.5f), boardYPos = (int)((mino.position.y - 3.5f) * -1);
-                    board.objectMatrix[boardYPos][boardXPos] = mino.gameObject;
-                }
-
-                mino.SetParent(board.transform);
-            }
-            Destroy(currentPiece.gameObject);
-            makeAnotherOne();
-            keyTimer = keyDelay;
         }
     }
 }
