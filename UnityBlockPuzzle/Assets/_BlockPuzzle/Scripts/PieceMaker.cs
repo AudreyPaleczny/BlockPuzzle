@@ -117,12 +117,17 @@ public class PieceMaker : MonoBehaviour
 
     public bool isPieceOOB(GameObject piece)
     {
-        for (int i = 0; i < piece.transform.childCount; ++i)
+        //for (int i = 0; i < piece.transform.childCount; ++i)
+        //{
+        //    Transform mino = piece.transform.GetChild(i);
+        //    int minoXPos = (int)(mino.position.x - 0.5f),
+        //        minoYPos = (int)((mino.position.y - 3.5f) * -1);
+        //    if (isMinoOOB(minoXPos, minoYPos)) return true;
+        //}
+
+        foreach(Vector2Int mino in minoCoords())
         {
-            Transform mino = piece.transform.GetChild(i);
-            int minoXPos = (int)(mino.position.x - 0.5f),
-                minoYPos = (int)((mino.position.y - 3.5f) * -1);
-            if (isMinoOOB(minoXPos, minoYPos)) return true;
+            if(isMinoOOB(mino.x,mino.y)) return true;
         }
         return false;
     }
@@ -130,27 +135,47 @@ public class PieceMaker : MonoBehaviour
     public bool isMinoOOB(int boardXPos, int boardYPos)
     {
         return boardXPos < 0 ||
-            boardYPos < 0 ||
+            //boardYPos < 0 ||
             boardXPos >= board.width||
             boardYPos >= board.height;
     }
 
-    void ImprintPiece()
+    Vector2Int[] minoCoords() => minoCoords(currentPiece.transform);
+    Vector2Int[] minoCoords(Transform pieceTransform)
     {
-        if (isPieceOOB(currentPiece)) return;
+        Vector2Int[] coords = new Vector2Int[4];
+        int index = 0;
+        for(int i = 0; i < pieceTransform.childCount; ++i)
+        {
+            Transform mino = pieceTransform.GetChild(i);
+            if (!mino.GetComponent<Light>())
+            {
+                int boardXPos = (int)(mino.position.x - 0.5f), boardYPos = (int)((mino.position.y - 3.5f) * -1);
+                coords[index++] = new Vector2Int(boardXPos, boardYPos);
+            }
+        }
+        return coords;
+    }
+
+    bool ImprintPiece()
+    {
+        bool success = true;
+        //if (isPieceOOB(currentPiece)) return;
         while (currentPiece.transform.childCount > 0)
         {
             Transform mino = currentPiece.transform.GetChild(0);
             if (!mino.GetComponent<Light>())
             {
                 int boardXPos = (int)(mino.position.x - 0.5f), boardYPos = (int)((mino.position.y - 3.5f) * -1);
-                board.objectMatrix[boardYPos][boardXPos] = mino.gameObject;
+                if (isMinoOOB(boardXPos, boardYPos)) success = false;
+                else board.objectMatrix[boardYPos][boardXPos] = mino.gameObject;
             }
 
             mino.SetParent(board.transform);
         }
         Destroy(currentPiece.gameObject);
         makeAnotherOne();
+        return success;
     }
 
     // Start is called before the first frame update
@@ -162,9 +187,11 @@ public class PieceMaker : MonoBehaviour
         makeAnotherOne();
     }
 
-    // Update is called once per frame
+    [TextArea(4, 4)]
+    public string debugPosition;
     void Update()
     {
+        debugPosition = string.Join("\n", minoCoords());
         if (keyTimer > 0)
         {
             keyTimer -= Time.deltaTime;
@@ -204,7 +231,7 @@ public class PieceMaker : MonoBehaviour
             {
                 currentPiece.transform.Rotate(0, 0, -90);
             },
-            [KeyCode.Space] = ImprintPiece // <- thats a function
+            [KeyCode.Space] = ()=> ImprintPiece() // <- thats a function
         };
 
         for (int i = 0; i < keyMoves.Length; i++)
@@ -212,6 +239,7 @@ public class PieceMaker : MonoBehaviour
             if (Input.GetKey(keyMoves[i].Key))
             {
                 currentPiece.transform.position += keyMoves[i].Value;
+                if (isPieceOOB(currentPiece)) currentPiece.transform.position -= keyMoves[i].Value;
                 keyTimer = keyDelay;
             }
         }
