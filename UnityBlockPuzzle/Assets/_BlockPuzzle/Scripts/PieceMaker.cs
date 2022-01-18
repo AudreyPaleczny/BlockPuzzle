@@ -220,28 +220,6 @@ public class PieceMaker : MonoBehaviour
         }
     }
 
-    public bool isPieceCaSP(int position) // is piece colliding at a specific position
-    {
-        if (isPieceOOB(currentPiece)) return true;
-        for (int i = 0; i < currentPiece.transform.childCount; i++)
-        {
-            int x = (int)(currentPiece.transform.GetChild(i).position.x - 0.5);
-            int y = (int)((currentPiece.transform.GetChild(i).position.y - 3.5) * -1);
-            if (y<0 || board.objectMatrix[y][x] != null) return true;
-        }
-        return false;
-    }
-
-    public void placePieceIfCollision()
-    {
-        int bottomOfPiece = (int) currentPiece.transform.position.y;
-        if (bottomOfPiece > board.height || isPieceCaSP((int)currentPiece.transform.position.y))
-        {
-            currentPiece.transform.position += Vector3.up;
-            ImprintPiece();
-        }
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -271,7 +249,6 @@ public class PieceMaker : MonoBehaviour
         then = now;
         fallCounter += passed;
         fallCounterUpdate();
-        placePieceIfCollision();
 
         KeyValuePair<KeyCode, Vector3>[] keyMoves = new KeyValuePair<KeyCode, Vector3>[]
         {
