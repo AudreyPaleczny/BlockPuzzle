@@ -17,6 +17,8 @@ public class PieceMaker : MonoBehaviour
     const float keyDelay = 1f / 8;
     public Text debugText;
     public GameObject currentPiece;
+    public long then;
+    public long fallCounter = 0;
 
     public class LightUnattacher : MonoBehaviour
     {
@@ -178,9 +180,27 @@ public class PieceMaker : MonoBehaviour
         return success;
     }
 
+    public static long UTCMS()
+    {
+        return System.DateTime.Now.Ticks / System.TimeSpan.TicksPerMillisecond;
+    }
+
+    public void fallCounterUpdate()
+    {
+        // double iterationDelay = ((11 - level) * 0.1) * 1000;  // [seconds] used to be 0.05
+        double iterationDelay = 1000; 
+
+        if (fallCounter >= iterationDelay)
+        {
+            currentPiece.transform.position += Vector3.down;
+            fallCounter -= (long)iterationDelay;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        then = UTCMS();
         debugText = GameObject.Find("Debug Text")?.GetComponent<Text>();
         //Random.InitState(System.Environment.TickCount);
         initNums(7);
@@ -200,6 +220,12 @@ public class PieceMaker : MonoBehaviour
                 return;
             }
         }
+        long now = UTCMS();
+        //time passed
+        long passed = now - then;
+        then = now;
+        fallCounter += passed;
+        fallCounterUpdate();
 
         KeyValuePair<KeyCode, Vector3>[] keyMoves = new KeyValuePair<KeyCode, Vector3>[]
         {
