@@ -220,24 +220,49 @@ public class PieceMaker : MonoBehaviour
         }
     }
 
-    public bool isPieceCaSP(int position) // is piece colliding at a specific position
+    public enum PieceCollision { none, blocked, oobLeft, oobRight, oobTop, oobBottom };
+
+    public PieceCollision kindOfPieceCollision() // is piece colliding at a specific position
     {
-        if (isPieceOOB(currentPiece)) return true;
+        // if (isPieceOOB(currentPiece)) return true;
         for (int i = 0; i < currentPiece.transform.childCount; i++)
         {
             int x = (int)(currentPiece.transform.GetChild(i).position.x - 0.5);
             int y = (int)((currentPiece.transform.GetChild(i).position.y - 3.5) * -1);
-            if (y<0 || board.objectMatrix[y][x] != null) return true;
+            if (y < 0) return PieceCollision.oobTop;
+            if (y >= board.height) return PieceCollision.oobBottom;
+            if (x < 0) return PieceCollision.oobLeft;
+            if (x >= board.width) return PieceCollision.oobRight;
+            if (board.objectMatrix[y][x] != null) return PieceCollision.blocked;
         }
-        return false;
+        return PieceCollision.none;
+    }
+
+    public int findBottom()
+    {
+        Vector2Int[] minoPos = minoCoords();
+        //4 minos per piece
+        int highest = minoPos[0].y;
+
+        for (int i = 1; i < 4; i++)
+        {
+            int y = minoPos[i].y;
+
+            if (y > highest) { highest = y; }
+        }
+        return highest;
     }
 
     public void placePieceIfCollision()
     {
-        int bottomOfPiece = (int) currentPiece.transform.position.y;
-        if (bottomOfPiece > board.height || isPieceCaSP((int)currentPiece.transform.position.y))
+        int bottomOfPiece = findBottom();
+        PieceCollision col = kindOfPieceCollision();
+        if (col == PieceCollision.blocked)
         {
             currentPiece.transform.position += Vector3.up;
+            ImprintPiece();
+        } else if (col == PieceCollision.oobBottom)
+        {   currentPiece.transform.position += Vector3.up;
             ImprintPiece();
         }
     }
