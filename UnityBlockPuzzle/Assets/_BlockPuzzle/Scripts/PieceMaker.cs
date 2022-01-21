@@ -220,11 +220,13 @@ public class PieceMaker : MonoBehaviour
         }
     }
 
-    public enum PieceCollision { none, blocked, oobLeft, oobRight, oobTop, oobBottom };
+    public enum PieceCollision { none, blockedV, blockedH, oobLeft, oobRight, oobTop, oobBottom };
 
+    public KeyCode currentKey = KeyCode.None;
     public PieceCollision kindOfPieceCollision() // is piece colliding at a specific position
     {
         // if (isPieceOOB(currentPiece)) return true;
+
         for (int i = 0; i < currentPiece.transform.childCount; i++)
         {
             int x = (int)(currentPiece.transform.GetChild(i).position.x - 0.5);
@@ -233,7 +235,12 @@ public class PieceMaker : MonoBehaviour
             if (y >= board.height) return PieceCollision.oobBottom;
             if (x < 0) return PieceCollision.oobLeft;
             if (x >= board.width) return PieceCollision.oobRight;
-            if (board.objectMatrix[y][x] != null) return PieceCollision.blocked;
+
+            if (board.objectMatrix[y][x] != null)
+            {
+                if (currentKey == KeyCode.LeftArrow || currentKey == KeyCode.RightArrow) return PieceCollision.blockedH;
+                return PieceCollision.blockedV;
+            }
         }
         return PieceCollision.none;
     }
@@ -257,13 +264,19 @@ public class PieceMaker : MonoBehaviour
     {
         int bottomOfPiece = findBottom();
         PieceCollision col = kindOfPieceCollision();
-        if (col == PieceCollision.blocked)
+        if (col == PieceCollision.blockedV)
         {
             currentPiece.transform.position += Vector3.up;
             ImprintPiece();
         } else if (col == PieceCollision.oobBottom)
         {   currentPiece.transform.position += Vector3.up;
             ImprintPiece();
+        } else if (col == PieceCollision.blockedH)
+        {
+            if (currentKey == KeyCode.LeftArrow)
+            {
+                currentPiece.transform.position += Vector3.right;
+            } else currentPiece.transform.position += Vector3.left;
         }
     }
 
@@ -275,6 +288,7 @@ public class PieceMaker : MonoBehaviour
         //Random.InitState(System.Environment.TickCount);
         initNums(7);
         makeAnotherOne();
+
     }
 
     [TextArea(4, 4)]
@@ -296,7 +310,6 @@ public class PieceMaker : MonoBehaviour
         then = now;
         fallCounter += passed;
         fallCounterUpdate();
-        placePieceIfCollision();
 
         KeyValuePair<KeyCode, Vector3>[] keyMoves = new KeyValuePair<KeyCode, Vector3>[]
         {
@@ -331,17 +344,22 @@ public class PieceMaker : MonoBehaviour
             [KeyCode.Space] = ()=> ImprintPiece() // <- thats a function
         };
 
+        currentKey = KeyCode.None;
+
         for (int i = 0; i < keyMoves.Length; i++)
         {
             if (Input.GetKey(keyMoves[i].Key))
             {
+                currentKey = keyMoves[i].Key;
                 currentPiece.transform.position += keyMoves[i].Value;
                 if (isPieceOOB(currentPiece)) currentPiece.transform.position -= keyMoves[i].Value;
                 keyTimer = keyDelay;
             }
         }
 
-        foreach(KeyValuePair<KeyCode, Action> kvp in controls)
+        placePieceIfCollision();
+
+        foreach (KeyValuePair<KeyCode, Action> kvp in controls)
         {
             if (Input.GetKey(kvp.Key))
             {
