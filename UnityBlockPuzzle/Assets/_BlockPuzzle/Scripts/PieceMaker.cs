@@ -29,6 +29,43 @@ public class PieceMaker : MonoBehaviour
         }
     }
 
+    public void ClearLines()
+    {
+        int count = 0, clearRow, rowCount = 0;
+        for (int row = 0; row < board.height; ++row)
+        {
+            for (int col = 0; col < board.width; ++col)
+            {
+                if (board.objectMatrix[row][col])
+                {
+                    ++count;
+                }
+            }
+            if (count == board.width)
+            {
+                clearRow = row;
+                for (int col = 0; col < board.width; ++col)
+                {
+                    Destroy(board.objectMatrix[row][col]);
+                }
+                // for everyline under top to shift down by 1 row
+                for (int shiftRow = clearRow; shiftRow > 0; --shiftRow)
+                {
+                    for (int shiftCol = 0; shiftCol < board.width; ++shiftCol)
+                    {
+                        if (board.objectMatrix[shiftRow][shiftCol])
+                        {
+                            board.objectMatrix[shiftRow][shiftCol].transform.position += Vector3.down;
+                        }
+                    }
+                }
+                rowCount++;
+            }
+            count = 0;
+        }
+        //linesCleared += rowCount;
+    }
+
     public void destroyTheLastOne()
     {
         int last = listOfObjects.Count - 1;
@@ -367,5 +404,6 @@ public class PieceMaker : MonoBehaviour
                 keyTimer = keyDelay;
             }
         }
+        ClearLines();
     }
 }
