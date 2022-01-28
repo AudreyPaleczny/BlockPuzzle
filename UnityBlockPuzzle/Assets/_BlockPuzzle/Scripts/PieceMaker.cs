@@ -31,39 +31,53 @@ public class PieceMaker : MonoBehaviour
 
     public void ClearLines()
     {
-        int count = 0, clearRow, rowCount = 0;
+        int count = 0, clearRow;
         for (int row = 0; row < board.height; ++row)
         {
             for (int col = 0; col < board.width; ++col)
             {
-                if (board.objectMatrix[row][col])
+                if (board.objectMatrix[row][col]) // change when we add shadow pieces and whatever
                 {
                     ++count;
                 }
             }
+            //
+            //
             if (count == board.width)
             {
                 clearRow = row;
-                for (int col = 0; col < board.width; ++col)
+                for (int col = 0; col < board.width; ++col) 
                 {
                     Destroy(board.objectMatrix[row][col]);
                 }
-                // for everyline under top to shift down by 1 row
+
                 for (int shiftRow = clearRow; shiftRow > 0; --shiftRow)
                 {
                     for (int shiftCol = 0; shiftCol < board.width; ++shiftCol)
                     {
+                        board.objectMatrix[shiftRow][shiftCol] = board.objectMatrix[shiftRow - 1][shiftCol];
                         if (board.objectMatrix[shiftRow][shiftCol])
                         {
                             board.objectMatrix[shiftRow][shiftCol].transform.position += Vector3.down;
                         }
                     }
                 }
-                rowCount++;
+                for (int r = 0; r < board.height; ++r)
+                {
+                    for (int c = 0; c < board.width; ++c)
+                    {
+                        GameObject mino = board.objectMatrix[r][c];
+                        if (mino == null) { continue; }
+                        Vector3 expectedPosition = new Vector3(c + 0.5f, -(r - 3.5f), mino.gameObject.transform.position.z);
+                        if (Vector3.Distance(expectedPosition, mino.transform.position) > 0.5f)
+                        {
+                            mino.gameObject.GetComponentInChildren<Renderer>().material.color = Color.black;
+                        }
+                    }
+                }
             }
             count = 0;
         }
-        //linesCleared += rowCount;
     }
 
     public void destroyTheLastOne()
@@ -286,7 +300,7 @@ public class PieceMaker : MonoBehaviour
     {
         Vector2Int[] minoPos = minoCoords();
         //4 minos per piece
-        int highest = minoPos[0].y;
+        int highest = minoPos[0].y; // the bottom mino with the highest y coord, not the highest mino
 
         for (int i = 1; i < 4; i++)
         {
@@ -389,7 +403,9 @@ public class PieceMaker : MonoBehaviour
             {
                 currentKey = keyMoves[i].Key;
                 currentPiece.transform.position += keyMoves[i].Value;
-                if (isPieceOOB(currentPiece)) currentPiece.transform.position -= keyMoves[i].Value;
+                if (isPieceOOB(currentPiece)) {
+                    currentPiece.transform.position -= keyMoves[i].Value;
+                }
                 keyTimer = keyDelay;
             }
         }
