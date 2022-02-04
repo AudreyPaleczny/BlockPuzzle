@@ -232,6 +232,11 @@ public class PieceMaker : MonoBehaviour
         return coords;
     }
 
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns> whether the piece can be imprinted as is </returns>
     public bool ImprintPiece()
     {
         if (isColliding()) return false;
