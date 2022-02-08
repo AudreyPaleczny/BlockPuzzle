@@ -143,7 +143,7 @@ public class PieceMaker : MonoBehaviour
         return nums[numsLeft];
     }
 
-    public void makeAnotherOne()
+    public int randomizer()
     {
         int rgn = nextInt();
         if (rgn == 7)
@@ -152,7 +152,35 @@ public class PieceMaker : MonoBehaviour
             rgn = nextInt();
         }
 
-        GameObject newOne = Instantiate(prefabsOfPieces[rgn]);
+        return rgn;
+    }
+
+    public List<GameObject> queue = new List<GameObject>(5);
+    public Vector3 initialPosition = new Vector3(18, 4.5f, 4);
+    public void makeQueue()
+    {   
+        GameObject pieceOne = Instantiate(prefabsOfPieces[randomizer()]);
+        GameObject pieceTwo = Instantiate(prefabsOfPieces[randomizer()]);
+        GameObject pieceThree = Instantiate(prefabsOfPieces[randomizer()]);
+        GameObject pieceFour = Instantiate(prefabsOfPieces[randomizer()]);
+        GameObject pieceFive = Instantiate(prefabsOfPieces[randomizer()]);
+
+        queue.Add(pieceOne);
+        queue.Add(pieceTwo);
+        queue.Add(pieceThree);
+        queue.Add(pieceFour);
+        queue.Add(pieceFive);
+
+        pieceOne.transform.position = initialPosition;
+        pieceTwo.transform.position = initialPosition + Vector3.down*4;
+        pieceThree.transform.position = initialPosition + Vector3.down * 8;
+        pieceFour.transform.position = initialPosition + Vector3.down * 12;
+        pieceFive.transform.position = initialPosition + Vector3.down * 16;
+    }
+
+    public void makeAnotherOne()
+    {
+        GameObject newOne = Instantiate(queue[0]);
         newOne.transform.position = transform.position;
         newOne.transform.SetParent(transform);
         listOfObjects.Add(newOne);
@@ -165,7 +193,26 @@ public class PieceMaker : MonoBehaviour
         }
 
         currentPiece = newOne;
+        updateQueue();
+        printQueue();
         //currentPiece.board = board;
+    }
+
+    public void updateQueue()
+    {
+        Destroy(queue[0]);
+        queue.Remove(queue[0]);
+        GameObject temp = Instantiate(prefabsOfPieces[randomizer()]);
+        queue.Add(temp);
+    }
+
+    public void printQueue()
+    {
+        queue[0].transform.position += Vector3.up * 4;
+        queue[1].transform.position += Vector3.up * 4;
+        queue[2].transform.position += Vector3.up * 4;
+        queue[3].transform.position += Vector3.up * 4;
+        queue[4].transform.position = initialPosition + Vector3.down * 16; 
     }
 
     public bool isPieceOOB(GameObject piece)
@@ -343,8 +390,8 @@ public class PieceMaker : MonoBehaviour
         debugText = GameObject.Find("Debug Text")?.GetComponent<Text>();
         //Random.InitState(System.Environment.TickCount);
         initNums(7);
+        makeQueue();
         makeAnotherOne();
-
     }
 
     [TextArea(4, 4)]
