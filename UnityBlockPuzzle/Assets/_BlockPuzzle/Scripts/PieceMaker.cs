@@ -240,28 +240,6 @@ public class PieceMaker : MonoBehaviour
             boardYPos >= board.height;
     }
 
-    //TODO: need to test more
-    public bool isColliding()
-    {
-        Vector2Int[] minoPos = minoCoords();
-        //4 minos per piece
-        for(int i = 0; i < 4; i++)
-        {
-            int x = minoPos[i].x;
-            int y = minoPos[i].y;
-
-            if (y < 0) return true;
-
-            if (board.objectMatrix[y][x] != null)
-            {
-                Debug.Log("Is Colliding");
-                return true;
-            }
-        }
-        
-        return false;
-    }
-
     Vector2Int[] minoCoords() => minoCoords(currentPiece.transform);
     Vector2Int[] minoCoords(Transform pieceTransform)
     {
@@ -279,16 +257,16 @@ public class PieceMaker : MonoBehaviour
         return coords;
     }
 
-    
     /// <summary>
     /// 
     /// </summary>
     /// <returns> whether the piece can be imprinted as is </returns>
     public bool ImprintPiece()
     {
-        if (isColliding()) return false;
+        if (CollisionDetection.isColliding(minoCoords(),board.objectMatrix)) return false;
         bool success = true;
-        //if (isPieceOOB(currentPiece)) return;
+        Vector2Int[] MinosPos = minoCoords();
+
         while (currentPiece.transform.childCount > 0)
         {
             Transform mino = currentPiece.transform.GetChild(0);
@@ -472,6 +450,6 @@ public class PieceMaker : MonoBehaviour
                 keyTimer = keyDelay;
             }
         }
-        ClearLines();
+        //ClearLines();
     }
 }
