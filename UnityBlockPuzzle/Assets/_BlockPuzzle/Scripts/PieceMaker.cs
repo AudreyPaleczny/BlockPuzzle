@@ -279,13 +279,15 @@ public class PieceMaker : MonoBehaviour
         return coords;
     }
 
+    bool isColliding() => CollisionDetection.isColliding(minoCoords(), board.objectMatrix);
+
     /// <summary>
     /// 
     /// </summary>
     /// <returns> whether the piece can be imprinted as is </returns>
     public bool ImprintPiece()
     {
-        if (CollisionDetection.isColliding(minoCoords(),board.objectMatrix)) return false;
+        if (isColliding()) return false;
         bool success = true;
         Vector2Int[] MinosPos = minoCoords();
 
@@ -311,7 +313,7 @@ public class PieceMaker : MonoBehaviour
         return System.DateTime.Now.Ticks / System.TimeSpan.TicksPerMillisecond;
     }
 
-    public void fallCounterUpdate()
+    public void pieceFallOnTime()
     {
         // double iterationDelay = ((11 - level) * 0.1) * 1000;  // [seconds] used to be 0.05
         double iterationDelay = 1000; 
@@ -319,6 +321,17 @@ public class PieceMaker : MonoBehaviour
         if (fallCounter >= iterationDelay)
         {
             currentPiece.transform.position += Vector3.down;
+            if (findBottom() == board.height)
+            {
+                currentPiece.transform.position += Vector3.up;
+                ImprintPiece(); // add delay later
+            }
+
+            else if (isColliding()) {
+                currentPiece.transform.position += Vector3.up;
+                ImprintPiece();
+            }
+
             fallCounter -= (long)iterationDelay;
         }
     }
@@ -351,10 +364,9 @@ public class PieceMaker : MonoBehaviour
     public int findBottom()
     {
         Vector2Int[] minoPos = minoCoords();
-        //4 minos per piece
         int highest = minoPos[0].y; // the bottom mino with the highest y coord, not the highest mino
 
-        for (int i = 1; i < 4; i++)
+        for (int i = 1; i < minoPos.Length; i++)
         {
             int y = minoPos[i].y;
 
@@ -412,15 +424,15 @@ public class PieceMaker : MonoBehaviour
         long passed = now - then;
         then = now;
         fallCounter += passed;
-        fallCounterUpdate();
+        pieceFallOnTime();
 
-        KeyValuePair<KeyCode, Vector3>[] keyMoves = new KeyValuePair<KeyCode, Vector3>[]
-        {
-            new KeyValuePair<KeyCode, Vector3> (KeyCode.DownArrow, Vector3.down),
-            new KeyValuePair<KeyCode, Vector3> (KeyCode.UpArrow, Vector3.up),
-            new KeyValuePair<KeyCode, Vector3> (KeyCode.LeftArrow, Vector3.left),
-            new KeyValuePair<KeyCode, Vector3> (KeyCode.RightArrow, Vector3.right),
-        };
+        //KeyValuePair<KeyCode, Vector3>[] keyMoves = new KeyValuePair<KeyCode, Vector3>[]
+        //{
+        //    new KeyValuePair<KeyCode, Vector3> (KeyCode.DownArrow, Vector3.down),
+        //    new KeyValuePair<KeyCode, Vector3> (KeyCode.UpArrow, Vector3.up),
+        //    new KeyValuePair<KeyCode, Vector3> (KeyCode.LeftArrow, Vector3.left),
+        //    new KeyValuePair<KeyCode, Vector3> (KeyCode.RightArrow, Vector3.right),
+        //};
 
         Dictionary<KeyCode, Action> controls = new Dictionary<KeyCode, Action>()
         {
@@ -444,29 +456,54 @@ public class PieceMaker : MonoBehaviour
             {
                 currentPiece.transform.Rotate(0, 0, -90);
             },
+
             [KeyCode.Space] = () => ImprintPiece(), // <- thats a function
             [KeyCode.C] = () =>
             {
                 swapHold();
-            }
+            },
+            [KeyCode.UpArrow] = () =>
+            {
+                currentPiece.transform.position += Vector3.up;
+            },
+            [KeyCode.DownArrow] = () =>
+            {
+                currentPiece.transform.position += Vector3.down;
+                if (isPieceOOB(currentPiece) || isColliding())
+                {
+                    currentPiece.transform.position += Vector3.up;
+                    ImprintPiece();
+                }
+            },
+            [KeyCode.LeftArrow] = () =>
+            {
+                currentPiece.transform.position += Vector3.left;
+                if (isPieceOOB(currentPiece) || isColliding()) currentPiece.transform.position += Vector3.right;
+
+            },
+            [KeyCode.RightArrow] = () =>
+            {
+                currentPiece.transform.position += Vector3.right;
+                if (isPieceOOB(currentPiece) || isColliding() ) currentPiece.transform.position += Vector3.left;
+            },
         };
 
         currentKey = KeyCode.None;
 
-        for (int i = 0; i < keyMoves.Length; i++)
-        {
-            if (Input.GetKey(keyMoves[i].Key))
-            {
-                currentKey = keyMoves[i].Key;
-                currentPiece.transform.position += keyMoves[i].Value;
-                if (isPieceOOB(currentPiece)) {
-                    currentPiece.transform.position -= keyMoves[i].Value;
-                }
-                keyTimer = keyDelay;
-            }
-        }
+        //for (int i = 0; i < keyMoves.Length; i++)
+        //{
+        //    if (Input.GetKey(keyMoves[i].Key))
+        //    {
+        //        currentKey = keyMoves[i].Key;
+        //        currentPiece.transform.position += keyMoves[i].Value;
+        //        if (isPieceOOB(currentPiece)) {
+        //            currentPiece.transform.position -= keyMoves[i].Value;
+        //        }
+        //        keyTimer = keyDelay;
+        //    }
+        //}
 
-        placePieceIfCollision();
+        //placePieceIfCollision();
 
         foreach (KeyValuePair<KeyCode, Action> kvp in controls)
         {

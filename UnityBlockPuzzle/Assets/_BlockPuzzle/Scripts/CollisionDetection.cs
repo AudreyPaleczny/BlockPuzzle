@@ -13,7 +13,7 @@ public static class CollisionDetection
             int x = minoPos[i].x;
             int y = minoPos[i].y;
 
-            if (y < 0) return true;
+            //if (y < 0) return true;
 
             if (objectMatrix[y][x] != null)
             {

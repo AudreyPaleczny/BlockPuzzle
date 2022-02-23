@@ -6,7 +6,7 @@ using UnityEngine;
 public class Board : MonoBehaviour
 {
     public int width = 10;
-    public int height = 20;
+    public int height = 23;
     public GameObject normalBlock;
     public Vector3 blockSize = Vector3.one;
 
