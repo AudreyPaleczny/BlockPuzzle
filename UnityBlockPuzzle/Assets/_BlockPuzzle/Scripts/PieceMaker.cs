@@ -17,6 +17,7 @@ public class PieceMaker : MonoBehaviour
     const float keyDelay = 1f / 8;
     public Text debugText;
     public GameObject currentPiece;
+    public GameObject holdPiece;
     public long then;
     public long fallCounter = 0;
 
@@ -176,6 +177,27 @@ public class PieceMaker : MonoBehaviour
         pieceThree.transform.position = initialPosition + Vector3.down * 8;
         pieceFour.transform.position = initialPosition + Vector3.down * 12;
         pieceFive.transform.position = initialPosition + Vector3.down * 16;
+    }
+    public int n = 1;
+    public void swapHold()
+    {
+        GameObject temp;
+
+        if (n == 1) // first time THIS WORKS BTW WOOOOHOOOO
+        {
+            holdPiece = currentPiece;
+            holdPiece.transform.position = new Vector3(-5, 4.5f, 4);
+            makeAnotherOne();
+            n++;
+        } else if (n == 2) // from then on
+        {
+            temp = holdPiece;
+            holdPiece = currentPiece;
+            currentPiece = temp;
+            holdPiece.transform.position = new Vector3(-5, 4.5f, 4); // magic number that is the position of the hold piece
+            currentPiece.transform.position = new Vector3(4.5f, 4.5f, 4); // or transform.position? this is the position of piecemaker
+            // add an update current piece funtion so the current piece changes
+        }
     }
 
     public void makeAnotherOne()
@@ -422,7 +444,11 @@ public class PieceMaker : MonoBehaviour
             {
                 currentPiece.transform.Rotate(0, 0, -90);
             },
-            [KeyCode.Space] = ()=> ImprintPiece() // <- thats a function
+            [KeyCode.Space] = () => ImprintPiece(), // <- thats a function
+            [KeyCode.C] = () =>
+            {
+                swapHold();
+            }
         };
 
         currentKey = KeyCode.None;
