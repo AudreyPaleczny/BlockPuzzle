@@ -19,6 +19,7 @@ public class Board : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Score.Value = 0;
         objectMatrix = new GameObject[height][];
 
         for (int i = 0; i < objectMatrix.Length; ++i) objectMatrix[i] = new GameObject[width];
