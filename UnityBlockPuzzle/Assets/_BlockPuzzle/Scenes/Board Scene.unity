@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4381995, g: 0.48621613, b: 0.5664921, a: 1}
+  m_IndirectSpecularColor: {r: 0.43820006, g: 0.48621696, b: 0.5664928, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -956,14 +956,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92c78e8bdab368c4c8599727581135d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabsOfPieces:
-  - {fileID: 1020447776129946073, guid: fefe922f5beabc64a91d1e5234dcd132, type: 3}
-  - {fileID: 522334374843294851, guid: 418efdbe4ee50e14bbcb2d6680daa7b5, type: 3}
-  - {fileID: 1773043618498676235, guid: 53d143cb7b6804213bd76fe2e914af3f, type: 3}
-  - {fileID: 8012274529541418100, guid: 9e40ee5f73f9146ba892236d77126419, type: 3}
-  - {fileID: 6957823039190526958, guid: ce792fb648b1247c0850ed07f58aae4b, type: 3}
-  - {fileID: 2701999390867481429, guid: f0f78dadfe8b043a9adcd1cbff601d59, type: 3}
-  - {fileID: 3931688169107807429, guid: 410962dd4dee642ba95727bf50a226d6, type: 3}
   delay: 0
   listOfObjects: []
   board: {fileID: 1729263184}
@@ -975,9 +967,10 @@ MonoBehaviour:
   - {fileID: 1580717062}
   debugText: {fileID: 0}
   currentPiece: {fileID: 0}
-  holdPiece: {fileID: 0}
   then: 0
   fallCounter: 0
+  n: 1
+  holdPiece: {fileID: 0}
   currentKey: 0
   debugPosition: 
 --- !u!4 &1441315622
@@ -1621,13 +1614,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e1c1d5ef21c8d04794f3eae614801e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabsOfPieces: []
-  holdPiece: {fileID: 0}
-  nums: 
-  numsLeft: 0
+  prefabsOfPieces:
+  - {fileID: 1020447776129946073, guid: fefe922f5beabc64a91d1e5234dcd132, type: 3}
+  - {fileID: 522334374843294851, guid: 418efdbe4ee50e14bbcb2d6680daa7b5, type: 3}
+  - {fileID: 1773043618498676235, guid: 53d143cb7b6804213bd76fe2e914af3f, type: 3}
+  - {fileID: 8012274529541418100, guid: 9e40ee5f73f9146ba892236d77126419, type: 3}
+  - {fileID: 6957823039190526958, guid: ce792fb648b1247c0850ed07f58aae4b, type: 3}
+  - {fileID: 2701999390867481429, guid: f0f78dadfe8b043a9adcd1cbff601d59, type: 3}
+  - {fileID: 3931688169107807429, guid: 410962dd4dee642ba95727bf50a226d6, type: 3}
   queue: []
   initialPosition: {x: 18, y: 4.5, z: 4}
-  n: 1
+  nums: 
+  numsLeft: 0
 --- !u!4 &1909340089
 Transform:
   m_ObjectHideFlags: 0
