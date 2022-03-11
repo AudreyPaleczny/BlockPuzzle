@@ -169,7 +169,7 @@ namespace Piece
                 Transform mino = pieceTransform.GetChild(i);
                 if (!mino.GetComponent<Light>())
                 {
-                    int boardXPos = (int)(mino.position.x - 0.5f), boardYPos = (int)((mino.position.y - 3.5f) * -1);
+                    int boardXPos = (int)Mathf.Round(mino.position.x - 0.5f), boardYPos = (int)Mathf.Round((mino.position.y - 3.5f) * -1);
                     coords[index++] = new Vector2Int(boardXPos, boardYPos);
                 }
             }
@@ -193,7 +193,7 @@ namespace Piece
                 Transform mino = currentPiece.transform.GetChild(0);
                 if (!mino.GetComponent<Light>())
                 {
-                    int boardXPos = (int)(mino.position.x - 0.5f), boardYPos = (int)((mino.position.y - 3.5f) * -1);
+                    int boardXPos = (int)Mathf.Round(mino.position.x - 0.5f), boardYPos = (int)Mathf.Round((mino.position.y - 3.5f) * -1);
                     if (isMinoOOB(boardXPos, boardYPos)) success = false;
                     else board.objectMatrix[boardYPos][boardXPos] = mino.gameObject;
                 }
@@ -328,14 +328,6 @@ namespace Piece
             fallCounter += passed;
             pieceFallOnTime();
 
-            //KeyValuePair<KeyCode, Vector3>[] keyMoves = new KeyValuePair<KeyCode, Vector3>[]
-            //{
-            //    new KeyValuePair<KeyCode, Vector3> (KeyCode.DownArrow, Vector3.down),
-            //    new KeyValuePair<KeyCode, Vector3> (KeyCode.UpArrow, Vector3.up),
-            //    new KeyValuePair<KeyCode, Vector3> (KeyCode.LeftArrow, Vector3.left),
-            //    new KeyValuePair<KeyCode, Vector3> (KeyCode.RightArrow, Vector3.right),
-            //};
-
             Dictionary<KeyCode, Action> controls = new Dictionary<KeyCode, Action>()
             {
                 [KeyCode.P] = () =>
@@ -392,19 +384,6 @@ namespace Piece
 
             currentKey = KeyCode.None;
 
-            //for (int i = 0; i < keyMoves.Length; i++)
-            //{
-            //    if (Input.GetKey(keyMoves[i].Key))
-            //    {
-            //        currentKey = keyMoves[i].Key;
-            //        currentPiece.transform.position += keyMoves[i].Value;
-            //        if (isPieceOOB(currentPiece)) {
-            //            currentPiece.transform.position -= keyMoves[i].Value;
-            //        }
-            //        keyTimer = keyDelay;
-            //    }
-            //}
-
             //placePieceIfCollision();
 
             foreach (KeyValuePair<KeyCode, Action> kvp in controls)
@@ -415,7 +394,7 @@ namespace Piece
                     keyTimer = keyDelay;
                 }
             }
-            //ClearLines();
+            ClearLines();
         }
     }
 }
