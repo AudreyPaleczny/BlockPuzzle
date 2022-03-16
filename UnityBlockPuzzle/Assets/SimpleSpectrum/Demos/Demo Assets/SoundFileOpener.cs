@@ -18,7 +18,9 @@ public class SoundFileOpener : MonoBehaviour {
 
     public void PlayFile()
     {
+#pragma warning disable CS0618 // Type or member is obsolete
         WWW w = new WWW(pathBox.text);
+#pragma warning restore CS0618 // Type or member is obsolete
         while (!w.isDone){ } //shh... don't tell anyone
         if (w.error != null)
             print(w.error);

@@ -24,10 +24,10 @@ namespace Piece
 
         public class LightUnattacher : MonoBehaviour
         {
-            public Light light;
+            public Light _light;
             private void OnDestroy()
             {
-                light.transform.SetParent(null);
+                _light.transform.SetParent(null);
             }
         }
 
@@ -113,31 +113,36 @@ namespace Piece
             currentPiece = newOne;
             blockQueue.updateQueue();
             blockQueue.printQueue();
-            //currentPiece.board = board;
         }
 
         public int n = 1;
+        public int holdCounter = 0;
         public GameObject holdPiece;
 
         public void swapHold()
         {
             GameObject temp;
-
-            if (n == 1) // first time THIS WORKS BTW WOOOOHOOOO
+            while (holdCounter == 0)
             {
-                holdPiece = currentPiece;
-                holdPiece.transform.position = new Vector3(-5, 2.5f, 4);
-                currentPiece = blockQueue.queue[0];
-                currentPiece.transform.position = new Vector3(4.5f, 2.5f, 4);
-                n++;
-            }
-            else if (n == 2) // from then on
-            {
-                temp = holdPiece;
-                holdPiece = currentPiece;
-                currentPiece = temp;
-                holdPiece.transform.position = new Vector3(-5, 2.5f, 4); // magic number that is the position of the hold piece
-                currentPiece.transform.position = new Vector3(4.5f, 2.5f, 4); // or transform.position? this is the position of piecemaker
+                if (n == 1) // first time THIS WORKS BTW WOOOOHOOOO
+                {
+                    holdPiece = currentPiece;
+                    holdPiece.transform.position = new Vector3(-5, 2.5f, 4);
+                    makeAnotherOne();
+                    // currentPiece.transform.position = new Vector3(4.5f, 2.5f, 4);
+                    n++;
+                    holdCounter++;
+                }
+                else if (n == 2) // from then on
+                {
+                    temp = holdPiece;
+                    Vector3 prevPos = currentPiece.transform.position;
+                    holdPiece = currentPiece;
+                    currentPiece = temp;
+                    holdPiece.transform.position = new Vector3(-5, 2.5f, 4); // magic number that is the position of the hold piece
+                    currentPiece.transform.position = prevPos; // or transform.position? this is the position of piecemaker
+                    holdCounter++;
+                }
             }
         }
 
@@ -191,7 +196,7 @@ namespace Piece
         /// <returns> whether the piece can be imprinted as is </returns>
         public bool ImprintPiece()
         {
-            if (isColliding()) return false;
+            if (currentPiece == null || isColliding()) return false;
             bool success = true;
             Vector2Int[] MinosPos = minoCoords();
 
@@ -208,6 +213,7 @@ namespace Piece
                 mino.SetParent(board.transform);
             }
             Destroy(currentPiece.gameObject);
+            holdCounter = 0;
             makeAnotherOne();
             return success;
         }
@@ -220,6 +226,8 @@ namespace Piece
         public void pieceFallOnTime()
         {
             // double iterationDelay = ((11 - level) * 0.1) * 1000;  // [seconds] used to be 0.05
+            if (currentPiece == null) return;
+
             double iterationDelay = 1000;
 
             if (fallCounter >= iterationDelay)
@@ -284,7 +292,11 @@ namespace Piece
         public string debugPosition;
         void Update()
         {
-            debugPosition = string.Join("\n", minoCoords());
+            if (currentPiece)
+            {
+                debugPosition = string.Join("\n", minoCoords());
+            }
+            
             if (keyTimer > 0)
             {
                 keyTimer -= Time.deltaTime;
