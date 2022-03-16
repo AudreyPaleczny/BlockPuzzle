@@ -96,6 +96,13 @@ namespace Piece
             newOne.transform.SetParent(transform);
             listOfObjects.Add(newOne);
 
+            // make ghostPiece transparent
+            //GameObject ghostPiece = Instantiate(blockQueue.queue[0]);
+            //Color ghostPieceColor = ghostPiece.GetComponent<Renderer>().material.color;
+            //ghostPieceColor.a = 0.5f;
+            //ghostPiece.GetComponent<Renderer>().material.color = ghostPieceColor;
+            //ghostPiece.transform.position = transform.position;
+
             for (int i = 0; i < 4; i++)
             {
                 pieceLight[i].transform.SetParent(newOne.transform.GetChild(i));
@@ -237,27 +244,6 @@ namespace Piece
         public enum PieceCollision { none, blockedV, blockedH, oobLeft, oobRight, oobTop, oobBottom };
 
         public KeyCode currentKey = KeyCode.None;
-        public PieceCollision kindOfPieceCollision() // is piece colliding at a specific position
-        {
-            // if (isPieceOOB(currentPiece)) return true;
-
-            for (int i = 0; i < currentPiece.transform.childCount; i++)
-            {
-                int x = (int)(currentPiece.transform.GetChild(i).position.x - 0.5);
-                int y = (int)((currentPiece.transform.GetChild(i).position.y - 3.5) * -1);
-                if (y < 0) return PieceCollision.oobTop;
-                if (y >= board.height) return PieceCollision.oobBottom;
-                if (x < 0) return PieceCollision.oobLeft;
-                if (x >= board.width) return PieceCollision.oobRight;
-
-                if (board.objectMatrix[y][x] != null)
-                {
-                    if (currentKey == KeyCode.LeftArrow || currentKey == KeyCode.RightArrow) return PieceCollision.blockedH;
-                    return PieceCollision.blockedV;
-                }
-            }
-            return PieceCollision.none;
-        }
 
         public int findBottom()
         {
@@ -273,28 +259,14 @@ namespace Piece
             return highest;
         }
 
-        public void placePieceIfCollision()
+        public void HardDrop()
         {
-            int bottomOfPiece = findBottom();
-            PieceCollision col = kindOfPieceCollision();
-            if (col == PieceCollision.blockedV)
+            while(findBottom() != board.height && !isColliding())
             {
-                currentPiece.transform.position += Vector3.up;
-                ImprintPiece();
+                currentPiece.transform.position += Vector3.down;
             }
-            else if (col == PieceCollision.oobBottom)
-            {
-                currentPiece.transform.position += Vector3.up;
-                ImprintPiece();
-            }
-            else if (col == PieceCollision.blockedH)
-            {
-                if (currentKey == KeyCode.LeftArrow)
-                {
-                    currentPiece.transform.position += Vector3.right;
-                }
-                else currentPiece.transform.position += Vector3.left;
-            }
+            currentPiece.transform.position += Vector3.up;
+            ImprintPiece();
         }
 
         // Start is called before the first frame update
@@ -350,8 +322,11 @@ namespace Piece
                 {
                     currentPiece.transform.Rotate(0, 0, -90);
                 },
-
-                [KeyCode.Space] = () => ImprintPiece(), // <- thats a function
+                [KeyCode.Space] = () => {
+                    if (!Input.GetKeyDown(KeyCode.Space)) return;
+                    HardDrop();
+                },
+                //[KeyCode.Space] = () => ImprintPiece(), // <- thats a function
                 [KeyCode.C] = () =>
                 {
                     swapHold();
