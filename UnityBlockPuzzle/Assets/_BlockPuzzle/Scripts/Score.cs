@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
@@ -13,12 +14,15 @@ public class Score : MonoBehaviour
         {
             if(_instance == null)
             {
+                _instance = FindObjectOfType<Score>();
+                if (_instance != null) return _instance;
                 _instance = new GameObject("Score").AddComponent<Score>();
             }
             return _instance;
         }
     }
 
+    public Text scoreText;
     private int _score;
 
     public int value
@@ -32,6 +36,7 @@ public class Score : MonoBehaviour
         {
             _score = value;
             PlayerPrefs.SetInt("Score", _score);
+            scoreText.text = "Score: " + _score.ToString();
         }
     }
 
