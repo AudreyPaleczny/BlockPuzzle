@@ -147,6 +147,7 @@ namespace Piece
                 {
                     holdPiece = currentPiece;
                     holdPiece.transform.position = new Vector3(-5, 2.5f, 4);
+                    resetRotation(holdPiece);
                     makeAnotherOne();
                     dirtyGhost = true;
                     // currentPiece.transform.position = new Vector3(4.5f, 2.5f, 4);
@@ -161,9 +162,18 @@ namespace Piece
                     currentPiece = temp;
                     holdPiece.transform.position = new Vector3(-5, 2.5f, 4); // magic number that is the position of the hold piece
                     currentPiece.transform.position = transform.position; // or transform.position? this is the position of piecemaker
+                    resetRotation(holdPiece);
+                    resetRotation(currentPiece);
                     holdCounter++;
                 }
+
+                Noisy.PlaySound("Pop");
             }
+        }
+
+        public void resetRotation(GameObject p)
+        {
+            p.transform.eulerAngles = new Vector3(0, 0, 0);
         }
 
         public bool isPieceOOB(GameObject piece)
@@ -365,6 +375,10 @@ namespace Piece
                     currentPiece.transform.Rotate(0, 0, -90);
                     currentGhostPiece.transform.Rotate(0, 0, -90);
                     dirtyGhost = true;
+                },
+                [KeyCode.R] = () =>
+                {
+                    resetRotation(currentPiece);
                 },
                 [KeyCode.Space] = () => {
                     if (!Input.GetKeyDown(KeyCode.Space)) return;
