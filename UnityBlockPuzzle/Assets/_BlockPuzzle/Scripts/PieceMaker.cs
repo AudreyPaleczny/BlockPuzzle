@@ -19,7 +19,7 @@ namespace Piece
         const float keyDelay = 1f / 8;
         public Text debugText;
         public GameObject currentPiece;
-        public GameObject currentGhostPiece;
+        public GameObject currentGhostPiece, previousGhostPiece;
         public long then;
         public long fallCounter = 0;
         private bool dirtyGhost = true;
@@ -94,6 +94,7 @@ namespace Piece
         public void placeGhostPiece()
         {
             currentGhostPiece.transform.position = currentPiece.transform.position;
+            //Debug.Log( string.Join(", ",minoCoords()) );
             while ((findBottom(currentGhostPiece.transform) != board.height) && (!CollisionDetection.isColliding(minoCoords(currentGhostPiece.transform), board.objectMatrix)))
             {
                 currentGhostPiece.transform.position += Vector3.down;
@@ -134,36 +135,40 @@ namespace Piece
         }
 
         public int howManyTimesPieceBeenHeld = 1;
-        public int holdCounter = 0;
+        public bool canPieceBeHeld = true;
         public GameObject holdPiece;
 
         public void swapHold()
         {
-            GameObject temp, tempGhost;
-            while (holdCounter == 0)
+            if (!canPieceBeHeld) return;
+            GameObject temp;
+
+            //previousGhostPiece = currentGhostPiece;
+
+            if (howManyTimesPieceBeenHeld == 1) // first time THIS WORKS BTW WOOOOHOOOO
             {
-                if (currentGhostPiece) Destroy(currentGhostPiece.gameObject);
-                if (howManyTimesPieceBeenHeld == 1) // first time THIS WORKS BTW WOOOOHOOOO
-                {
-                    holdPiece = currentPiece;
-                    holdPiece.transform.position = new Vector3(-5, 2.5f, 4);
-                    makeAnotherOne();
-                    dirtyGhost = true;
-                    // currentPiece.transform.position = new Vector3(4.5f, 2.5f, 4);
-                    howManyTimesPieceBeenHeld++;
-                    holdCounter++;
-                }
-                else if (howManyTimesPieceBeenHeld == 2) // from then on
-                {
-                    temp = holdPiece;
-                    //Vector3 prevPos = currentPiece.transform.position;
-                    holdPiece = currentPiece;
-                    currentPiece = temp;
-                    holdPiece.transform.position = new Vector3(-5, 2.5f, 4); // magic number that is the position of the hold piece
-                    currentPiece.transform.position = transform.position; // or transform.position? this is the position of piecemaker
-                    holdCounter++;
-                }
+                previousGhostPiece = currentGhostPiece;
+                previousGhostPiece.SetActive(false);
+                holdPiece = currentPiece;
+                makeAnotherOne();
+                howManyTimesPieceBeenHeld++;
             }
+            else if (howManyTimesPieceBeenHeld == 2) // from then on
+            {
+                temp = holdPiece; holdPiece = currentPiece; currentPiece = temp; // swaps the hold piece and current piece
+                currentPiece.transform.position = transform.position; 
+
+                temp = previousGhostPiece; previousGhostPiece = currentGhostPiece; currentGhostPiece = temp; // swaps ghost piece and old ghost piece
+
+                currentGhostPiece.SetActive(true);
+                previousGhostPiece.SetActive(false);
+                currentGhostPiece.transform.position = transform.position;
+            }
+            
+            dirtyGhost = true;
+            holdPiece.transform.position = new Vector3(-5, 2.5f, 4); // magic number that is the position of the hold piece
+            canPieceBeHeld = false;
+            
         }
 
         public bool isPieceOOB(GameObject piece)
@@ -234,7 +239,7 @@ namespace Piece
             }
             Destroy(currentPiece.gameObject);
             Destroy(currentGhostPiece.gameObject);
-            holdCounter = 0;
+            canPieceBeHeld = true;
             makeAnotherOne();
             dirtyGhost = true;
             return success;
