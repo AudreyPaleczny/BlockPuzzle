@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4381995, g: 0.48621613, b: 0.5664921, a: 1}
+  m_IndirectSpecularColor: {r: 0.4381991, g: 0.48621583, b: 0.56649154, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -879,8 +879,8 @@ Camera:
   m_GameObject: {fileID: 1141102349}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -967,9 +967,10 @@ MonoBehaviour:
   - {fileID: 1580717062}
   debugText: {fileID: 0}
   currentPiece: {fileID: 0}
+  currentGhostPiece: {fileID: 0}
   then: 0
   fallCounter: 0
-  n: 1
+  howManyTimesPieceBeenHeld: 1
   holdCounter: 0
   holdPiece: {fileID: 0}
   currentKey: 0
@@ -1749,8 +1750,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2113421658}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -14, z: 5}
-  m_LocalScale: {x: 14, y: 2, z: 5}
+  m_LocalPosition: {x: 0, y: -14, z: 4}
+  m_LocalScale: {x: 14, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 1069979731}
   m_RootOrder: 1

@@ -19,8 +19,10 @@ namespace Piece
         const float keyDelay = 1f / 8;
         public Text debugText;
         public GameObject currentPiece;
+        public GameObject currentGhostPiece;
         public long then;
         public long fallCounter = 0;
+        private bool dirtyGhost = true;
 
         public class LightUnattacher : MonoBehaviour
         {
@@ -89,6 +91,16 @@ namespace Piece
             listOfObjects.RemoveAt(last);
         }
 
+        public void placeGhostPiece()
+        {
+            currentGhostPiece.transform.position = currentPiece.transform.position;
+            while ((findBottom(currentGhostPiece.transform) != board.height) && (!CollisionDetection.isColliding(minoCoords(currentGhostPiece.transform), board.objectMatrix)))
+            {
+                currentGhostPiece.transform.position += Vector3.down;
+            }
+            currentGhostPiece.transform.position += Vector3.up;
+        }
+
         public void makeAnotherOne()
         {
             GameObject newOne = Instantiate(blockQueue.queue[0]);
@@ -97,11 +109,17 @@ namespace Piece
             listOfObjects.Add(newOne);
 
             // make ghostPiece transparent
-            //GameObject ghostPiece = Instantiate(blockQueue.queue[0]);
-            //Color ghostPieceColor = ghostPiece.GetComponent<Renderer>().material.color;
-            //ghostPieceColor.a = 0.5f;
-            //ghostPiece.GetComponent<Renderer>().material.color = ghostPieceColor;
-            //ghostPiece.transform.position = transform.position;
+            GameObject ghostPiece = Instantiate(newOne);
+            for(int i = 0; i < ghostPiece.transform.childCount; i++)
+            {
+                Transform ghostMino = ghostPiece.transform.GetChild(i);
+                Transform minoModel = ghostMino.GetChild(0);
+                Color ghostMinoColor = minoModel.GetComponent<Renderer>().material.color;
+                ghostMinoColor.a = 0.25f;
+                minoModel.GetComponent<Renderer>().material.color = ghostMinoColor;
+            }
+
+            currentGhostPiece = ghostPiece;
 
             for (int i = 0; i < 4; i++)
             {
@@ -115,32 +133,34 @@ namespace Piece
             blockQueue.printQueue();
         }
 
-        public int n = 1;
+        public int howManyTimesPieceBeenHeld = 1;
         public int holdCounter = 0;
         public GameObject holdPiece;
 
         public void swapHold()
         {
-            GameObject temp;
+            GameObject temp, tempGhost;
             while (holdCounter == 0)
             {
-                if (n == 1) // first time THIS WORKS BTW WOOOOHOOOO
+                if (currentGhostPiece) Destroy(currentGhostPiece.gameObject);
+                if (howManyTimesPieceBeenHeld == 1) // first time THIS WORKS BTW WOOOOHOOOO
                 {
                     holdPiece = currentPiece;
                     holdPiece.transform.position = new Vector3(-5, 2.5f, 4);
                     makeAnotherOne();
+                    dirtyGhost = true;
                     // currentPiece.transform.position = new Vector3(4.5f, 2.5f, 4);
-                    n++;
+                    howManyTimesPieceBeenHeld++;
                     holdCounter++;
                 }
-                else if (n == 2) // from then on
+                else if (howManyTimesPieceBeenHeld == 2) // from then on
                 {
                     temp = holdPiece;
-                    Vector3 prevPos = currentPiece.transform.position;
+                    //Vector3 prevPos = currentPiece.transform.position;
                     holdPiece = currentPiece;
                     currentPiece = temp;
                     holdPiece.transform.position = new Vector3(-5, 2.5f, 4); // magic number that is the position of the hold piece
-                    currentPiece.transform.position = prevPos; // or transform.position? this is the position of piecemaker
+                    currentPiece.transform.position = transform.position; // or transform.position? this is the position of piecemaker
                     holdCounter++;
                 }
             }
@@ -213,8 +233,10 @@ namespace Piece
                 mino.SetParent(board.transform);
             }
             Destroy(currentPiece.gameObject);
+            Destroy(currentGhostPiece.gameObject);
             holdCounter = 0;
             makeAnotherOne();
+            dirtyGhost = true;
             return success;
         }
 
@@ -233,7 +255,7 @@ namespace Piece
             if (fallCounter >= iterationDelay)
             {
                 currentPiece.transform.position += Vector3.down;
-                if (findBottom() == board.height)
+                if (findBottom(currentPiece.transform) == board.height)
                 {
                     currentPiece.transform.position += Vector3.up;
                     ImprintPiece(); // add delay later
@@ -253,9 +275,9 @@ namespace Piece
 
         public KeyCode currentKey = KeyCode.None;
 
-        public int findBottom()
+        public int findBottom(Transform pieceTransform)
         {
-            Vector2Int[] minoPos = minoCoords();
+            Vector2Int[] minoPos = minoCoords(pieceTransform);
             int highest = minoPos[0].y; // the bottom mino with the highest y coord, not the highest mino
 
             for (int i = 1; i < minoPos.Length; i++)
@@ -269,7 +291,7 @@ namespace Piece
 
         public void HardDrop()
         {
-            while(findBottom() != board.height && !isColliding())
+            while(findBottom(currentPiece.transform) != board.height && !isColliding())
             {
                 currentPiece.transform.position += Vector3.down;
             }
@@ -296,7 +318,12 @@ namespace Piece
             {
                 debugPosition = string.Join("\n", minoCoords());
             }
-            
+            if (dirtyGhost)
+            {
+                placeGhostPiece();
+                //Debug.Log("moved");
+                dirtyGhost = false;
+            }
             if (keyTimer > 0)
             {
                 keyTimer -= Time.deltaTime;
@@ -305,6 +332,7 @@ namespace Piece
                     return;
                 }
             }
+
             long now = UTCMS();
             //time passed
             long passed = now - then;
@@ -329,10 +357,14 @@ namespace Piece
                 [KeyCode.Z] = () =>
                 {
                     currentPiece.transform.Rotate(0, 0, 90);
+                    currentGhostPiece.transform.Rotate(0, 0, 90);
+                    dirtyGhost = true;
                 },
                 [KeyCode.X] = () =>
                 {
                     currentPiece.transform.Rotate(0, 0, -90);
+                    currentGhostPiece.transform.Rotate(0, 0, -90);
+                    dirtyGhost = true;
                 },
                 [KeyCode.Space] = () => {
                     if (!Input.GetKeyDown(KeyCode.Space)) return;
@@ -360,12 +392,13 @@ namespace Piece
                 {
                     currentPiece.transform.position += Vector3.left;
                     if (isPieceOOB(currentPiece) || isColliding()) currentPiece.transform.position += Vector3.right;
-
+                    dirtyGhost = true;
                 },
                 [KeyCode.RightArrow] = () =>
                 {
                     currentPiece.transform.position += Vector3.right;
                     if (isPieceOOB(currentPiece) || isColliding()) currentPiece.transform.position += Vector3.left;
+                    dirtyGhost = true;
                 },
             };
 
