@@ -143,7 +143,8 @@ namespace Piece
             if (!canPieceBeHeld) return;
             GameObject temp;
 
-            //previousGhostPiece = currentGhostPiece;
+            resetRotation(currentGhostPiece);
+            resetRotation(currentPiece);
 
             if (howManyTimesPieceBeenHeld == 1) // first time THIS WORKS BTW WOOOOHOOOO
             {
@@ -165,10 +166,16 @@ namespace Piece
                 currentGhostPiece.transform.position = transform.position;
             }
             
+            Noisy.PlaySound("Pop");
             dirtyGhost = true;
             holdPiece.transform.position = new Vector3(-5, 2.5f, 4); // magic number that is the position of the hold piece
             canPieceBeHeld = false;
             
+        }
+
+        public void resetRotation(GameObject p)
+        {
+            p.transform.eulerAngles = new Vector3(0, 0, 0);
         }
 
         public bool isPieceOOB(GameObject piece)
@@ -370,6 +377,10 @@ namespace Piece
                     currentPiece.transform.Rotate(0, 0, -90);
                     currentGhostPiece.transform.Rotate(0, 0, -90);
                     dirtyGhost = true;
+                },
+                [KeyCode.R] = () =>
+                {
+                    resetRotation(currentPiece);
                 },
                 [KeyCode.Space] = () => {
                     if (!Input.GetKeyDown(KeyCode.Space)) return;
