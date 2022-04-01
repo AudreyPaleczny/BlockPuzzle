@@ -21,7 +21,12 @@ namespace Piece
         public GameObject currentPiece;
         public GameObject currentGhostPiece, previousGhostPiece;
         public long then;
+
         public long fallCounter = 0;
+        double iterationDelay = 1000;
+
+        bool delayTheImprintForSoftDrop = false;
+
         private bool dirtyGhost = true;
 
         public class LightUnattacher : MonoBehaviour
@@ -262,8 +267,6 @@ namespace Piece
             // double iterationDelay = ((11 - level) * 0.1) * 1000;  // [seconds] used to be 0.05
             if (currentPiece == null) return;
 
-            double iterationDelay = 1000;
-
             if (fallCounter >= iterationDelay)
             {
                 currentPiece.transform.position += Vector3.down;
@@ -271,12 +274,14 @@ namespace Piece
                 {
                     currentPiece.transform.position += Vector3.up;
                     ImprintPiece(); // add delay later
+                    delayTheImprintForSoftDrop = false;
                 }
 
                 else if (isColliding())
                 {
                     currentPiece.transform.position += Vector3.up;
                     ImprintPiece();
+                    delayTheImprintForSoftDrop = false;
                 }
 
                 fallCounter -= (long)iterationDelay;
@@ -398,10 +403,15 @@ namespace Piece
                 [KeyCode.DownArrow] = () =>
                 {
                     currentPiece.transform.position += Vector3.down;
+
                     if (isPieceOOB(currentPiece) || isColliding())
                     {
                         currentPiece.transform.position += Vector3.up;
-                        ImprintPiece();
+                        if (!delayTheImprintForSoftDrop)
+                        {
+                            fallCounter = 0;
+                            delayTheImprintForSoftDrop = true;
+                        }
                     }
                 },
                 [KeyCode.LeftArrow] = () =>
