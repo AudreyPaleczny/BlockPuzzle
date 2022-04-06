@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Piece
 {
-    public class PieceMaker : MonoBehaviour
+    public partial class PieceMaker : MonoBehaviour
     {
         [Tooltip("Put a thing in here to create!"), ContextMenuItem("Spawn", "makeAnotherOne"), ContextMenuItem("DESTROY THE LAST THING", "destroyTheLastOne")]
         public float delay;
@@ -227,36 +227,6 @@ namespace Piece
 
         bool isColliding() => CollisionDetection.isColliding(minoCoords(), board.objectMatrix);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns> whether the piece can be imprinted as is </returns>
-        public bool ImprintPiece()
-        {
-            if (currentPiece == null || isColliding()) return false;
-            bool success = true;
-            Vector2Int[] MinosPos = minoCoords();
-
-            while (currentPiece.transform.childCount > 0)
-            {
-                Transform mino = currentPiece.transform.GetChild(0);
-                if (!mino.GetComponent<Light>())
-                {
-                    int boardXPos = (int)Mathf.Round(mino.position.x - 0.5f), boardYPos = (int)Mathf.Round((mino.position.y - 3.5f) * -1);
-                    if (isMinoOOB(boardXPos, boardYPos)) success = false;
-                    else board.objectMatrix[boardYPos][boardXPos] = mino.gameObject;
-                }
-
-                mino.SetParent(board.transform);
-            }
-            Destroy(currentPiece.gameObject);
-            Destroy(currentGhostPiece.gameObject);
-            canPieceBeHeld = true;
-            makeAnotherOne();
-            dirtyGhost = true;
-            return success;
-        }
-
         public static long UTCMS()
         {
             return System.DateTime.Now.Ticks / System.TimeSpan.TicksPerMillisecond;
@@ -327,6 +297,84 @@ namespace Piece
             makeAnotherOne();
         }
 
+
+        public Dictionary<KeyCode, Action> _controls;
+
+        Dictionary<KeyCode, Action> controls =>
+            _controls != null
+                ? _controls
+                : _controls = new Dictionary<KeyCode, Action>()
+                {
+                    [KeyCode.P] = () =>
+                    {
+                        StringBuilder sb = new StringBuilder();
+                        for (int i = 0; i < currentPiece.transform.childCount; i++)
+                        {
+                            //Debug.Log("Child " + i + " " + transform.GetChild(i).position);
+                            sb.Append("Child " + i + " board xPos: " + (currentPiece.transform.GetChild(i).position.x - 0.5) +
+                                " board yPos:" + (currentPiece.transform.GetChild(i).position.y - 3.5) * -1).Append("\n");
+                        }
+                        Debug.Log(sb);
+                        if (debugText) debugText.text = sb.ToString();
+                    },
+                    [KeyCode.Z] = () =>
+                    {
+                        currentPiece.transform.Rotate(0, 0, 90);
+                        currentGhostPiece.transform.Rotate(0, 0, 90);
+                        dirtyGhost = true;
+                    },
+                    [KeyCode.X] = () =>
+                    {
+                        currentPiece.transform.Rotate(0, 0, -90);
+                        currentGhostPiece.transform.Rotate(0, 0, -90);
+                        dirtyGhost = true;
+                    },
+                    [KeyCode.R] = () =>
+                    {
+                        resetRotation(currentPiece);
+                    },
+                    [KeyCode.Space] = () => {
+                        if (!Input.GetKeyDown(KeyCode.Space)) return;
+                        HardDrop();
+                    },
+                    //[KeyCode.Space] = () => ImprintPiece(), // <- thats a function
+                    [KeyCode.C] = () =>
+                    {
+                        swapHold();
+                    },
+                    [KeyCode.UpArrow] = () =>
+                    {
+                        currentPiece.transform.position += Vector3.up;
+                    },
+                    [KeyCode.DownArrow] = () =>
+                    {
+                        currentPiece.transform.position += Vector3.down;
+
+                        if (isPieceOOB(currentPiece) || isColliding())
+                        {
+                            currentPiece.transform.position += Vector3.up;
+                            if (!delayTheImprintForSoftDrop)
+                            {
+                                fallCounter = 0;
+                                delayTheImprintForSoftDrop = true;
+                            }
+                        }
+                    },
+                    [KeyCode.LeftArrow] = () =>
+                    {
+                        currentPiece.transform.position += Vector3.left;
+                        if (isPieceOOB(currentPiece) || isColliding()) currentPiece.transform.position += Vector3.right;
+                        dirtyGhost = true;
+                    },
+                    [KeyCode.RightArrow] = () =>
+                    {
+                        currentPiece.transform.position += Vector3.right;
+                        if (isPieceOOB(currentPiece) || isColliding()) currentPiece.transform.position += Vector3.left;
+                        dirtyGhost = true;
+                    },
+                };
+
+
         [TextArea(4, 4)]
         public string debugPosition;
         void Update()
@@ -356,77 +404,6 @@ namespace Piece
             then = now;
             fallCounter += passed;
             pieceFallOnTime();
-
-            Dictionary<KeyCode, Action> controls = new Dictionary<KeyCode, Action>()
-            {
-                [KeyCode.P] = () =>
-                {
-                    StringBuilder sb = new StringBuilder();
-                    for (int i = 0; i < currentPiece.transform.childCount; i++)
-                    {
-                        //Debug.Log("Child " + i + " " + transform.GetChild(i).position);
-                        sb.Append("Child " + i + " board xPos: " + (currentPiece.transform.GetChild(i).position.x - 0.5) +
-                            " board yPos:" + (currentPiece.transform.GetChild(i).position.y - 3.5) * -1).Append("\n");
-                    }
-                    Debug.Log(sb);
-                    if (debugText) debugText.text = sb.ToString();
-                },
-                [KeyCode.Z] = () =>
-                {
-                    currentPiece.transform.Rotate(0, 0, 90);
-                    currentGhostPiece.transform.Rotate(0, 0, 90);
-                    dirtyGhost = true;
-                },
-                [KeyCode.X] = () =>
-                {
-                    currentPiece.transform.Rotate(0, 0, -90);
-                    currentGhostPiece.transform.Rotate(0, 0, -90);
-                    dirtyGhost = true;
-                },
-                [KeyCode.R] = () =>
-                {
-                    resetRotation(currentPiece);
-                },
-                [KeyCode.Space] = () => {
-                    if (!Input.GetKeyDown(KeyCode.Space)) return;
-                    HardDrop();
-                },
-                //[KeyCode.Space] = () => ImprintPiece(), // <- thats a function
-                [KeyCode.C] = () =>
-                {
-                    swapHold();
-                },
-                [KeyCode.UpArrow] = () =>
-                {
-                    currentPiece.transform.position += Vector3.up;
-                },
-                [KeyCode.DownArrow] = () =>
-                {
-                    currentPiece.transform.position += Vector3.down;
-
-                    if (isPieceOOB(currentPiece) || isColliding())
-                    {
-                        currentPiece.transform.position += Vector3.up;
-                        if (!delayTheImprintForSoftDrop)
-                        {
-                            fallCounter = 0;
-                            delayTheImprintForSoftDrop = true;
-                        }
-                    }
-                },
-                [KeyCode.LeftArrow] = () =>
-                {
-                    currentPiece.transform.position += Vector3.left;
-                    if (isPieceOOB(currentPiece) || isColliding()) currentPiece.transform.position += Vector3.right;
-                    dirtyGhost = true;
-                },
-                [KeyCode.RightArrow] = () =>
-                {
-                    currentPiece.transform.position += Vector3.right;
-                    if (isPieceOOB(currentPiece) || isColliding()) currentPiece.transform.position += Vector3.left;
-                    dirtyGhost = true;
-                },
-            };
 
             currentKey = KeyCode.None;
 
