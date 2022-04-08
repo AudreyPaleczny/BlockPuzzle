@@ -6540,7 +6540,7 @@ MonoBehaviour:
   height: 23
   normalBlock: {fileID: 6607239654039140499, guid: a34e40e7ec78e4aa292f3f598f88a92f, type: 3}
   blockSize: {x: 1, y: 1, z: 1}
-  initial: ok
+  initial: 
 --- !u!4 &1729263185
 Transform:
   m_ObjectHideFlags: 0
