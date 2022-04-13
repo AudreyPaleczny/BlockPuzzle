@@ -21,6 +21,7 @@ namespace Piece
         public GameObject currentPiece;
         public GameObject currentGhostPiece, previousGhostPiece;
         public long then;
+        private int level = 0;
 
         public long fallCounter = 0;
         double iterationDelay = 1000;
@@ -40,21 +41,23 @@ namespace Piece
 
         public void ClearLines()
         {
-            int count = 0, clearRow;
+            int rowsCleared = 0;
+            int countColumns = 0, clearRow;
             for (int row = 0; row < board.height; ++row)
             {
                 for (int col = 0; col < board.width; ++col)
                 {
                     if (board.objectMatrix[row][col]) // change when we add shadow pieces and whatever
                     {
-                        ++count;
+                        ++countColumns;
                     }
                 }
                 //
                 //
-                if (count == board.width)
+                if (countColumns == board.width)
                 {
                     clearRow = row;
+                    rowsCleared++;
                     for (int col = 0; col < board.width; ++col)
                     {
                         Destroy(board.objectMatrix[row][col]);
@@ -85,8 +88,35 @@ namespace Piece
                         }
                     }
                 }
-                count = 0;
+
+                countColumns = 0;
             }
+
+            updateScore(rowsCleared, level);
+        }
+
+        private void updateScore(int rowsCleared, int level)
+        {
+            switch (rowsCleared)
+            {
+                case 0:
+                    break;
+
+                case 1: Score.Instance.value += (40 * (level + 1));
+                    break;
+
+                case 2: Score.Instance.value += (100 * (level + 1));
+                    break;
+
+                case 3:
+                    Score.Instance.value += (300 * (level + 1));
+                    break;
+
+                default:
+                    Score.Instance.value += (1200 * (level + 1));
+                    break;
+            }
+
         }
 
         public void destroyTheLastOne()
