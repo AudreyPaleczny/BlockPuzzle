@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
 
 namespace Piece
 {
@@ -22,6 +24,7 @@ namespace Piece
         public GameObject currentGhostPiece, previousGhostPiece;
         public long then;
         private int level = 0;
+        private int topOfBoard = 2;
 
         public long fallCounter = 0;
         double iterationDelay = 1000;
@@ -135,6 +138,22 @@ namespace Piece
                 currentGhostPiece.transform.position += Vector3.down;
             }
             currentGhostPiece.transform.position += Vector3.up;
+        }
+
+        private void checkIfGameOver()
+        {
+            Vector2Int[] minoPos = minoCoords(currentPiece.transform);
+            foreach(Vector2Int coord in minoPos)
+            {
+                int y = coord.y;
+
+                //start is @2
+                if(y <= topOfBoard)
+                {
+                    //go to next scene
+                    SceneManager.LoadScene("GameOverScreen");
+                }
+            }
         }
 
         public void makeAnotherOne()

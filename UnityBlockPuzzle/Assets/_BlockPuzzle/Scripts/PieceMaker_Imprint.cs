@@ -16,6 +16,8 @@ namespace Piece
             bool success = true;
             Vector2Int[] MinosPos = minoCoords();
 
+            checkIfGameOver();
+
             while (currentPiece.transform.childCount > 0)
             {
                 Transform mino = currentPiece.transform.GetChild(0);
@@ -28,6 +30,7 @@ namespace Piece
 
                 mino.SetParent(board.transform);
             }
+            
             Destroy(currentPiece.gameObject);
             Destroy(currentGhostPiece.gameObject);
             canPieceBeHeld = true;
