@@ -7,7 +7,7 @@ public class BlockQueue : MonoBehaviour
 {
     public List<GameObject> prefabsOfPieces = new List<GameObject>();
     public List<GameObject> queue = new List<GameObject>(5);
-    public Vector3 initialPosition = new Vector3(18, 4.5f, 4);
+    public Vector3 initialPosition;
 
     // 7 bag implementation here
     // the pieces are not random everytime we launch the game because the seed is the same
@@ -113,6 +113,11 @@ public class BlockQueue : MonoBehaviour
         queue[2].transform.position += Vector3.up * 4;
         queue[3].transform.position += Vector3.up * 4;
         queue[4].transform.position = initialPosition + Vector3.down * 16;
+    }
+
+    public void Start()
+    {
+        //initialPosition = new Vector3(18, 0.5f, 4);
     }
 
 }
