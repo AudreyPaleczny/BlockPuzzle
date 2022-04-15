@@ -132,6 +132,104 @@ namespace Piece
         //    listOfObjects.RemoveAt(last);
         //}
 
+        //public void placeGhostPiece()
+        //{
+        //    currentGhostPiece.transform.position = currentPiece.transform.position;
+        //    //Debug.Log( string.Join(", ",minoCoords()) );
+        //    while ((findBottom(currentGhostPiece.transform) != board.height) && (!CollisionDetection.isColliding(minoCoords(currentGhostPiece.transform), board.objectMatrix)))
+        //    {
+        //        currentGhostPiece.transform.position += Vector3.down;
+        //    }
+        //    currentGhostPiece.transform.position += Vector3.up;
+        //}
+
+        //private void checkIfGameOver()
+        //{
+        //    Vector2Int[] minoPos = minoCoords(currentPiece.transform);
+        //    foreach(Vector2Int coord in minoPos)
+        //    {
+        //        int y = coord.y;
+
+        //        //start is @2
+        //        if(y <= topOfBoard)
+        //        {
+        //            //go to next scene
+        //            SceneManager.LoadScene("GameOverScreen");
+        //        }
+        //    }
+        //}
+
+        //public void makeAnotherOne()
+        //{
+        //    GameObject newOne = Instantiate(blockQueue.queue[0]);
+        //    newOne.transform.position = transform.position;
+        //    newOne.transform.SetParent(transform);
+        //    listOfObjects.Add(newOne);
+
+        //    // make ghostPiece transparent
+        //    GameObject ghostPiece = Instantiate(newOne);
+        //    for(int i = 0; i < ghostPiece.transform.childCount; i++)
+        //    {
+        //        Transform ghostMino = ghostPiece.transform.GetChild(i);
+        //        Transform minoModel = ghostMino.GetChild(0);
+        //        Color ghostMinoColor = minoModel.GetComponent<Renderer>().material.color;
+        //        ghostMinoColor.a = 0.25f;
+        //        minoModel.GetComponent<Renderer>().material.color = ghostMinoColor;
+        //    }
+
+        //    currentGhostPiece = ghostPiece;
+
+        //    for (int i = 0; i < 4; i++)
+        //    {
+        //        pieceLight[i].transform.SetParent(newOne.transform.GetChild(i));
+        //        pieceLight[i].transform.localPosition = Vector3.zero;
+        //        pieceLight[i].transform.SetParent(newOne.transform);
+        //    }
+
+        //    currentPiece = newOne;
+        //    blockQueue.updateQueue();
+        //    blockQueue.printQueue();
+        //}
+
+        //public int howManyTimesPieceBeenHeld = 1;
+        //public bool canPieceBeHeld = true;
+        //public GameObject holdPiece;
+
+        //public void swapHold()
+        //{
+        //    if (!canPieceBeHeld) return;
+        //    GameObject temp;
+
+        //    resetRotation(currentGhostPiece);
+        //    resetRotation(currentPiece);
+
+        //    if (howManyTimesPieceBeenHeld == 1) // first time THIS WORKS BTW WOOOOHOOOO
+        //    {
+        //        previousGhostPiece = currentGhostPiece;
+        //        previousGhostPiece.SetActive(false);
+        //        holdPiece = currentPiece;
+        //        makeAnotherOne();
+        //        howManyTimesPieceBeenHeld++;
+        //    }
+        //    else if (howManyTimesPieceBeenHeld == 2) // from then on
+        //    {
+        //        temp = holdPiece; holdPiece = currentPiece; currentPiece = temp; // swaps the hold piece and current piece
+        //        currentPiece.transform.position = transform.position; 
+
+        //        temp = previousGhostPiece; previousGhostPiece = currentGhostPiece; currentGhostPiece = temp; // swaps ghost piece and old ghost piece
+
+        //        currentGhostPiece.SetActive(true);
+        //        previousGhostPiece.SetActive(false);
+        //        currentGhostPiece.transform.position = transform.position;
+        //    }
+            
+        //    Noisy.PlaySound("Pop");
+        //    dirtyGhost = true;
+        //    holdPiece.transform.position = new Vector3(-5, 2.5f, 4); // magic number that is the position of the hold piece
+        //    canPieceBeHeld = false;
+        //    currentPiece.GetComponent<PieceInfo>().pieceOrientation = 0;
+        //}
+
         public void resetRotation(GameObject p)
         {
             p.transform.eulerAngles = new Vector3(0, 0, 0);
@@ -189,6 +287,21 @@ namespace Piece
             player1.makeAnotherOne();
         }
 
+        bool SpecialCollisionLogic(PieceInfo currentPieceInfo, int rotationRuleIndex)
+        {
+            for (int i = 0; i < currentPieceInfo.rules_I[rotationRuleIndex].test.Length; i++)
+            {
+                (int,int) v = currentPieceInfo.rules_I[rotationRuleIndex].test[i];
+                Vector3Int piece_test = new Vector3Int(v.Item1, v.Item2, 0);
+                player1.currentPiece.transform.position += piece_test;
+                if (!(player1.isPieceOOB(player1.currentPiece) || isColliding(player1.currentPiece)))
+                {
+                    return true;
+                }
+                else player1.currentPiece.transform.position -= piece_test;
+            }
+            return false;
+        }
 
         public Dictionary<KeyCode, Action> _controls;
 
@@ -211,15 +324,122 @@ namespace Piece
                     },
                     [KeyCode.Z] = () =>
                     {
+
                         player1.currentPiece.transform.Rotate(0, 0, 90);
-                        player1.currentGhostPiece.transform.Rotate(0, 0, 90);
-                        player1.dirtyGhost = true;
+                        PieceInfo currentPieceInfo = player1.currentPiece.GetComponent<PieceInfo>();
+                        bool canRotate = true;
+                        if (player1.isPieceOOB(player1.currentPiece) || isColliding(player1.currentPiece))
+                        {
+                            canRotate = false;
+                            if (currentPieceInfo.pieceType == PieceInfo.PieceType.I) // IPiece 
+                            {                           
+                                switch (currentPieceInfo.pieceOrientation)
+                                {
+                                    case 0:
+                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 7);
+                                        break;
+                                    case 1:
+                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 1);
+                                        break;
+                                    case 2:
+                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 3);
+                                        break;
+                                    case 3:
+                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 5);
+                                        break;
+                                }
+
+                            }
+                            else
+                            {
+                                switch (currentPieceInfo.pieceOrientation)
+                                {
+                                    case 0:
+                                        Debug.LogError("Error: not working yet");
+                                        break;
+                                    case 1:
+                                        Debug.LogError("Error: not working yet");
+                                        break;
+                                    case 2:
+                                        Debug.LogError("Error: not working yet");
+                                        break;
+                                    case 3:
+                                        Debug.LogError("Error: not working yet");
+                                        break;
+                                }
+                            }
+                        }
+                        if (canRotate)
+                        {
+                            player1.currentGhostPiece.transform.Rotate(0, 0, 90);
+                            currentPieceInfo.pieceOrientation--;
+                            if (currentPieceInfo.pieceOrientation < 0) currentPieceInfo.pieceOrientation += 4;
+                            player1.dirtyGhost = true;
+                        }
+                        else
+                        {
+                            player1.currentPiece.transform.Rotate(0, 0, -90);
+                        }
+                        
                     },
                     [KeyCode.X] = () =>
                     {
                         player1.currentPiece.transform.Rotate(0, 0, -90);
-                        player1.currentGhostPiece.transform.Rotate(0, 0, -90);
-                        player1.dirtyGhost = true;
+                        PieceInfo currentPieceInfo = player1.currentPiece.GetComponent<PieceInfo>();
+                        bool canRotate = true;
+                        if (player1.isPieceOOB(player1.currentPiece) || isColliding(player1.currentPiece))
+                        {
+                            canRotate = false;
+                            if (currentPieceInfo.pieceType == PieceInfo.PieceType.I) // IPiece 
+                            {
+                                switch (currentPieceInfo.pieceOrientation)
+                                {
+                                    case 0:
+                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 0);
+                                        break;
+                                    case 1:
+                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 2);
+                                        break;
+                                    case 2:
+                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 4);
+                                        break;
+                                    case 3:
+                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 6);
+                                        break;
+                                }
+
+                            }
+                            else
+                            {
+                                switch (currentPieceInfo.pieceOrientation)
+                                {
+                                    case 0:
+                                        Debug.LogError("Error: not working yet");
+                                        break;
+                                    case 1:
+                                        Debug.LogError("Error: not working yet");
+                                        break;
+                                    case 2:
+                                        Debug.LogError("Error: not working yet");
+                                        break;
+                                    case 3:
+                                        Debug.LogError("Error: not working yet");
+                                        break;
+                                }
+                            }
+                        }
+                        if (canRotate)
+                        {
+                            player1.currentGhostPiece.transform.Rotate(0, 0, -90);
+                            currentPieceInfo.pieceOrientation++;
+                            if (currentPieceInfo.pieceOrientation > 3) currentPieceInfo.pieceOrientation -= 4;
+                            player1.dirtyGhost = true;
+                        }
+                        else
+                        {
+                            player1.currentPiece.transform.Rotate(0, 0, 90);
+                        }
+                        
                     },
                     [KeyCode.A] = () =>
                     {
@@ -244,7 +464,7 @@ namespace Piece
                     {
                         player1.currentPiece.transform.position += Vector3.down;
 
-                        if (player1.isPieceOOB() || isColliding(player1.currentPiece))
+                        if (player1.isPieceOOB(player1.currentPiece) || isColliding(player1.currentPiece))
                         {
                             player1.currentPiece.transform.position += Vector3.up;
                             if (!delayTheImprintForSoftDrop)
@@ -257,13 +477,13 @@ namespace Piece
                     [KeyCode.LeftArrow] = () =>
                     {
                         player1.currentPiece.transform.position += Vector3.left;
-                        if (player1.isPieceOOB() || isColliding(player1.currentPiece)) player1.currentPiece.transform.position += Vector3.right;
+                        if (player1.isPieceOOB(player1.currentPiece) || isColliding(player1.currentPiece)) player1.currentPiece.transform.position += Vector3.right;
                         player1.dirtyGhost = true;
                     },
                     [KeyCode.RightArrow] = () =>
                     {
                         player1.currentPiece.transform.position += Vector3.right;
-                        if (player1.isPieceOOB() || isColliding(player1.currentPiece)) player1.currentPiece.transform.position += Vector3.left;
+                        if (player1.isPieceOOB(player1.currentPiece) || isColliding(player1.currentPiece)) player1.currentPiece.transform.position += Vector3.left;
                         player1.dirtyGhost = true;
                     },
                 };
@@ -309,7 +529,7 @@ namespace Piece
                     {
                         player1.currentPiece.transform.position += Vector3.down;
 
-                        if (player1.isPieceOOB() || isColliding(player1.currentPiece))
+                        if (player1.isPieceOOB(player1.currentPiece) || isColliding(player1.currentPiece))
                         {
                             player1.currentPiece.transform.position += Vector3.up;
                             if (!delayTheImprintForSoftDrop)
@@ -322,13 +542,13 @@ namespace Piece
                     [KeyCode.A] = () =>
                     {
                         player1.currentPiece.transform.position += Vector3.left;
-                        if (player1.isPieceOOB() || isColliding(player1.currentPiece)) player1.currentPiece.transform.position += Vector3.right;
+                        if (player1.isPieceOOB(player1.currentPiece) || isColliding(player1.currentPiece)) player1.currentPiece.transform.position += Vector3.right;
                         player1.dirtyGhost = true;
                     },
                     [KeyCode.D] = () =>
                     {
                         player1.currentPiece.transform.position += Vector3.right;
-                        if (player1.isPieceOOB() || isColliding(player1.currentPiece)) player1.currentPiece.transform.position += Vector3.left;
+                        if (player1.isPieceOOB(player1.currentPiece) || isColliding(player1.currentPiece)) player1.currentPiece.transform.position += Vector3.left;
                         player1.dirtyGhost = true;
                     },
 
@@ -369,7 +589,7 @@ namespace Piece
                     {
                         player2.currentPiece.transform.position += Vector3.down;
 
-                        if (player2.isPieceOOB() || isColliding(player2.currentPiece))
+                        if (player2.isPieceOOB(player2.currentPiece) || isColliding(player2.currentPiece))
                         {
                             player2.currentPiece.transform.position += Vector3.up;
                             if (!delayTheImprintForSoftDrop)
@@ -382,13 +602,13 @@ namespace Piece
                     [KeyCode.LeftArrow] = () =>
                     {
                         player2.currentPiece.transform.position += Vector3.left;
-                        if (player2.isPieceOOB() || isColliding(player2.currentPiece)) player2.currentPiece.transform.position += Vector3.right;
+                        if (player2.isPieceOOB(player2.currentPiece) || isColliding(player2.currentPiece)) player2.currentPiece.transform.position += Vector3.right;
                         player2.dirtyGhost = true;
                     },
                     [KeyCode.RightArrow] = () =>
                     {
                         player2.currentPiece.transform.position += Vector3.right;
-                        if (player2.isPieceOOB() || isColliding(player2.currentPiece)) player2.currentPiece.transform.position += Vector3.left;
+                        if (player2.isPieceOOB(player2.currentPiece) || isColliding(player2.currentPiece)) player2.currentPiece.transform.position += Vector3.left;
                         player2.dirtyGhost = true;
                     },
                 };

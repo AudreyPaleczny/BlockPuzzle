@@ -17,7 +17,7 @@ public static class CollisionDetection
 
             if (objectMatrix[y][x] != null)
             {
-                Debug.Log("Is Colliding");
+                //Debug.Log("Is Colliding");
                 return true;
             }
         }

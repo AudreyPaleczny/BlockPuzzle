@@ -25,11 +25,6 @@ namespace Piece
 
         public Board board;
 
-        public Player() { 
-
-        }
-
-
         Vector2Int[] minoCoords() => minoCoords(currentPiece.transform);
         public Vector2Int[] minoCoords(Transform pieceTransform)
         {
@@ -72,7 +67,7 @@ namespace Piece
                 boardYPos >= board.height;
         }
 
-        public bool isPieceOOB()
+        public bool isPieceOOB(GameObject piece)
         {
             //for (int i = 0; i < piece.transform.childCount; ++i)
             //{
@@ -82,7 +77,7 @@ namespace Piece
             //    if (isMinoOOB(minoXPos, minoYPos)) return true;
             //}
 
-            foreach (Vector2Int mino in minoCoords())
+            foreach (Vector2Int mino in minoCoords(piece.transform))
             {
                 if (isMinoOOB(mino.x, mino.y)) return true;
             }

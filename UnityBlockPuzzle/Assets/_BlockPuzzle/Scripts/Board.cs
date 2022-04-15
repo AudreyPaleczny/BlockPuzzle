@@ -48,23 +48,23 @@ public class Board : MonoBehaviour
             c++;
         }
 
-        string output = "";
-        for(int row = 0; row<height; ++row)
-        {
-            for (int col = 0; col < width; ++col)
-            {
-                if(array[row][col] != 0)
-                {
-                    output += array[row][col];
-                }
-                else
-                {
-                    output += '.';
-                }
-            }
-            output += '\n';
-        }
-        Debug.Log(output);
+        //string output = "";
+        //for(int row = 0; row<height; ++row)
+        //{
+        //    for (int col = 0; col < width; ++col)
+        //    {
+        //        if(array[row][col] != 0)
+        //        {
+        //            output += array[row][col];
+        //        }
+        //        else
+        //        {
+        //            output += '.';
+        //        }
+        //    }
+        //    output += '\n';
+        //}
+        //Debug.Log(output);
 
         for (int col = 0; col<width; col++)
         {
