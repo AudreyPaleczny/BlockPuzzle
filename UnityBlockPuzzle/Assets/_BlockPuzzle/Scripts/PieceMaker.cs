@@ -515,6 +515,7 @@ namespace Piece
                     [KeyCode.Space] = () => {
                         if (!Input.GetKeyDown(KeyCode.Space)) return;
                         player1.HardDrop();
+                        player2.placeGhostPiece();
                     },
                     //[KeyCode.Space] = () => ImprintPiece(), // <- thats a function
                     [KeyCode.C] = () =>
@@ -575,6 +576,7 @@ namespace Piece
                     [KeyCode.Period] = () => {
                         if (!Input.GetKeyDown(KeyCode.Period)) return;
                         player2.HardDrop();
+                        player1.placeGhostPiece();
                     },
                     //[KeyCode.Space] = () => ImprintPiece(), // <- thats a function
                     [KeyCode.Comma] = () =>
