@@ -18,7 +18,7 @@ public class GameOverScore : MonoBehaviour
     void Start()
     {
         scoreText = GetComponent<Text>();
-        int scoreValue = PlayerPrefs.GetInt("scoreValue");
+        int scoreValue = PlayerPrefs.GetInt("Score");
         scoreText.text = scoreText.text + "" + scoreValue;
     }
 
