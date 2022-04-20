@@ -9,7 +9,7 @@ public class PieceInfo : MonoBehaviour
     public PieceType pieceType;
     public int pieceOrientation = 0;
 
-    public RotationRule[] rules_I = new RotationRule[]{
+    public static RotationRule[] rules_I = new RotationRule[]{ // needs to be re-ordered
         new RotationRule(0,1, ( 0, 2), ( 0, 1), ( 1, 2), (-1, 2), ( 1, 1), (-1,1)),
         new RotationRule(1,0, (-2, 0), (-2, 1), ( 1, 0), ( 1, 1)),
         new RotationRule(1,2, (-1, 0), (-1, 1), ( 2, 0), ( 2, 1)),
@@ -18,6 +18,18 @@ public class PieceInfo : MonoBehaviour
         new RotationRule(3,2, ( 2, 0), (-1, 0), ( 2, 1), (-1, 1)),
         new RotationRule(3,0, ( 1, 0), (-2, 0), ( 1, 1), (-2, 1)),
         new RotationRule(0,3, ( 0, 1), ( 1, 1), (-1, 1), ( 2, 1))
+    };
+
+    public static RotationRule[] rules_rest = new RotationRule[]
+    {
+        new RotationRule(0,1, (-1, 0), (-1, 1), ( 0,-2), (-1,-2)),
+        new RotationRule(1,0, ( 1, 0), ( 1,-1), ( 0, 2), ( 1, 2)),
+        new RotationRule(1,2, ( 1, 0), ( 1,-1), ( 0, 2), ( 1, 2)),
+        new RotationRule(2,1, (-1, 0), (-1, 1), ( 0,-2), (-1,-2)),
+        new RotationRule(2,3, ( 1, 0), ( 1, 1), ( 0,-2), ( 1,-2)),
+        new RotationRule(3,2, (-1, 0), (-1,-1), ( 0, 2), (-1, 2)),
+        new RotationRule(3,0, (-1, 0), (-1,-1), ( 0, 2), (-1, 2)),
+        new RotationRule(0,3, ( 1, 0), ( 1, 1), ( 0,-2), ( 1,-2))
     };
 
 

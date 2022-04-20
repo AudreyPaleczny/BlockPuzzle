@@ -125,111 +125,6 @@ namespace Piece
 
         }
 
-        //public void destroyTheLastOne()
-        //{
-        //    int last = listOfObjects.Count - 1;
-        //    Destroy(listOfObjects[last]);
-        //    listOfObjects.RemoveAt(last);
-        //}
-
-        //public void placeGhostPiece()
-        //{
-        //    currentGhostPiece.transform.position = currentPiece.transform.position;
-        //    //Debug.Log( string.Join(", ",minoCoords()) );
-        //    while ((findBottom(currentGhostPiece.transform) != board.height) && (!CollisionDetection.isColliding(minoCoords(currentGhostPiece.transform), board.objectMatrix)))
-        //    {
-        //        currentGhostPiece.transform.position += Vector3.down;
-        //    }
-        //    currentGhostPiece.transform.position += Vector3.up;
-        //}
-
-        //private void checkIfGameOver()
-        //{
-        //    Vector2Int[] minoPos = minoCoords(currentPiece.transform);
-        //    foreach(Vector2Int coord in minoPos)
-        //    {
-        //        int y = coord.y;
-
-        //        //start is @2
-        //        if(y <= topOfBoard)
-        //        {
-        //            //go to next scene
-        //            SceneManager.LoadScene("GameOverScreen");
-        //        }
-        //    }
-        //}
-
-        //public void makeAnotherOne()
-        //{
-        //    GameObject newOne = Instantiate(blockQueue.queue[0]);
-        //    newOne.transform.position = transform.position;
-        //    newOne.transform.SetParent(transform);
-        //    listOfObjects.Add(newOne);
-
-        //    // make ghostPiece transparent
-        //    GameObject ghostPiece = Instantiate(newOne);
-        //    for(int i = 0; i < ghostPiece.transform.childCount; i++)
-        //    {
-        //        Transform ghostMino = ghostPiece.transform.GetChild(i);
-        //        Transform minoModel = ghostMino.GetChild(0);
-        //        Color ghostMinoColor = minoModel.GetComponent<Renderer>().material.color;
-        //        ghostMinoColor.a = 0.25f;
-        //        minoModel.GetComponent<Renderer>().material.color = ghostMinoColor;
-        //    }
-
-        //    currentGhostPiece = ghostPiece;
-
-        //    for (int i = 0; i < 4; i++)
-        //    {
-        //        pieceLight[i].transform.SetParent(newOne.transform.GetChild(i));
-        //        pieceLight[i].transform.localPosition = Vector3.zero;
-        //        pieceLight[i].transform.SetParent(newOne.transform);
-        //    }
-
-        //    currentPiece = newOne;
-        //    blockQueue.updateQueue();
-        //    blockQueue.printQueue();
-        //}
-
-        //public int howManyTimesPieceBeenHeld = 1;
-        //public bool canPieceBeHeld = true;
-        //public GameObject holdPiece;
-
-        //public void swapHold()
-        //{
-        //    if (!canPieceBeHeld) return;
-        //    GameObject temp;
-
-        //    resetRotation(currentGhostPiece);
-        //    resetRotation(currentPiece);
-
-        //    if (howManyTimesPieceBeenHeld == 1) // first time THIS WORKS BTW WOOOOHOOOO
-        //    {
-        //        previousGhostPiece = currentGhostPiece;
-        //        previousGhostPiece.SetActive(false);
-        //        holdPiece = currentPiece;
-        //        makeAnotherOne();
-        //        howManyTimesPieceBeenHeld++;
-        //    }
-        //    else if (howManyTimesPieceBeenHeld == 2) // from then on
-        //    {
-        //        temp = holdPiece; holdPiece = currentPiece; currentPiece = temp; // swaps the hold piece and current piece
-        //        currentPiece.transform.position = transform.position; 
-
-        //        temp = previousGhostPiece; previousGhostPiece = currentGhostPiece; currentGhostPiece = temp; // swaps ghost piece and old ghost piece
-
-        //        currentGhostPiece.SetActive(true);
-        //        previousGhostPiece.SetActive(false);
-        //        currentGhostPiece.transform.position = transform.position;
-        //    }
-            
-        //    Noisy.PlaySound("Pop");
-        //    dirtyGhost = true;
-        //    holdPiece.transform.position = new Vector3(-5, 2.5f, 4); // magic number that is the position of the hold piece
-        //    canPieceBeHeld = false;
-        //    currentPiece.GetComponent<PieceInfo>().pieceOrientation = 0;
-        //}
-
         public void resetRotation(GameObject p)
         {
             p.transform.eulerAngles = new Vector3(0, 0, 0);
@@ -265,7 +160,7 @@ namespace Piece
         // Start is called before the first frame update
         void Start()
         {
-            numberOfPlayers = 2;
+            numberOfPlayers = 1;
             then = UTCMS();
             debugText = GameObject.Find("Debug Text")?.GetComponent<Text>();
             //Random.InitState(System.Environment.TickCount);
@@ -287,11 +182,12 @@ namespace Piece
             player1.makeAnotherOne();
         }
 
-        bool SpecialCollisionLogic(PieceInfo currentPieceInfo, int rotationRuleIndex)
+        bool SpecialCollisionLogic(PieceInfo currentPieceInfo, int rotationRuleIndex, PieceInfo.RotationRule[] rulesSet = null)
         {
-            for (int i = 0; i < currentPieceInfo.rules_I[rotationRuleIndex].test.Length; i++)
+            if (rulesSet == null) rulesSet = PieceInfo.rules_I;
+            for (int i = 0; i < rulesSet[rotationRuleIndex].test.Length; i++)
             {
-                (int,int) v = currentPieceInfo.rules_I[rotationRuleIndex].test[i];
+                (int,int) v = rulesSet[rotationRuleIndex].test[i];
                 Vector3Int piece_test = new Vector3Int(v.Item1, v.Item2, 0);
                 player1.currentPiece.transform.position += piece_test;
                 if (!(player1.isPieceOOB(player1.currentPiece) || isColliding(player1.currentPiece)))
@@ -355,16 +251,16 @@ namespace Piece
                                 switch (currentPieceInfo.pieceOrientation)
                                 {
                                     case 0:
-                                        Debug.LogError("Error: not working yet");
+                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 7, PieceInfo.rules_rest);
                                         break;
                                     case 1:
-                                        Debug.LogError("Error: not working yet");
+                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 1, PieceInfo.rules_rest);
                                         break;
                                     case 2:
-                                        Debug.LogError("Error: not working yet");
+                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 3, PieceInfo.rules_rest);
                                         break;
                                     case 3:
-                                        Debug.LogError("Error: not working yet");
+                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 5, PieceInfo.rules_rest);
                                         break;
                                 }
                             }
@@ -414,16 +310,16 @@ namespace Piece
                                 switch (currentPieceInfo.pieceOrientation)
                                 {
                                     case 0:
-                                        Debug.LogError("Error: not working yet");
+                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 0, PieceInfo.rules_rest);
                                         break;
                                     case 1:
-                                        Debug.LogError("Error: not working yet");
+                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 2, PieceInfo.rules_rest);
                                         break;
                                     case 2:
-                                        Debug.LogError("Error: not working yet");
+                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 4, PieceInfo.rules_rest);
                                         break;
                                     case 3:
-                                        Debug.LogError("Error: not working yet");
+                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 6, PieceInfo.rules_rest);
                                         break;
                                 }
                             }
