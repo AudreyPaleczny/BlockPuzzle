@@ -25,6 +25,11 @@ namespace Piece
         private int level = 0;
         // private int topOfBoard = 2;
 
+        //most of the time this is going to be equal to 0
+        //this variable is used for keeping track of how many times in a row a specific line clear happened
+        public int rowsClearedLastTurn = 0;
+        private int timesClearedinaRow = 1; //times a specific amount of rows were cleared in a row
+
         //public long fallCounter = 0;
         //double iterationDelay = 1000;
 
@@ -98,10 +103,21 @@ namespace Piece
                 countColumns = 0;
             }
 
-            updateScore(rowsCleared, level);
+            if(rowsClearedLastTurn == rowsCleared && rowsCleared != 0)
+            {
+                timesClearedinaRow++;
+                if(timesClearedinaRow >= 2) { comboScore(rowsCleared, level, timesClearedinaRow); }
+            }
+            else
+            {
+                timesClearedinaRow = 1;
+            }
+
+            lineScore(rowsCleared, level);
+            rowsClearedLastTurn = rowsCleared;
         }
 
-        private void updateScore(int rowsCleared, int level)
+        private void lineScore(int rowsCleared, int level)
         {
             switch (rowsCleared)
             {
@@ -123,6 +139,31 @@ namespace Piece
                     break;
             }
 
+        }
+
+        private void comboScore(int rowsCleared, int level, int times)
+        {
+            switch (rowsCleared)
+            {
+                case 0:
+                    break;
+
+                case 1:
+                    Score.Instance.value += (int)((40 * (level + 1)) * (times - 0.5));
+                    break;
+
+                case 2:
+                    Score.Instance.value += (int)((100 * (level + 1)) * (times - 0.5));
+                    break;
+
+                case 3:
+                    Score.Instance.value += (int)((300 * (level + 1)) * (times));
+                    break;
+
+                default:
+                    Score.Instance.value += (int)((1200 * (level + 1)) * (times));
+                    break;
+            }
         }
 
         public void resetRotation(GameObject p)
