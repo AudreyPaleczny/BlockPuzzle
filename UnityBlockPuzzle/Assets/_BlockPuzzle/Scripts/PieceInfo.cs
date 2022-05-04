@@ -10,10 +10,10 @@ public class PieceInfo : MonoBehaviour
     public int pieceOrientation = 0;
 
     public static RotationRule[] rules_I = new RotationRule[]{ // needs to be re-ordered
-        new RotationRule(0,1, ( 0, 2), ( 0, 1), ( 1, 2), (-1, 2), ( 1, 1), (-1,1)),
+        new RotationRule(0,1, ( 0, 1), ( 0, 2), ( 1, 1), (-1, 1), ( 1, 2), (-1, 2)),
         new RotationRule(1,0, (-2, 0), (-2, 1), ( 1, 0), ( 1, 1)),
         new RotationRule(1,2, (-1, 0), (-1, 1), ( 2, 0), ( 2, 1)),
-        new RotationRule(2,1, ( 0, 2), ( 0, 1), ( 1, 2), (-1, 2), ( 1, 1), (-1,1)),
+        new RotationRule(2,1, ( 0, 1), ( 0, 2), ( 1, 1), (-1, 1), ( 1, 2), (-1, 2)),
         new RotationRule(2,3, ( 0, 1), ( 1, 1), (-1, 1), (-2, 1)),
         new RotationRule(3,2, ( 2, 0), (-1, 0), ( 2, 1), (-1, 1)),
         new RotationRule(3,0, ( 1, 0), (-2, 0), ( 1, 1), (-2, 1)),

@@ -111,9 +111,10 @@ namespace Piece
             else
             {
                 timesClearedinaRow = 1;
+                lineScore(rowsCleared, level);
             }
-
-            lineScore(rowsCleared, level);
+            //Debug.Log($"rows cleared: {rowsCleared}, times cleared in a row: {timesClearedinaRow}");
+            
             rowsClearedLastTurn = rowsCleared;
         }
 
@@ -386,7 +387,7 @@ namespace Piece
                     },
                     [KeyCode.Space] = () => {
                         if (!Input.GetKeyDown(KeyCode.Space)) return;
-                        player1.HardDrop();
+                        player1.HardDrop(this);
                     },
                     //[KeyCode.Space] = () => ImprintPiece(), // <- thats a function
                     [KeyCode.C] = () =>
@@ -451,7 +452,7 @@ namespace Piece
                     },
                     [KeyCode.Space] = () => {
                         if (!Input.GetKeyDown(KeyCode.Space)) return;
-                        player1.HardDrop();
+                        player1.HardDrop(this);
                         player2.placeGhostPiece();
                     },
                     //[KeyCode.Space] = () => ImprintPiece(), // <- thats a function
@@ -512,7 +513,7 @@ namespace Piece
                     },
                     [KeyCode.Period] = () => {
                         if (!Input.GetKeyDown(KeyCode.Period)) return;
-                        player2.HardDrop();
+                        player2.HardDrop(this);
                         player1.placeGhostPiece();
                     },
                     //[KeyCode.Space] = () => ImprintPiece(), // <- thats a function
@@ -587,12 +588,12 @@ namespace Piece
             long passed = now - then;
             then = now;
             player1.fallCounter += passed;
-            player1.pieceFallOnTime();
+            player1.pieceFallOnTime(this);
             if (numberOfPlayers == 2)
             {
                 player2.fallCounter += passed;
-                player2.pieceFallOnTime();
-                player2.pieceFallOnTime();
+                //player2.pieceFallOnTime(this);
+                player2.pieceFallOnTime(this);
             }
             currentKey = KeyCode.None;
 
@@ -618,7 +619,7 @@ namespace Piece
                 }
             }
 
-            ClearLines();
+            //ClearLines();
         }
     }
 }

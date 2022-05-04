@@ -203,7 +203,7 @@ namespace Piece
             return success;
         }
 
-        public void pieceFallOnTime()
+        public void pieceFallOnTime(PieceMaker pieceMaker)
         {
             // double iterationDelay = ((11 - level) * 0.1) * 1000;  // [seconds] used to be 0.05
             if (currentPiece == null) return;
@@ -216,13 +216,15 @@ namespace Piece
                 if (findBottom(currentPiece.transform) == board.height)
                 {
                     currentPiece.transform.position += Vector3.up;
-                    ImprintPiece(); // add delay later
+                    ImprintPiece();
+                    pieceMaker.ClearLines();
                 }
 
                 else if (isColliding(currentPiece))
                 {
                     currentPiece.transform.position += Vector3.up;
                     ImprintPiece();
+                    pieceMaker.ClearLines();
                 }
 
                 fallCounter -= (long)iterationDelay;
@@ -246,7 +248,7 @@ namespace Piece
             }
         }
 
-        public void HardDrop()
+        public void HardDrop(PieceMaker pieceMaker)
         {
             while (findBottom(currentPiece.transform) != board.height && !isColliding(currentPiece))
             {
@@ -254,6 +256,7 @@ namespace Piece
             }
             currentPiece.transform.position += Vector3.up;
             ImprintPiece();
+            pieceMaker.ClearLines();
         }
     }
 }
