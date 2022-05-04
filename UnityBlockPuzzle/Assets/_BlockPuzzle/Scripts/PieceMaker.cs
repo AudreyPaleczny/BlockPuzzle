@@ -202,7 +202,7 @@ namespace Piece
         // Start is called before the first frame update
         void Start()
         {
-            numberOfPlayers = 1;
+            //numberOfPlayers = 1;
             then = UTCMS();
             debugText = GameObject.Find("Debug Text")?.GetComponent<Text>();
             //Random.InitState(System.Environment.TickCount);

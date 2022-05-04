@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/_BlockPuzzle/Scenes/StartScreen.unity
+    guid: 73e262c15f061402f94164ab7410bfb1
+  - enabled: 1
     path: Assets/_BlockPuzzle/Scenes/Board Scene.unity
     guid: 33468854c6dd94c0a8ec413abbcdec13
   - enabled: 1

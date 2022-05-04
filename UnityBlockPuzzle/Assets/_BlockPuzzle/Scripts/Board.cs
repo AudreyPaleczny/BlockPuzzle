@@ -83,7 +83,9 @@ public class Board : MonoBehaviour
         controls[KeyCode.Escape] = () =>
         {
             Application.Quit();
+#if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
+#endif
             //this is how you quit in the editor
         };
 
