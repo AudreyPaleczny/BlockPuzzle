@@ -7,12 +7,6 @@ namespace Piece
 {
     public class StartScreen : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
         private void whatToDoOnClassic(AsyncOperation a)
         {
             PieceMaker p = FindObjectOfType<PieceMaker>();
@@ -35,6 +29,16 @@ namespace Piece
         public void StartClassic() => startGame(whatToDoOnClassic);
 
         public void StartMultiplayer() => startGame(whatToDoOnMultiplayer);
+
+        public void Stats()
+        {
+            Debug.Log("no worky");
+        }
+
+        public void Themes()
+        {
+            Debug.Log("no worky");
+        }
 
     }
 }
