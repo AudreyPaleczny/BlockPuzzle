@@ -119,6 +119,7 @@ namespace Piece
         public void makeGhost(GameObject newOne)
         {
             GameObject ghostPiece = Instantiate(newOne);
+            ghostPiece.transform.position = startingPos;
             for (int i = 0; i < ghostPiece.transform.childCount; i++)
             {
                 Transform ghostMino = ghostPiece.transform.GetChild(i);

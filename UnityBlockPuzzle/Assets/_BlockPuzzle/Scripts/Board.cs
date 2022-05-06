@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Board : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class Board : MonoBehaviour
     public int height = 23;
     public GameObject normalBlock;
     public Vector3 blockSize = Vector3.one;
+    public bool isGameLoaded = false;
+    public TMP_Text countdownText;
 
     char[][] array;
     [TextArea(10, 20)]
@@ -17,7 +20,31 @@ public class Board : MonoBehaviour
     public GameObject[][] objectMatrix;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
+    {
+        StartCoroutine(StartGameCountdown());
+        //StartGame();
+    }
+
+    public IEnumerator StartGameCountdown()
+    {
+        Debug.Log("3");
+        yield return new WaitForSeconds(1);
+        Debug.Log("2");
+        countdownText.text = "2";
+        yield return new WaitForSeconds(1);
+        Debug.Log("1");
+        countdownText.text = "1";
+        yield return new WaitForSeconds(1);
+        Debug.Log("boomshakalaka");
+        countdownText.text = "Bolke Puzle!";
+        yield return new WaitForSeconds(0.5f);
+        countdownText.text = "";
+        StartGame();
+    }
+
+
+    void StartGame()
     {
         Score.Value = 0;
         objectMatrix = new GameObject[height][];
@@ -48,24 +75,6 @@ public class Board : MonoBehaviour
             c++;
         }
 
-        //string output = "";
-        //for(int row = 0; row<height; ++row)
-        //{
-        //    for (int col = 0; col < width; ++col)
-        //    {
-        //        if(array[row][col] != 0)
-        //        {
-        //            output += array[row][col];
-        //        }
-        //        else
-        //        {
-        //            output += '.';
-        //        }
-        //    }
-        //    output += '\n';
-        //}
-        //Debug.Log(output);
-
         for (int col = 0; col<width; col++)
         {
             for (int row = 0; row < height; row++)
@@ -89,16 +98,11 @@ public class Board : MonoBehaviour
             //this is how you quit in the editor
         };
 
-        //controls[KeyCode.LeftArrow] = () =>
-        //{
-        //    Debug.Log("Go left");
-        //};
+        isGameLoaded = true;
     }
 
     Dictionary<KeyCode, Action> controls = new Dictionary<KeyCode, Action>();
 
-
-    // Update is called once per frame
     void Update()
     {
         foreach(KeyValuePair<KeyCode, Action> kvp in controls)

@@ -209,6 +209,7 @@ namespace Piece
             player1.blockQueue.initNums(7);
             player1.blockQueue.initialPosition = new Vector3(18, 0.5f, 4);
             player1.startingPos = transform.position;
+
             player1.blockQueue.makeQueue();
             
             if (numberOfPlayers == 2)
@@ -558,6 +559,11 @@ namespace Piece
         public string debugPosition;
         void Update()
         {
+            if (!board.isGameLoaded)
+            {
+                then = UTCMS();
+                return;
+            }
             //if (player1.currentPiece)
             //{
             //    debugPosition = string.Join("\n", minoCoords());
