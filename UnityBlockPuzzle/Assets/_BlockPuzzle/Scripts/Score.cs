@@ -23,7 +23,7 @@ public class Score : MonoBehaviour
     }
 
     public Text scoreText;
-    private int _score, _level;
+    private int _score, _level, _linesCleared;
 
     public int value
     {
@@ -34,8 +34,9 @@ public class Score : MonoBehaviour
 
         set
         {
+            bool isNewValue = _score != value;
             _score = value;
-            PlayerPrefs.SetInt("Score", _score);
+            if (isNewValue) PlayerPrefs.SetInt("Score", _score);
             scoreText.text = "Score: " + _score.ToString();
         }
     }
@@ -49,9 +50,23 @@ public class Score : MonoBehaviour
 
         set
         {
+            bool isNewValue = _level != value;
             _level = value;
-            PlayerPrefs.SetInt("Level", _level);
-            scoreText.text = "Level: " + _level.ToString();
+            if (isNewValue) PlayerPrefs.SetInt("Level", _level);
+        }
+    }
+
+    public int linesCleared
+    {
+        get
+        {
+            return _linesCleared;
+        }
+        set
+        {
+            bool isNewValue = _linesCleared != value;
+            _linesCleared = value;
+            if (isNewValue) PlayerPrefs.SetInt("LinesCleared", _linesCleared);
         }
     }
 
@@ -61,11 +76,16 @@ public class Score : MonoBehaviour
         set => Instance.level = value;
     }
 
+    public static int LinesCleared
+    {
+        get => Instance.linesCleared;
+        set => Instance.linesCleared = value;
+    }
+
     public static int Value
     {
         get => Instance.value;
         set => Instance.value = value;
-        
     }
 
     // Awake called right after add component

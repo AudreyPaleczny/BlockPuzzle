@@ -46,6 +46,50 @@ namespace Piece
         public Player player1;
         public Player player2;
 
+        public int linesNeededToLevelUp = 10;
+
+        public void SetLevel()
+        {
+            if (Score.LinesCleared >= linesNeededToLevelUp)
+            {
+                Score.Level += 1;
+                int linesInTheNextLevel;
+                switch (Score.Level) {
+                    case 1: linesInTheNextLevel = 20; break;
+                    case 2: linesInTheNextLevel = 30; break;
+                    case 3: linesInTheNextLevel = 40; break;
+                    case 4: linesInTheNextLevel = 50; break;
+                    case 5: linesInTheNextLevel = 60; break;
+                    case 6: linesInTheNextLevel = 70; break;
+                    case 7: linesInTheNextLevel = 80; break;
+                    case 8: linesInTheNextLevel = 90; break;
+                    case 9: linesInTheNextLevel = 100; break;
+                    case 10: linesInTheNextLevel = 100; break;
+                    case 11: linesInTheNextLevel = 100; break;
+                    case 12: linesInTheNextLevel = 100; break;
+                    case 13: linesInTheNextLevel = 100; break;
+                    case 14: linesInTheNextLevel = 100; break;
+                    case 15: linesInTheNextLevel = 100; break;
+                    case 16: linesInTheNextLevel = 110; break;
+                    case 17: linesInTheNextLevel = 120; break;
+                    case 18: linesInTheNextLevel = 130; break;
+                    case 19: linesInTheNextLevel = 140; break;
+                    case 20: linesInTheNextLevel = 150; break;
+                    case 21: linesInTheNextLevel = 160; break;
+                    case 22: linesInTheNextLevel = 170; break;
+                    case 23: linesInTheNextLevel = 180; break;
+                    case 24: linesInTheNextLevel = 190; break;
+                    case 25: linesInTheNextLevel = 200; break;
+                    case 26: linesInTheNextLevel = 200; break;
+                    case 27: linesInTheNextLevel = 200; break;
+                    case 28: linesInTheNextLevel = 200; break;
+                    case 29: linesInTheNextLevel = 200; break;
+                    default: linesInTheNextLevel = 200; break;
+                }
+                linesNeededToLevelUp += linesInTheNextLevel;
+            }
+        }
+
         public void ClearLines()
         {
             int rowsCleared = 0;
@@ -112,7 +156,10 @@ namespace Piece
             //Debug.Log($"rows cleared: {rowsCleared}, times cleared in a row: {timesClearedinaRow}");
             
             rowsClearedLastTurn = rowsCleared;
+            Score.LinesCleared += rowsCleared;
+            SetLevel();
         }
+
 
         private void lineScore(int rowsCleared, int level)
         {
