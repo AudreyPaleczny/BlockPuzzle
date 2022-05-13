@@ -38,6 +38,7 @@ public class Board : MonoBehaviour
         yield return new WaitForSeconds(1);
         Debug.Log("boomshakalaka");
         countdownText.text = "Bolke Puzle!";
+        Noisy.PlaySound("startgame");
         yield return new WaitForSeconds(0.5f);
         countdownText.text = "";
         StartGame();
@@ -45,7 +46,7 @@ public class Board : MonoBehaviour
 
 
     void StartGame()
-    {
+    { 
         Score.Value = 0;
         objectMatrix = new GameObject[height][];
 

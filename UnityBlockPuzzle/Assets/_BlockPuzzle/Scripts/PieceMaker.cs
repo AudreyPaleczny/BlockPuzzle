@@ -122,17 +122,21 @@ namespace Piece
                     break;
 
                 case 1: Score.Instance.value += (40 * (level + 1));
+                    Noisy.PlaySound("Lines1");
                     break;
 
                 case 2: Score.Instance.value += (100 * (level + 1));
+                    Noisy.PlaySound("Lines2");
                     break;
 
                 case 3:
                     Score.Instance.value += (300 * (level + 1));
+                    Noisy.PlaySound("Lines3");
                     break;
 
                 default:
                     Score.Instance.value += (1200 * (level + 1));
+                    Noisy.PlaySound("Lines4");
                     break;
             }
 
