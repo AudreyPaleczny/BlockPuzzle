@@ -6,14 +6,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
 namespace Piece
 {
     public partial class PieceMaker : MonoBehaviour
     {
         [Tooltip("Put a thing in here to create!"), ContextMenuItem("Spawn", "makeAnotherOne"), ContextMenuItem("DESTROY THE LAST THING", "destroyTheLastOne")]
         public float delay;
-        // public List<GameObject> listOfObjects = new List<GameObject>();
         public Board board;
         // public BlockQueue blockQueue;
         // public Light[] pieceLight = new Light[4];
@@ -22,8 +20,6 @@ namespace Piece
         public Text debugText;
         public GameObject previousGhostPiece;
         public long then;
-        private int level = 0;
-        // private int topOfBoard = 2;
 
         //most of the time this is going to be equal to 0
         //this variable is used for keeping track of how many times in a row a specific line clear happened
@@ -106,12 +102,12 @@ namespace Piece
             if(rowsClearedLastTurn == rowsCleared && rowsCleared != 0)
             {
                 timesClearedinaRow++;
-                if(timesClearedinaRow >= 2) { comboScore(rowsCleared, level, timesClearedinaRow); }
+                if(timesClearedinaRow >= 2) { comboScore(rowsCleared, Score.Level, timesClearedinaRow); }
             }
             else
             {
                 timesClearedinaRow = 1;
-                lineScore(rowsCleared, level);
+                lineScore(rowsCleared, Score.Level);
             }
             //Debug.Log($"rows cleared: {rowsCleared}, times cleared in a row: {timesClearedinaRow}");
             
@@ -199,7 +195,6 @@ namespace Piece
 
         public KeyCode currentKey = KeyCode.None;
 
-        // Start is called before the first frame update
         void Start()
         {
             //numberOfPlayers = 1;
@@ -390,22 +385,19 @@ namespace Piece
                         if (!Input.GetKeyDown(KeyCode.Space)) return;
                         player1.HardDrop(this);
                     },
-                    //[KeyCode.Space] = () => ImprintPiece(), // <- thats a function
                     [KeyCode.C] = () =>
                     {
                         player1.swapHold();
                     },
-                    [KeyCode.UpArrow] = () =>
-                    {
-                        player1.currentPiece.transform.position += Vector3.up;
-                    },
                     [KeyCode.DownArrow] = () =>
                     {
                         player1.currentPiece.transform.position += Vector3.down;
+                        Score.Instance.value += 1 * (Score.Level / 2 + 1);
 
                         if (player1.isPieceOOB(player1.currentPiece) || isColliding(player1.currentPiece))
                         {
                             player1.currentPiece.transform.position += Vector3.up;
+                            Score.Instance.value -= 1 * (Score.Level / 2 + 1);
                             if (!delayTheImprintForSoftDrop)
                             {
                                 player1.fallCounter = 0;
@@ -456,22 +448,19 @@ namespace Piece
                         player1.HardDrop(this);
                         player2.placeGhostPiece();
                     },
-                    //[KeyCode.Space] = () => ImprintPiece(), // <- thats a function
                     [KeyCode.C] = () =>
                     {
                         player1.swapHold();
                     },
-                    [KeyCode.W] = () =>
-                    {
-                        player1.currentPiece.transform.position += Vector3.up;
-                    },
                     [KeyCode.S] = () =>
                     {
                         player1.currentPiece.transform.position += Vector3.down;
+                        Score.Instance.value += 1 * (Score.Level / 2 + 1);
 
                         if (player1.isPieceOOB(player1.currentPiece) || isColliding(player1.currentPiece))
                         {
                             player1.currentPiece.transform.position += Vector3.up;
+                            Score.Instance.value -= 1 * (Score.Level / 2 + 1);
                             if (!delayTheImprintForSoftDrop)
                             {
                                 player1.fallCounter = 0;
@@ -517,22 +506,19 @@ namespace Piece
                         player2.HardDrop(this);
                         player1.placeGhostPiece();
                     },
-                    //[KeyCode.Space] = () => ImprintPiece(), // <- thats a function
                     [KeyCode.Comma] = () =>
                     {
                         player2.swapHold();
                     },
-                    [KeyCode.UpArrow] = () =>
-                    {
-                        player2.currentPiece.transform.position += Vector3.up;
-                    },
                     [KeyCode.DownArrow] = () =>
                     {
                         player2.currentPiece.transform.position += Vector3.down;
+                        Score.Instance.value += 1 * (Score.Level / 2 + 1);
 
                         if (player2.isPieceOOB(player2.currentPiece) || isColliding(player2.currentPiece))
                         {
                             player2.currentPiece.transform.position += Vector3.up;
+                            Score.Instance.value -= 1 * (Score.Level / 2 + 1);
                             if (!delayTheImprintForSoftDrop)
                             {
                                 player2.fallCounter = 0;
@@ -564,20 +550,14 @@ namespace Piece
                 then = UTCMS();
                 return;
             }
-            //if (player1.currentPiece)
-            //{
-            //    debugPosition = string.Join("\n", minoCoords());
-            //}
             if (player1.dirtyGhost)
             {
                 player1.placeGhostPiece();
-                //Debug.Log("moved");
                 player1.dirtyGhost = false;
             }
             if (numberOfPlayers == 2 && player2.dirtyGhost)
             {
                 player2.placeGhostPiece();
-                //Debug.Log("moved");
                 player2.dirtyGhost = false;
             }
             if (keyTimer > 0)
@@ -624,8 +604,6 @@ namespace Piece
                     }
                 }
             }
-
-            //ClearLines();
         }
     }
 }

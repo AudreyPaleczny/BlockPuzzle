@@ -139,7 +139,7 @@ namespace Piece
 
         public void swapHold()
         {
-            GameObject temp, tempGhost;
+            GameObject temp;
             
             if (canPieceBeHeld)
             {
@@ -254,8 +254,10 @@ namespace Piece
             while (findBottom(currentPiece.transform) != board.height && !isColliding(currentPiece))
             {
                 currentPiece.transform.position += Vector3.down;
+                Score.Instance.value += 1 * (Score.Level / 2 + 1);
             }
             currentPiece.transform.position += Vector3.up;
+            Score.Instance.value -= 1 * (Score.Level / 2 + 1);
             ImprintPiece();
             pieceMaker.ClearLines();
         }

@@ -23,7 +23,7 @@ public class Score : MonoBehaviour
     }
 
     public Text scoreText;
-    private int _score;
+    private int _score, _level;
 
     public int value
     {
@@ -38,6 +38,27 @@ public class Score : MonoBehaviour
             PlayerPrefs.SetInt("Score", _score);
             scoreText.text = "Score: " + _score.ToString();
         }
+    }
+
+    public int level
+    {
+        get
+        {
+            return _level;
+        }
+
+        set
+        {
+            _level = value;
+            PlayerPrefs.SetInt("Level", _level);
+            scoreText.text = "Level: " + _level.ToString();
+        }
+    }
+
+    public static int Level
+    {
+        get => Instance.level;
+        set => Instance.level = value;
     }
 
     public static int Value
