@@ -434,6 +434,7 @@ namespace Piece
                     },
                     [KeyCode.Space] = () => {
                         if (!Input.GetKeyDown(KeyCode.Space)) return;
+                        Noisy.PlaySound("place block");
                         player1.HardDrop(this);
                     },
                     [KeyCode.C] = () =>
@@ -496,6 +497,7 @@ namespace Piece
                     },
                     [KeyCode.Space] = () => {
                         if (!Input.GetKeyDown(KeyCode.Space)) return;
+                        Noisy.PlaySound("place block");
                         player1.HardDrop(this);
                         player2.placeGhostPiece();
                     },
@@ -554,6 +556,7 @@ namespace Piece
                     },
                     [KeyCode.Period] = () => {
                         if (!Input.GetKeyDown(KeyCode.Period)) return;
+                        Noisy.PlaySound("place block");
                         player2.HardDrop(this);
                         player1.placeGhostPiece();
                     },
