@@ -204,12 +204,14 @@ namespace Piece
             return success;
         }
 
+        public int[] pieceFalltimeList = new int[] {1000, 793, 617, 472, 355, 262, 189, 134, 93, 64, 42, 28, 18, 11, 7};
+
         public void pieceFallOnTime(PieceMaker pieceMaker)
         {
             // double iterationDelay = ((11 - level) * 0.1) * 1000;  // [seconds] used to be 0.05
             if (currentPiece == null) return;
 
-            double iterationDelay = 1000;
+            double iterationDelay = pieceFalltimeList[Score.Level];
 
             if (fallCounter >= iterationDelay)
             {
