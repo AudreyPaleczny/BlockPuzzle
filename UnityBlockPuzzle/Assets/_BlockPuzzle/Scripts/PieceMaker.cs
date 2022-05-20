@@ -20,6 +20,8 @@ namespace Piece
         public Text debugText;
         public GameObject previousGhostPiece;
         public long then;
+        public Image singlePlayerControlsImage;
+        public Image coopControlsImage;
 
         //most of the time this is going to be equal to 0
         //this variable is used for keeping track of how many times in a row a specific line clear happened
@@ -54,7 +56,8 @@ namespace Piece
             {
                 Score.Level += 1;
                 int linesInTheNextLevel;
-                switch (Score.Level) {
+                switch (Score.Level)
+                {
                     case 1: linesInTheNextLevel = 20; break;
                     case 2: linesInTheNextLevel = 30; break;
                     case 3: linesInTheNextLevel = 40; break;
@@ -143,10 +146,10 @@ namespace Piece
                 countColumns = 0;
             }
 
-            if(rowsClearedLastTurn == rowsCleared && rowsCleared != 0)
+            if (rowsClearedLastTurn == rowsCleared && rowsCleared != 0)
             {
                 timesClearedinaRow++;
-                if(timesClearedinaRow >= 2) { comboScore(rowsCleared, Score.Level, timesClearedinaRow); }
+                if (timesClearedinaRow >= 2) { comboScore(rowsCleared, Score.Level, timesClearedinaRow); }
             }
             else
             {
@@ -154,7 +157,7 @@ namespace Piece
                 lineScore(rowsCleared, Score.Level);
             }
             //Debug.Log($"rows cleared: {rowsCleared}, times cleared in a row: {timesClearedinaRow}");
-            
+
             rowsClearedLastTurn = rowsCleared;
             Score.LinesCleared += rowsCleared;
             SetLevel();
@@ -168,11 +171,13 @@ namespace Piece
                 case 0:
                     break;
 
-                case 1: Score.Instance.value += (40 * (level + 1));
+                case 1:
+                    Score.Instance.value += (40 * (level + 1));
                     Noisy.PlaySound("Lines1");
                     break;
 
-                case 2: Score.Instance.value += (100 * (level + 1));
+                case 2:
+                    Score.Instance.value += (100 * (level + 1));
                     Noisy.PlaySound("Lines2");
                     break;
 
@@ -251,13 +256,17 @@ namespace Piece
             //numberOfPlayers = 1;
             then = UTCMS();
             debugText = GameObject.Find("Debug Text")?.GetComponent<Text>();
+
+            singlePlayerControlsImage.enabled = false;
+            coopControlsImage.enabled = false;
+
             //Random.InitState(System.Environment.TickCount);
             player1.blockQueue.initNums(7);
             player1.blockQueue.initialPosition = new Vector3(18, 0.5f, 4);
             player1.startingPos = transform.position;
 
             player1.blockQueue.makeQueue();
-            
+
             if (numberOfPlayers == 2)
             {
                 player1.startingPos = transform.position + Vector3.left * 2;
@@ -276,7 +285,7 @@ namespace Piece
             if (rulesSet == null) rulesSet = PieceInfo.rules_I;
             for (int i = 0; i < rulesSet[rotationRuleIndex].test.Length; i++)
             {
-                (int,int) v = rulesSet[rotationRuleIndex].test[i];
+                (int, int) v = rulesSet[rotationRuleIndex].test[i];
                 Vector3Int piece_test = new Vector3Int(v.Item1, v.Item2, 0);
                 player1.currentPiece.transform.position += piece_test;
                 if (!(player1.isPieceOOB(player1.currentPiece) || isColliding(player1.currentPiece)))
@@ -295,6 +304,10 @@ namespace Piece
                 ? _controls
                 : _controls = new Dictionary<KeyCode, Action>()
                 {
+                    [KeyCode.M] = () =>
+                    {
+                        singlePlayerControlsImage.enabled = !singlePlayerControlsImage.enabled;
+                    },
                     [KeyCode.P] = () =>
                     {
                         StringBuilder sb = new StringBuilder();
@@ -317,7 +330,7 @@ namespace Piece
                         {
                             canRotate = false;
                             if (currentPieceInfo.pieceType == PieceInfo.PieceType.I) // IPiece 
-                            {                           
+                            {
                                 switch (currentPieceInfo.pieceOrientation)
                                 {
                                     case 0:
@@ -365,7 +378,7 @@ namespace Piece
                         {
                             player1.currentPiece.transform.Rotate(0, 0, -90);
                         }
-                        
+
                     },
                     [KeyCode.X] = () =>
                     {
@@ -424,7 +437,7 @@ namespace Piece
                         {
                             player1.currentPiece.transform.Rotate(0, 0, 90);
                         }
-                        
+
                     },
                     [KeyCode.A] = () =>
                     {
@@ -434,7 +447,6 @@ namespace Piece
                     },
                     [KeyCode.Space] = () => {
                         if (!Input.GetKeyDown(KeyCode.Space)) return;
-                        Noisy.PlaySound("place block");
                         player1.HardDrop(this);
                     },
                     [KeyCode.C] = () =>
@@ -477,6 +489,10 @@ namespace Piece
                 ? _coopcontrols
                 : _coopcontrols = new Dictionary<KeyCode, Action>()
                 {
+                    [KeyCode.M] = () =>
+                    {
+                        coopControlsImage.enabled = !coopControlsImage.enabled;
+                    },
                     [KeyCode.Q] = () =>
                     {
                         player1.currentPiece.transform.Rotate(0, 0, 90);
@@ -497,7 +513,6 @@ namespace Piece
                     },
                     [KeyCode.Space] = () => {
                         if (!Input.GetKeyDown(KeyCode.Space)) return;
-                        Noisy.PlaySound("place block");
                         player1.HardDrop(this);
                         player2.placeGhostPiece();
                     },
@@ -534,7 +549,7 @@ namespace Piece
                         player1.dirtyGhost = true;
                     },
 
-                    
+
                     // second player
                     [KeyCode.K] = () =>
                     {
@@ -556,7 +571,6 @@ namespace Piece
                     },
                     [KeyCode.Period] = () => {
                         if (!Input.GetKeyDown(KeyCode.Period)) return;
-                        Noisy.PlaySound("place block");
                         player2.HardDrop(this);
                         player1.placeGhostPiece();
                     },
@@ -647,7 +661,8 @@ namespace Piece
                         keyTimer = keyDelay;
                     }
                 }
-            } else
+            }
+            else
             {
                 foreach (KeyValuePair<KeyCode, Action> kvp in controls)
                 {
