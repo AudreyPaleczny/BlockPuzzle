@@ -37,8 +37,8 @@ public class Board : MonoBehaviour
         countdownText.text = "1";
         yield return new WaitForSeconds(1);
         Debug.Log("boomshakalaka");
-        countdownText.text = "Bolke Puzle!";
-        Noisy.PlaySound("startgame");
+        countdownText.text = "Start!";
+        //Noisy.PlaySound("startgame");
         yield return new WaitForSeconds(0.5f);
         countdownText.text = "";
         StartGame();

@@ -1,0 +1,188 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8546327685119048672
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8546327685119048678}
+  - component: {fileID: 8546327685119048673}
+  m_Layer: 0
+  m_Name: Noisy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8546327685119048678
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8546327685119048672}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8546327685119048673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8546327685119048672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3b6258b6c5146749b68c58bed9289e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noises:
+  - name: Pop
+    sounds:
+    - {fileID: 8300000, guid: 5c802b305f263544b86fd08ca81a5a51, type: 3}
+    - {fileID: 8300000, guid: 52a318cfcf2072f438106fe810f449cb, type: 3}
+    volumeReduce: 0
+    backgroundMusic: 0
+    playOnStart: 0
+    is2D: 1
+    followsObject: 0
+    loop: 0
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}
+  - name: Music
+    sounds:
+    - {fileID: 8300000, guid: cc3ccdd31fd1cdd41bcd284e738d0725, type: 3}
+    volumeReduce: 0
+    backgroundMusic: 0
+    playOnStart: 0
+    is2D: 0
+    followsObject: 0
+    loop: 0
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}
+  - name: Lines1
+    sounds:
+    - {fileID: 8300000, guid: 23aeaa8ec539c29418de84148fa44c9a, type: 3}
+    volumeReduce: 0
+    backgroundMusic: 0
+    playOnStart: 0
+    is2D: 1
+    followsObject: 0
+    loop: 0
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}
+  - name: Lines2
+    sounds:
+    - {fileID: 8300000, guid: 41787ec506cf140478f8d7d39367a82c, type: 3}
+    volumeReduce: 0
+    backgroundMusic: 0
+    playOnStart: 0
+    is2D: 1
+    followsObject: 0
+    loop: 0
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}
+  - name: Lines3
+    sounds:
+    - {fileID: 8300000, guid: cf04da140d1bc804c8f8f363eeef5831, type: 3}
+    volumeReduce: 0
+    backgroundMusic: 0
+    playOnStart: 0
+    is2D: 1
+    followsObject: 0
+    loop: 0
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}
+  - name: Lines4
+    sounds:
+    - {fileID: 8300000, guid: 2190e6b1b7909e34cacc0ff315c30fe4, type: 3}
+    volumeReduce: 0
+    backgroundMusic: 0
+    playOnStart: 0
+    is2D: 1
+    followsObject: 0
+    loop: 0
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}
+  - name: startgame
+    sounds:
+    - {fileID: 8300000, guid: e7026a450169b234c9506d6b930c6a41, type: 3}
+    volumeReduce: 0.5
+    backgroundMusic: 0
+    playOnStart: 0
+    is2D: 1
+    followsObject: 0
+    loop: 0
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}
+  - name: place block
+    sounds:
+    - {fileID: 8300000, guid: 8b5ef55e0ff4d44a8968fe2563ceffdf, type: 3}
+    volumeReduce: 0.5
+    backgroundMusic: 0
+    playOnStart: 0
+    is2D: 1
+    followsObject: 0
+    loop: 0
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}
+  - name: Start noise
+    sounds:
+    - {fileID: 8300000, guid: 4c146a207a8574a9ea5be1667d16c3e5, type: 3}
+    volumeReduce: 0.5
+    backgroundMusic: 0
+    playOnStart: 0
+    is2D: 1
+    followsObject: 0
+    loop: 0
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}
+  - name: Clear noise
+    sounds:
+    - {fileID: 8300000, guid: 3c459ead0010340e3bad4f17b7066149, type: 3}
+    volumeReduce: 0.5
+    backgroundMusic: 0
+    playOnStart: 0
+    is2D: 1
+    followsObject: 0
+    loop: 0
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}

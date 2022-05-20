@@ -215,6 +215,7 @@ namespace Piece
                     break;
 
                 default:
+                    Noisy.PlaySound("Clear noise");
                     Score.Instance.value += (int)((1200 * (level + 1)) * (times));
                     break;
             }

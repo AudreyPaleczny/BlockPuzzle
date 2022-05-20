@@ -40,6 +40,10 @@ namespace Piece
             Debug.Log("no worky");
         }
 
+        public void Start()
+        {
+            Noisy.PlaySound("Start noise");
+        }
     }
 }
 
