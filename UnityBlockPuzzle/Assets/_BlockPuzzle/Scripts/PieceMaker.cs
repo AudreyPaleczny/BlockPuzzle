@@ -20,6 +20,7 @@ namespace Piece
         public Text debugText;
         public GameObject previousGhostPiece;
         public long then;
+        public GameObject pauseMenu;
         public Image singlePlayerControlsImage;
         public Image coopControlsImage;
 
@@ -259,6 +260,7 @@ namespace Piece
 
             singlePlayerControlsImage.enabled = false;
             coopControlsImage.enabled = false;
+            pauseMenu.SetActive(false);
             Time.timeScale = 1;
 
             //Random.InitState(System.Environment.TickCount);
@@ -634,13 +636,17 @@ namespace Piece
             {
                 if (Input.GetKeyDown(KeyCode.M))
                 {
-                    singlePlayerControlsImage.enabled = !singlePlayerControlsImage.enabled;
+                    //singlePlayerControlsImage.enabled = !singlePlayerControlsImage.enabled;
                     if (Time.timeScale == 1)
                     {
+                        pauseMenu.SetActive(true);
+                        singlePlayerControlsImage.enabled = true;
                         Time.timeScale = 0;
                     }
                     else
                     {
+                        pauseMenu.SetActive(false);
+                        singlePlayerControlsImage.enabled = false;
                         Time.timeScale = 1;
                         then = UTCMS();
                     }
@@ -649,13 +655,17 @@ namespace Piece
             {
                 if (Input.GetKeyDown(KeyCode.M))
                 {
-                    coopControlsImage.enabled = !coopControlsImage.enabled;
+                    //coopControlsImage.enabled = !coopControlsImage.enabled;
                     if (Time.timeScale == 1)
                     {
+                        pauseMenu.SetActive(true);
+                        coopControlsImage.enabled = true;
                         Time.timeScale = 0;
                     }
                     else
                     {
+                        pauseMenu.SetActive(false);
+                        coopControlsImage.enabled = false;
                         Time.timeScale = 1;
                         then = UTCMS();
                     }
