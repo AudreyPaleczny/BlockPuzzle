@@ -259,6 +259,7 @@ namespace Piece
 
             singlePlayerControlsImage.enabled = false;
             coopControlsImage.enabled = false;
+            Time.timeScale = 1;
 
             //Random.InitState(System.Environment.TickCount);
             player1.blockQueue.initNums(7);
@@ -304,10 +305,6 @@ namespace Piece
                 ? _controls
                 : _controls = new Dictionary<KeyCode, Action>()
                 {
-                    [KeyCode.M] = () =>
-                    {
-                        singlePlayerControlsImage.enabled = !singlePlayerControlsImage.enabled;
-                    },
                     [KeyCode.P] = () =>
                     {
                         StringBuilder sb = new StringBuilder();
@@ -489,10 +486,6 @@ namespace Piece
                 ? _coopcontrols
                 : _coopcontrols = new Dictionary<KeyCode, Action>()
                 {
-                    [KeyCode.M] = () =>
-                    {
-                        coopControlsImage.enabled = !coopControlsImage.enabled;
-                    },
                     [KeyCode.Q] = () =>
                     {
                         player1.currentPiece.transform.Rotate(0, 0, 90);
@@ -637,18 +630,55 @@ namespace Piece
                 }
             }
 
-            long now = UTCMS();
-            //time passed
-            long passed = now - then;
-            then = now;
-            player1.fallCounter += passed;
-            player1.pieceFallOnTime(this);
-            if (numberOfPlayers == 2)
+            if (numberOfPlayers == 1)
             {
-                player2.fallCounter += passed;
-                //player2.pieceFallOnTime(this);
-                player2.pieceFallOnTime(this);
+                if (Input.GetKeyDown(KeyCode.M))
+                {
+                    singlePlayerControlsImage.enabled = !singlePlayerControlsImage.enabled;
+                    if (Time.timeScale == 1)
+                    {
+                        Time.timeScale = 0;
+                    }
+                    else
+                    {
+                        Time.timeScale = 1;
+                        then = UTCMS();
+                    }
+                }
+            } else
+            {
+                if (Input.GetKeyDown(KeyCode.M))
+                {
+                    coopControlsImage.enabled = !coopControlsImage.enabled;
+                    if (Time.timeScale == 1)
+                    {
+                        Time.timeScale = 0;
+                    }
+                    else
+                    {
+                        Time.timeScale = 1;
+                        then = UTCMS();
+                    }
+                }
             }
+
+
+            if (Time.timeScale == 1)
+            {
+                long now = UTCMS();
+                //time passed
+                long passed = now - then;
+                then = now;
+                player1.fallCounter += passed;
+                player1.pieceFallOnTime(this);
+                if (numberOfPlayers == 2)
+                {
+                    player2.fallCounter += passed;
+                    //player2.pieceFallOnTime(this);
+                    player2.pieceFallOnTime(this);
+                }
+            }
+            
             currentKey = KeyCode.None;
 
             if (numberOfPlayers == 2)
