@@ -301,6 +301,19 @@ namespace Piece
             return false;
         }
 
+        public void pauseGame()
+        {
+            pauseMenu.SetActive(true);
+            Time.timeScale = 0;
+        }
+
+        public void resumeGame()
+        {
+            pauseMenu.SetActive(false);
+            Time.timeScale = 1;
+            then = UTCMS();
+        }
+
         public Dictionary<KeyCode, Action> _controls;
 
         Dictionary<KeyCode, Action> controls =>
@@ -640,16 +653,13 @@ namespace Piece
                     //singlePlayerControlsImage.enabled = !singlePlayerControlsImage.enabled;
                     if (Time.timeScale == 1)
                     {
-                        pauseMenu.SetActive(true);
+                        pauseGame();
                         singlePlayerControlsImage.enabled = true;
-                        Time.timeScale = 0;
                     }
                     else
                     {
-                        pauseMenu.SetActive(false);
+                        resumeGame();
                         singlePlayerControlsImage.enabled = false;
-                        Time.timeScale = 1;
-                        then = UTCMS();
                     }
                 }
             } else
@@ -659,15 +669,13 @@ namespace Piece
                     //coopControlsImage.enabled = !coopControlsImage.enabled;
                     if (Time.timeScale == 1)
                     {
-                        pauseMenu.SetActive(true);
+                        pauseGame();
                         coopControlsImage.enabled = true;
-                        Time.timeScale = 0;
                     }
                     else
                     {
-                        pauseMenu.SetActive(false);
+                        resumeGame();
                         coopControlsImage.enabled = false;
-                        Time.timeScale = 1;
                         then = UTCMS();
                     }
                 }
