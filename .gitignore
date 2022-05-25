@@ -17,6 +17,8 @@ UnityBlockPuzzle/[Bb]uild/
 UnityBlockPuzzle/[Bb]uilds/
 UnityBlockPuzzle/[Ll]ogs/
 UnityBlockPuzzle/[Mm]emoryCaptures/
+UnityBlockPuzzle/WebGL*
+UnityBlockPuzzle/*.zip
 
 # Never ignore Asset meta data
 !UnityBlockPuzzle/[Aa]ssets/**/*.meta
