@@ -266,7 +266,7 @@ namespace Piece
 
             //Random.InitState(System.Environment.TickCount);
             player1.blockQueue.initNums(7);
-            player1.blockQueue.initialPosition = new Vector3(18, 0.5f, 4);
+            player1.blockQueue.initialPosition = new Vector3(14, -1, 4);
             player1.startingPos = transform.position;
 
             player1.blockQueue.makeQueue();

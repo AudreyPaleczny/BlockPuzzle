@@ -115,9 +115,4 @@ public class BlockQueue : MonoBehaviour
         queue[4].transform.position = initialPosition + Vector3.down * 16;
     }
 
-    public void Start()
-    {
-        //initialPosition = new Vector3(18, 0.5f, 4);
-    }
-
 }
