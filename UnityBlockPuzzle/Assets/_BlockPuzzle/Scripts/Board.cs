@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Events;
 
 public class Board : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Board : MonoBehaviour
     public Vector3 blockSize = Vector3.one;
     public bool isGameLoaded = false;
     public TMP_Text countdownText;
+    public UnityEvent onStart;
 
     char[][] array;
     [TextArea(10, 20)]
@@ -29,16 +31,20 @@ public class Board : MonoBehaviour
     public IEnumerator StartGameCountdown()
     {
         Debug.Log("3");
+        Noisy.PlaySound("startgame");
         yield return new WaitForSeconds(1);
         Debug.Log("2");
+        Noisy.PlaySound("startgame");
         countdownText.text = "2";
         yield return new WaitForSeconds(1);
         Debug.Log("1");
+        Noisy.PlaySound("startgame");
         countdownText.text = "1";
         yield return new WaitForSeconds(1);
         Debug.Log("boomshakalaka");
         countdownText.text = "Start!";
-        //Noisy.PlaySound("startgame");
+        Noisy.PlaySound("startgame");
+        onStart.Invoke();
         yield return new WaitForSeconds(0.5f);
         countdownText.text = "";
         StartGame();
