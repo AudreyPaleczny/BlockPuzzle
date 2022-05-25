@@ -1171,7 +1171,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8546327685119048673, guid: a66f019dab99546b8acff160be54734a, type: 3}
       propertyPath: noises.Array.size
-      value: 10
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8546327685119048673, guid: a66f019dab99546b8acff160be54734a, type: 3}
+      propertyPath: noises.Array.data[7].name
+      value: lowerStartgame
+      objectReference: {fileID: 0}
+    - target: {fileID: 8546327685119048673, guid: a66f019dab99546b8acff160be54734a, type: 3}
+      propertyPath: noises.Array.data[8].name
+      value: place block
+      objectReference: {fileID: 0}
+    - target: {fileID: 8546327685119048673, guid: a66f019dab99546b8acff160be54734a, type: 3}
+      propertyPath: noises.Array.data[9].name
+      value: Start noise
       objectReference: {fileID: 0}
     - target: {fileID: 8546327685119048673, guid: a66f019dab99546b8acff160be54734a, type: 3}
       propertyPath: noises.Array.data[10].is2D
@@ -1197,6 +1209,18 @@ PrefabInstance:
       propertyPath: noises.Array.data[6].sounds.Array.data[0]
       value: 
       objectReference: {fileID: 8300000, guid: dcfbdccab31014733b0e0baed515af3a, type: 3}
+    - target: {fileID: 8546327685119048673, guid: a66f019dab99546b8acff160be54734a, type: 3}
+      propertyPath: noises.Array.data[7].sounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: c40ded0377e894adabe6fee62a71d973, type: 3}
+    - target: {fileID: 8546327685119048673, guid: a66f019dab99546b8acff160be54734a, type: 3}
+      propertyPath: noises.Array.data[8].sounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 8b5ef55e0ff4d44a8968fe2563ceffdf, type: 3}
+    - target: {fileID: 8546327685119048673, guid: a66f019dab99546b8acff160be54734a, type: 3}
+      propertyPath: noises.Array.data[9].sounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 4c146a207a8574a9ea5be1667d16c3e5, type: 3}
     - target: {fileID: 8546327685119048673, guid: a66f019dab99546b8acff160be54734a, type: 3}
       propertyPath: noises.Array.data[10].sounds.Array.data[0]
       value: 

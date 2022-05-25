@@ -31,14 +31,14 @@ public class Board : MonoBehaviour
     public IEnumerator StartGameCountdown()
     {
         Debug.Log("3");
-        Noisy.PlaySound("startgame");
+        Noisy.PlaySound("lowerStartgame");
         yield return new WaitForSeconds(1);
         Debug.Log("2");
-        Noisy.PlaySound("startgame");
+        Noisy.PlaySound("lowerStartgame");
         countdownText.text = "2";
         yield return new WaitForSeconds(1);
         Debug.Log("1");
-        Noisy.PlaySound("startgame");
+        Noisy.PlaySound("lowerStartgame");
         countdownText.text = "1";
         yield return new WaitForSeconds(1);
         Debug.Log("boomshakalaka");
