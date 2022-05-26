@@ -22,7 +22,7 @@ namespace Piece
 
         private void startGame(System.Action<AsyncOperation> f)
         {
-            AsyncOperation a = SceneManager.LoadSceneAsync("Board Scene");
+            AsyncOperation a = SceneManager.LoadSceneAsync("Minimal Board Scene");
             a.completed += f;
         }
 
