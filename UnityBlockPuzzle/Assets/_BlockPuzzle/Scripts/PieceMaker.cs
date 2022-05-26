@@ -215,7 +215,7 @@ namespace Piece
                     break;
 
                 default:
-                    Noisy.PlaySound("Clear noise");
+                    Noisy.PlaySound("Double Tetris");
                     Score.Instance.value += (int)((1200 * (level + 1)) * (times));
                     break;
             }

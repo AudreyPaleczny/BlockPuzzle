@@ -2104,6 +2104,20 @@ MonoBehaviour:
     onTrigger: 0
     lastNoisePlayed: -1
     activeAudioSource: {fileID: 0}
+  - name: lowerStartgame
+    sounds:
+    - {fileID: 8300000, guid: c40ded0377e894adabe6fee62a71d973, type: 3}
+    volumeReduce: 0.5
+    backgroundMusic: 0
+    playOnStart: 0
+    is2D: 1
+    followsObject: 0
+    loop: 0
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}
 --- !u!4 &1585359244
 Transform:
   m_ObjectHideFlags: 0
@@ -2579,6 +2593,9 @@ MonoBehaviour:
   blockSize: {x: 1, y: 1, z: 1}
   isGameLoaded: 0
   countdownText: {fileID: 261437197}
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
   initial: 
 --- !u!4 &1729263185
 Transform:
