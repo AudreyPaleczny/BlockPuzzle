@@ -12,8 +12,7 @@ namespace Piece
         public bool canPieceBeHeld = true;
         public int howManyTimesPieceBeenHeld = 1;
         public GameObject holdPiece;
-        [SerializeField]
-        private Vector3 _holdPosition = new Vector3(-6,-2, 4);
+        public Vector3 holdPosition = new Vector3(-5, 0.5f, 4);
 
         public BlockQueue blockQueue;
         public List<GameObject> listOfObjects = new List<GameObject>();
@@ -25,7 +24,6 @@ namespace Piece
         public long fallCounter = 0;
 
         public Board board;
-        public Vector3 holdPosition { get => _holdPosition; set => _holdPosition = value; }
 
         Vector2Int[] minoCoords() => minoCoords(currentPiece.transform);
         public Vector2Int[] minoCoords(Transform pieceTransform)

@@ -102,9 +102,9 @@ public class Board : MonoBehaviour
         {
             Application.Quit();
 #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;//this is how you quit in the editor
+            UnityEditor.EditorApplication.isPlaying = false;
 #endif
-
+            //this is how you quit in the editor
         };
 
         isGameLoaded = true;
@@ -114,7 +114,7 @@ public class Board : MonoBehaviour
 
     void Update()
     {
-        foreach (KeyValuePair<KeyCode, Action> kvp in controls)
+        foreach(KeyValuePair<KeyCode, Action> kvp in controls)
         {
             //see if the key is being pressed
             if (Input.GetKey(kvp.Key))
@@ -124,7 +124,3 @@ public class Board : MonoBehaviour
         }
     }
 }
-
-    
-
-
