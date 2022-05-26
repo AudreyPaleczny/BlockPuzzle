@@ -276,7 +276,7 @@ namespace Piece
                 player1.startingPos = transform.position + Vector3.left * 2;
                 player1.holdPosition = new Vector3(-10, 0.5f, 4);
                 player2.startingPos = transform.position + Vector3.right * 2;
-                player2.blockQueue.initialPosition = new Vector3(23, 0.5f, 4);
+                player2.blockQueue.initialPosition = new Vector3(20, -1, 4);
                 player2.blockQueue.initNums(7);
                 player2.blockQueue.makeQueue();
                 player2.makeAnotherOne();
