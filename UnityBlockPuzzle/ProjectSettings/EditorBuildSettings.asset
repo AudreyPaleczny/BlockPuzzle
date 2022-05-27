@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_BlockPuzzle/Scenes/GameOverScreen.unity
     guid: 981e407da35e04423ad91a46fa215916
+  - enabled: 1
+    path: Assets/_BlockPuzzle/Scenes/Minimal Board Scene.unity
+    guid: e9557bf62359a4d728050dd1a35f090b
   m_configObjects: {}
