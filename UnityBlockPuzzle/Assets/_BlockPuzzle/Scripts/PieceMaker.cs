@@ -13,9 +13,7 @@ namespace Piece
         [Tooltip("Put a thing in here to create!"), ContextMenuItem("Spawn", "makeAnotherOne"), ContextMenuItem("DESTROY THE LAST THING", "destroyTheLastOne")]
         public float delay;
         public Board board;
-        // public BlockQueue blockQueue;
-        // public Light[] pieceLight = new Light[4];
-        float keyTimer = 0.0f;
+        //float keyTimer = 0.0f;
         const float keyDelay = 1f / 8;
         public Text debugText;
         public GameObject previousGhostPiece;
@@ -23,8 +21,8 @@ namespace Piece
         public GameObject pauseMenu;
         public Image singlePlayerControlsImage;
         public Image coopControlsImage;
+        private Dictionary<KeyCode, int> keyTimers = new Dictionary<KeyCode, int>();
 
-        //most of the time this is going to be equal to 0
         //this variable is used for keeping track of how many times in a row a specific line clear happened
         public int rowsClearedLastTurn = 0;
         private int timesClearedinaRow = 1; //times a specific amount of rows were cleared in a row
@@ -164,7 +162,6 @@ namespace Piece
             SetLevel();
         }
 
-
         private void lineScore(int rowsCleared, int level)
         {
             switch (rowsCleared)
@@ -253,6 +250,39 @@ namespace Piece
 
         public KeyCode currentKey = KeyCode.None;
 
+        public void PauseGameKey()
+        {
+            if (numberOfPlayers == 1)
+            {
+                //singlePlayerControlsImage.enabled = !singlePlayerControlsImage.enabled;
+                if (Time.timeScale == 1)
+                {
+                    pauseGame();
+                    singlePlayerControlsImage.enabled = true;
+                }
+                else
+                {
+                    resumeGame();
+                    singlePlayerControlsImage.enabled = false;
+                }
+            }
+            else
+            {
+                //coopControlsImage.enabled = !coopControlsImage.enabled;
+                if (Time.timeScale == 1)
+                {
+                    pauseGame();
+                    coopControlsImage.enabled = true;
+                }
+                else
+                {
+                    resumeGame();
+                    coopControlsImage.enabled = false;
+                    then = UTCMS();
+                }
+            }
+        }
+
         void Start()
         {
             //numberOfPlayers = 1;
@@ -314,310 +344,6 @@ namespace Piece
             then = UTCMS();
         }
 
-        public Dictionary<KeyCode, Action> _controls;
-
-        Dictionary<KeyCode, Action> controls =>
-            _controls != null
-                ? _controls
-                : _controls = new Dictionary<KeyCode, Action>()
-                {
-                    [KeyCode.P] = () =>
-                    {
-                        StringBuilder sb = new StringBuilder();
-                        for (int i = 0; i < player1.currentPiece.transform.childCount; i++)
-                        {
-                            //Debug.Log("Child " + i + " " + transform.GetChild(i).position);
-                            sb.Append("Child " + i + " board xPos: " + (player1.currentPiece.transform.GetChild(i).position.x - 0.5) +
-                                " board yPos:" + (player1.currentPiece.transform.GetChild(i).position.y - 3.5) * -1).Append("\n");
-                        }
-                        Debug.Log(sb);
-                        if (debugText) debugText.text = sb.ToString();
-                    },
-                    [KeyCode.Z] = () =>
-                    {
-
-                        player1.currentPiece.transform.Rotate(0, 0, 90);
-                        PieceInfo currentPieceInfo = player1.currentPiece.GetComponent<PieceInfo>();
-                        bool canRotate = true;
-                        if (player1.isPieceOOB(player1.currentPiece) || isColliding(player1.currentPiece))
-                        {
-                            canRotate = false;
-                            if (currentPieceInfo.pieceType == PieceInfo.PieceType.I) // IPiece 
-                            {
-                                switch (currentPieceInfo.pieceOrientation)
-                                {
-                                    case 0:
-                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 7);
-                                        break;
-                                    case 1:
-                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 1);
-                                        break;
-                                    case 2:
-                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 3);
-                                        break;
-                                    case 3:
-                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 5);
-                                        break;
-                                }
-
-                            }
-                            else
-                            {
-                                switch (currentPieceInfo.pieceOrientation)
-                                {
-                                    case 0:
-                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 7, PieceInfo.rules_rest);
-                                        break;
-                                    case 1:
-                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 1, PieceInfo.rules_rest);
-                                        break;
-                                    case 2:
-                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 3, PieceInfo.rules_rest);
-                                        break;
-                                    case 3:
-                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 5, PieceInfo.rules_rest);
-                                        break;
-                                }
-                            }
-                        }
-                        if (canRotate)
-                        {
-                            player1.currentGhostPiece.transform.Rotate(0, 0, 90);
-                            currentPieceInfo.pieceOrientation--;
-                            if (currentPieceInfo.pieceOrientation < 0) currentPieceInfo.pieceOrientation += 4;
-                            player1.dirtyGhost = true;
-                        }
-                        else
-                        {
-                            player1.currentPiece.transform.Rotate(0, 0, -90);
-                        }
-
-                    },
-                    [KeyCode.X] = () =>
-                    {
-                        player1.currentPiece.transform.Rotate(0, 0, -90);
-                        PieceInfo currentPieceInfo = player1.currentPiece.GetComponent<PieceInfo>();
-                        bool canRotate = true;
-                        if (player1.isPieceOOB(player1.currentPiece) || isColliding(player1.currentPiece))
-                        {
-                            canRotate = false;
-                            if (currentPieceInfo.pieceType == PieceInfo.PieceType.I) // IPiece 
-                            {
-                                switch (currentPieceInfo.pieceOrientation)
-                                {
-                                    case 0:
-                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 0);
-                                        break;
-                                    case 1:
-                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 2);
-                                        break;
-                                    case 2:
-                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 4);
-                                        break;
-                                    case 3:
-                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 6);
-                                        break;
-                                }
-
-                            }
-                            else
-                            {
-                                switch (currentPieceInfo.pieceOrientation)
-                                {
-                                    case 0:
-                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 0, PieceInfo.rules_rest);
-                                        break;
-                                    case 1:
-                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 2, PieceInfo.rules_rest);
-                                        break;
-                                    case 2:
-                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 4, PieceInfo.rules_rest);
-                                        break;
-                                    case 3:
-                                        canRotate = SpecialCollisionLogic(currentPieceInfo, 6, PieceInfo.rules_rest);
-                                        break;
-                                }
-                            }
-                        }
-                        if (canRotate)
-                        {
-                            player1.currentGhostPiece.transform.Rotate(0, 0, -90);
-                            currentPieceInfo.pieceOrientation++;
-                            if (currentPieceInfo.pieceOrientation > 3) currentPieceInfo.pieceOrientation -= 4;
-                            player1.dirtyGhost = true;
-                        }
-                        else
-                        {
-                            player1.currentPiece.transform.Rotate(0, 0, 90);
-                        }
-
-                    },
-                    [KeyCode.A] = () =>
-                    {
-                        player1.currentPiece.transform.Rotate(0, 0, -180);
-                        player1.currentGhostPiece.transform.Rotate(0, 0, -180);
-                        player1.dirtyGhost = true;
-                    },
-                    [KeyCode.Space] = () => {
-                        if (!Input.GetKeyDown(KeyCode.Space)) return;
-                        player1.HardDrop(this);
-                    },
-                    [KeyCode.C] = () =>
-                    {
-                        player1.swapHold();
-                    },
-                    [KeyCode.DownArrow] = () =>
-                    {
-                        player1.currentPiece.transform.position += Vector3.down;
-                        Score.Instance.value += 1 * (Score.Level / 2 + 1);
-
-                        if (player1.isPieceOOB(player1.currentPiece) || isColliding(player1.currentPiece))
-                        {
-                            player1.currentPiece.transform.position += Vector3.up;
-                            Score.Instance.value -= 1 * (Score.Level / 2 + 1);
-                            if (!delayTheImprintForSoftDrop)
-                            {
-                                player1.fallCounter = 0;
-                                delayTheImprintForSoftDrop = true;
-                            }
-                        }
-                    },
-                    [KeyCode.LeftArrow] = () =>
-                    {
-                        player1.currentPiece.transform.position += Vector3.left;
-                        if (player1.isPieceOOB(player1.currentPiece) || isColliding(player1.currentPiece)) player1.currentPiece.transform.position += Vector3.right;
-                        player1.dirtyGhost = true;
-                    },
-                    [KeyCode.RightArrow] = () =>
-                    {
-                        player1.currentPiece.transform.position += Vector3.right;
-                        if (player1.isPieceOOB(player1.currentPiece) || isColliding(player1.currentPiece)) player1.currentPiece.transform.position += Vector3.left;
-                        player1.dirtyGhost = true;
-                    },
-                };
-
-        public Dictionary<KeyCode, Action> _coopcontrols;
-        Dictionary<KeyCode, Action> coopcontrols =>
-            _coopcontrols != null
-                ? _coopcontrols
-                : _coopcontrols = new Dictionary<KeyCode, Action>()
-                {
-                    [KeyCode.Q] = () =>
-                    {
-                        player1.currentPiece.transform.Rotate(0, 0, 90);
-                        player1.currentGhostPiece.transform.Rotate(0, 0, 90);
-                        player1.dirtyGhost = true;
-                    },
-                    [KeyCode.E] = () =>
-                    {
-                        player1.currentPiece.transform.Rotate(0, 0, -90);
-                        player1.currentGhostPiece.transform.Rotate(0, 0, -90);
-                        player1.dirtyGhost = true;
-                    },
-                    [KeyCode.F] = () =>
-                    {
-                        player1.currentPiece.transform.Rotate(0, 0, -180);
-                        player1.currentGhostPiece.transform.Rotate(0, 0, -180);
-                        player1.dirtyGhost = true;
-                    },
-                    [KeyCode.Space] = () => {
-                        if (!Input.GetKeyDown(KeyCode.Space)) return;
-                        player1.HardDrop(this);
-                        player2.placeGhostPiece();
-                    },
-                    [KeyCode.C] = () =>
-                    {
-                        player1.swapHold();
-                    },
-                    [KeyCode.S] = () =>
-                    {
-                        player1.currentPiece.transform.position += Vector3.down;
-                        Score.Instance.value += 1 * (Score.Level / 2 + 1);
-
-                        if (player1.isPieceOOB(player1.currentPiece) || isColliding(player1.currentPiece))
-                        {
-                            player1.currentPiece.transform.position += Vector3.up;
-                            Score.Instance.value -= 1 * (Score.Level / 2 + 1);
-                            if (!delayTheImprintForSoftDrop)
-                            {
-                                player1.fallCounter = 0;
-                                delayTheImprintForSoftDrop = true;
-                            }
-                        }
-                    },
-                    [KeyCode.A] = () =>
-                    {
-                        player1.currentPiece.transform.position += Vector3.left;
-                        if (player1.isPieceOOB(player1.currentPiece) || isColliding(player1.currentPiece)) player1.currentPiece.transform.position += Vector3.right;
-                        player1.dirtyGhost = true;
-                    },
-                    [KeyCode.D] = () =>
-                    {
-                        player1.currentPiece.transform.position += Vector3.right;
-                        if (player1.isPieceOOB(player1.currentPiece) || isColliding(player1.currentPiece)) player1.currentPiece.transform.position += Vector3.left;
-                        player1.dirtyGhost = true;
-                    },
-
-
-                    // second player
-                    [KeyCode.K] = () =>
-                    {
-                        player2.currentPiece.transform.Rotate(0, 0, 90);
-                        player2.currentGhostPiece.transform.Rotate(0, 0, 90);
-                        player2.dirtyGhost = true;
-                    },
-                    [KeyCode.L] = () =>
-                    {
-                        player2.currentPiece.transform.Rotate(0, 0, -90);
-                        player2.currentGhostPiece.transform.Rotate(0, 0, -90);
-                        player2.dirtyGhost = true;
-                    },
-                    [KeyCode.O] = () =>
-                    {
-                        player2.currentPiece.transform.Rotate(0, 0, -180);
-                        player2.currentGhostPiece.transform.Rotate(0, 0, -180);
-                        player2.dirtyGhost = true;
-                    },
-                    [KeyCode.Period] = () => {
-                        if (!Input.GetKeyDown(KeyCode.Period)) return;
-                        player2.HardDrop(this);
-                        player1.placeGhostPiece();
-                    },
-                    [KeyCode.Comma] = () =>
-                    {
-                        player2.swapHold();
-                    },
-                    [KeyCode.DownArrow] = () =>
-                    {
-                        player2.currentPiece.transform.position += Vector3.down;
-                        Score.Instance.value += 1 * (Score.Level / 2 + 1);
-
-                        if (player2.isPieceOOB(player2.currentPiece) || isColliding(player2.currentPiece))
-                        {
-                            player2.currentPiece.transform.position += Vector3.up;
-                            Score.Instance.value -= 1 * (Score.Level / 2 + 1);
-                            if (!delayTheImprintForSoftDrop)
-                            {
-                                player2.fallCounter = 0;
-                                delayTheImprintForSoftDrop = true;
-                            }
-                        }
-                    },
-                    [KeyCode.LeftArrow] = () =>
-                    {
-                        player2.currentPiece.transform.position += Vector3.left;
-                        if (player2.isPieceOOB(player2.currentPiece) || isColliding(player2.currentPiece)) player2.currentPiece.transform.position += Vector3.right;
-                        player2.dirtyGhost = true;
-                    },
-                    [KeyCode.RightArrow] = () =>
-                    {
-                        player2.currentPiece.transform.position += Vector3.right;
-                        if (player2.isPieceOOB(player2.currentPiece) || isColliding(player2.currentPiece)) player2.currentPiece.transform.position += Vector3.left;
-                        player2.dirtyGhost = true;
-                    },
-                };
-
-
         [TextArea(4, 4)]
         public string debugPosition;
         void Update()
@@ -637,50 +363,14 @@ namespace Piece
                 player2.placeGhostPiece();
                 player2.dirtyGhost = false;
             }
-            if (keyTimer > 0)
-            {
-                keyTimer -= Time.deltaTime;
-                if (keyTimer > 0)
-                {
-                    return;
-                }
-            }
-
-            if (numberOfPlayers == 1)
-            {
-                if (Input.GetKeyDown(KeyCode.M))
-                {
-                    //singlePlayerControlsImage.enabled = !singlePlayerControlsImage.enabled;
-                    if (Time.timeScale == 1)
-                    {
-                        pauseGame();
-                        singlePlayerControlsImage.enabled = true;
-                    }
-                    else
-                    {
-                        resumeGame();
-                        singlePlayerControlsImage.enabled = false;
-                    }
-                }
-            } else
-            {
-                if (Input.GetKeyDown(KeyCode.M))
-                {
-                    //coopControlsImage.enabled = !coopControlsImage.enabled;
-                    if (Time.timeScale == 1)
-                    {
-                        pauseGame();
-                        coopControlsImage.enabled = true;
-                    }
-                    else
-                    {
-                        resumeGame();
-                        coopControlsImage.enabled = false;
-                        then = UTCMS();
-                    }
-                }
-            }
-
+            //if (keyTimer > 0)
+            //{
+            //    keyTimer -= Time.deltaTime;
+            //    if (keyTimer > 0)
+            //    {
+            //        return;
+            //    }
+            //}
 
             if (Time.timeScale == 1)
             {
@@ -706,8 +396,15 @@ namespace Piece
                 {
                     if (Input.GetKey(kvp.Key))
                     {
-                        kvp.Value.Invoke();
-                        keyTimer = keyDelay;
+                        // if, this key was pressed too recently, ignore it
+                        // otherwise, mark that it was just pressed, and invoke it
+                        bool keyHasBeenPressedBefore = keyTimers.TryGetValue(kvp.Key, out int whenItWasPressed);
+                        bool keyWasPressedRecently = keyHasBeenPressedBefore && whenItWasPressed > Environment.TickCount - keyDelay;
+                        if (!keyWasPressedRecently)
+                        {
+                            keyTimers[kvp.Key] = Environment.TickCount;
+                            kvp.Value.Invoke();
+                        }
                     }
                 }
             }
@@ -717,8 +414,13 @@ namespace Piece
                 {
                     if (Input.GetKey(kvp.Key))
                     {
-                        kvp.Value.Invoke();
-                        keyTimer = keyDelay;
+                        bool keyHasBeenPressedBefore = keyTimers.TryGetValue(kvp.Key, out int whenItWasPressed);
+                        bool keyWasPressedRecently = keyHasBeenPressedBefore && whenItWasPressed > Environment.TickCount - keyDelay;
+                        if (!keyWasPressedRecently)
+                        {
+                            keyTimers[kvp.Key] = Environment.TickCount;
+                            kvp.Value.Invoke();
+                        }
                     }
                 }
             }

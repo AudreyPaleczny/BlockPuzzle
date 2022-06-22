@@ -71,14 +71,6 @@ namespace Piece
 
         public bool isPieceOOB(GameObject piece)
         {
-            //for (int i = 0; i < piece.transform.childCount; ++i)
-            //{
-            //    Transform mino = piece.transform.GetChild(i);
-            //    int minoXPos = (int)(mino.position.x - 0.5f),
-            //        minoYPos = (int)((mino.position.y - 3.5f) * -1);
-            //    if (isMinoOOB(minoXPos, minoYPos)) return true;
-            //}
-
             foreach (Vector2Int mino in minoCoords(piece.transform))
             {
                 if (isMinoOOB(mino.x, mino.y)) return true;
