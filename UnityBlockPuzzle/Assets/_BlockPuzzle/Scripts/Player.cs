@@ -198,15 +198,15 @@ namespace Piece
             return success;
         }
 
-        public int[] pieceFalltimeList = new int[] {1000, 793, 617, 472, 355, 262, 189, 134, 93, 64, 42, 28, 18, 11, 7};
-
+        // up to level 20. until 28, should be 33. lvl 29+ should be 17
+        public int[] pieceFalltimeList = new int[] {800, 717, 633, 550, 467, 383, 300, 217, 133, 100, 83, 83, 83, 67, 67, 67, 50, 50, 50, 33, 33};
+        public double iterationDelay;
         public void pieceFallOnTime(PieceMaker pieceMaker)
         {
             // double iterationDelay = ((11 - level) * 0.1) * 1000;  // [seconds] used to be 0.05
             if (currentPiece == null) return;
 
-            double iterationDelay = pieceFalltimeList[Score.Level];
-
+            iterationDelay = pieceFalltimeList[Score.Level];
             if (fallCounter >= iterationDelay)
             {
                 currentPiece.transform.position += Vector3.down;

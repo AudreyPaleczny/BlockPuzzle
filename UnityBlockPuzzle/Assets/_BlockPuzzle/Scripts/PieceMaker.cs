@@ -51,45 +51,46 @@ namespace Piece
 
         public void SetLevel()
         {
+            int linesInTheNextLevel;
+            switch (Score.Level)
+            {
+                case 1: linesInTheNextLevel = 20; break;
+                case 2: linesInTheNextLevel = 30; break;
+                case 3: linesInTheNextLevel = 40; break;
+                case 4: linesInTheNextLevel = 50; break;
+                case 5: linesInTheNextLevel = 60; break;
+                case 6: linesInTheNextLevel = 70; break;
+                case 7: linesInTheNextLevel = 80; break;
+                case 8: linesInTheNextLevel = 90; break;
+                case 9: linesInTheNextLevel = 100; break;
+                case 10: linesInTheNextLevel = 100; break;
+                case 11: linesInTheNextLevel = 100; break;
+                case 12: linesInTheNextLevel = 100; break;
+                case 13: linesInTheNextLevel = 100; break;
+                case 14: linesInTheNextLevel = 100; break;
+                case 15: linesInTheNextLevel = 100; break;
+                case 16: linesInTheNextLevel = 110; break;
+                case 17: linesInTheNextLevel = 120; break;
+                case 18: linesInTheNextLevel = 130; break;
+                case 19: linesInTheNextLevel = 140; break;
+                case 20: linesInTheNextLevel = 150; break;
+                case 21: linesInTheNextLevel = 160; break;
+                case 22: linesInTheNextLevel = 170; break;
+                case 23: linesInTheNextLevel = 180; break;
+                case 24: linesInTheNextLevel = 190; break;
+                case 25: linesInTheNextLevel = 200; break;
+                case 26: linesInTheNextLevel = 200; break;
+                case 27: linesInTheNextLevel = 200; break;
+                case 28: linesInTheNextLevel = 200; break;
+                case 29: linesInTheNextLevel = 200; break;
+                default: linesInTheNextLevel = 200; break;
+            }
+
             if (Score.LinesCleared >= linesNeededToLevelUp)
             {
                 Score.Level += 1;
-                int linesInTheNextLevel;
-                switch (Score.Level)
-                {
-                    case 1: linesInTheNextLevel = 20; break;
-                    case 2: linesInTheNextLevel = 30; break;
-                    case 3: linesInTheNextLevel = 40; break;
-                    case 4: linesInTheNextLevel = 50; break;
-                    case 5: linesInTheNextLevel = 60; break;
-                    case 6: linesInTheNextLevel = 70; break;
-                    case 7: linesInTheNextLevel = 80; break;
-                    case 8: linesInTheNextLevel = 90; break;
-                    case 9: linesInTheNextLevel = 100; break;
-                    case 10: linesInTheNextLevel = 100; break;
-                    case 11: linesInTheNextLevel = 100; break;
-                    case 12: linesInTheNextLevel = 100; break;
-                    case 13: linesInTheNextLevel = 100; break;
-                    case 14: linesInTheNextLevel = 100; break;
-                    case 15: linesInTheNextLevel = 100; break;
-                    case 16: linesInTheNextLevel = 110; break;
-                    case 17: linesInTheNextLevel = 120; break;
-                    case 18: linesInTheNextLevel = 130; break;
-                    case 19: linesInTheNextLevel = 140; break;
-                    case 20: linesInTheNextLevel = 150; break;
-                    case 21: linesInTheNextLevel = 160; break;
-                    case 22: linesInTheNextLevel = 170; break;
-                    case 23: linesInTheNextLevel = 180; break;
-                    case 24: linesInTheNextLevel = 190; break;
-                    case 25: linesInTheNextLevel = 200; break;
-                    case 26: linesInTheNextLevel = 200; break;
-                    case 27: linesInTheNextLevel = 200; break;
-                    case 28: linesInTheNextLevel = 200; break;
-                    case 29: linesInTheNextLevel = 200; break;
-                    default: linesInTheNextLevel = 200; break;
-                }
-                linesNeededToLevelUp += linesInTheNextLevel;
             }
+            linesNeededToLevelUp += linesInTheNextLevel;
         }
 
         public void ClearLines()
@@ -164,28 +165,30 @@ namespace Piece
 
         private void lineScore(int rowsCleared, int level)
         {
+            int lvl = level;
+            if (level == 0) lvl = 1;
             switch (rowsCleared)
             {
                 case 0:
                     break;
 
                 case 1:
-                    Score.Instance.value += (40 * (level + 1));
+                    Score.Instance.value += (100 * lvl);
                     Noisy.PlaySound("Lines1");
                     break;
 
                 case 2:
-                    Score.Instance.value += (100 * (level + 1));
+                    Score.Instance.value += (300 * lvl);
                     Noisy.PlaySound("Lines2");
                     break;
 
                 case 3:
-                    Score.Instance.value += (300 * (level + 1));
+                    Score.Instance.value += (500 * lvl);
                     Noisy.PlaySound("Lines3");
                     break;
 
                 default:
-                    Score.Instance.value += (1200 * (level + 1));
+                    Score.Instance.value += (800 * lvl);
                     Noisy.PlaySound("Lines4");
                     break;
             }
