@@ -698,7 +698,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 074253dbfce094d7a90acc6aed0e8848, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1000,8 +1000,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 200}
-  m_SizeDelta: {x: 500, y: 100}
+  m_AnchoredPosition: {x: 0.00001049, y: 170}
+  m_SizeDelta: {x: 604.3384, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1385236599
 MonoBehaviour:
@@ -1023,17 +1023,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: BOLKE PUZLE
+  m_text: B<#ff8533>O<#ffa64d>L<#ffff1a>K<#99ff66>E<#66ffff> P<#80dfff>U<#1ac6ff>Z<#3385ff>L<#aa80ff>E
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 4167805d6eb744fe0a9059b6b5909b63, type: 2}
-  m_sharedMaterial: {fileID: -2849132173937051296, guid: 4167805d6eb744fe0a9059b6b5909b63, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 90536a64b0aee4a3fa01be507c7e68e9, type: 2}
+  m_sharedMaterial: {fileID: 8978706171308048633, guid: 90536a64b0aee4a3fa01be507c7e68e9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283145957
-  m_fontColor: {r: 0.8980392, g: 0.61960787, b: 0.29411766, a: 1}
+    rgba: 4289890559
+  m_fontColor: {r: 1, g: 0.5330188, b: 0.696914, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1086,7 +1086,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -0.00024414062, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
