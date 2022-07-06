@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_BlockPuzzle/Scenes/Minimal Board Scene.unity
     guid: e9557bf62359a4d728050dd1a35f090b
+  - enabled: 1
+    path: Assets/_BlockPuzzle/Scenes/PastelStart.unity
+    guid: 266b26a1c0212450e9208dad84ee9682
   m_configObjects: {}
