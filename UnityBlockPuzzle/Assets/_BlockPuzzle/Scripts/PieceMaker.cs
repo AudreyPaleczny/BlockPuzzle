@@ -14,14 +14,26 @@ namespace Piece
         public float delay;
         public Board board;
         //float keyTimer = 0.0f;
-        const float keyDelay = 1f / 8;
+        const float keyDelay = 1000f / 40;
         public Text debugText;
         public GameObject previousGhostPiece;
         public long then;
         public GameObject pauseMenu;
         public Image singlePlayerControlsImage;
         public Image coopControlsImage;
-        private Dictionary<KeyCode, int> keyTimers = new Dictionary<KeyCode, int>();
+
+        public struct KeyTiming
+        {
+            public int consecutivePresses;
+            public int whenKeyWasPressed;
+
+            public KeyTiming(int whenKeyWasPressed, int consecutivePresses)
+            {
+                this.whenKeyWasPressed = whenKeyWasPressed;
+                this.consecutivePresses = consecutivePresses;
+            } 
+        }
+        private Dictionary<KeyCode, KeyTiming> keyTimers = new Dictionary<KeyCode, KeyTiming>();
 
         //this variable is used for keeping track of how many times in a row a specific line clear happened
         public int rowsClearedLastTurn = 0;
@@ -393,39 +405,28 @@ namespace Piece
             }
             
             currentKey = KeyCode.None;
+            Dictionary<KeyCode, Action> currentControls = (numberOfPlayers == 2) ? coopcontrols : controls;
+            foreach (KeyValuePair<KeyCode, Action> kvp in currentControls)
+            {
+                if (Input.GetKey(kvp.Key))
+                {
+                    bool keyHasBeenPressedBefore = keyTimers.TryGetValue(kvp.Key, out KeyTiming whenItWasPressed);
+                    bool keyWasPressedRecently = keyHasBeenPressedBefore && whenItWasPressed.whenKeyWasPressed > Environment.TickCount - keyDelay;
+                    if (!keyWasPressedRecently)
+                    {
+                        Debug.Log(whenItWasPressed.whenKeyWasPressed - Environment.TickCount);
+                        if (whenItWasPressed.consecutivePresses < 1 || whenItWasPressed.consecutivePresses > 3)
+                        {
+                            kvp.Value.Invoke();
+                        }
+                        keyTimers[kvp.Key] = new KeyTiming(Environment.TickCount, whenItWasPressed.consecutivePresses + 1);
+                    }
 
-            if (numberOfPlayers == 2)
-            {
-                foreach (KeyValuePair<KeyCode, Action> kvp in coopcontrols)
-                {
-                    if (Input.GetKey(kvp.Key))
-                    {
-                        // if, this key was pressed too recently, ignore it
-                        // otherwise, mark that it was just pressed, and invoke it
-                        bool keyHasBeenPressedBefore = keyTimers.TryGetValue(kvp.Key, out int whenItWasPressed);
-                        bool keyWasPressedRecently = keyHasBeenPressedBefore && whenItWasPressed > Environment.TickCount - keyDelay;
-                        if (!keyWasPressedRecently)
-                        {
-                            keyTimers[kvp.Key] = Environment.TickCount;
-                            kvp.Value.Invoke();
-                        }
-                    }
                 }
-            }
-            else
-            {
-                foreach (KeyValuePair<KeyCode, Action> kvp in controls)
+                else
                 {
-                    if (Input.GetKey(kvp.Key))
-                    {
-                        bool keyHasBeenPressedBefore = keyTimers.TryGetValue(kvp.Key, out int whenItWasPressed);
-                        bool keyWasPressedRecently = keyHasBeenPressedBefore && whenItWasPressed > Environment.TickCount - keyDelay;
-                        if (!keyWasPressedRecently)
-                        {
-                            keyTimers[kvp.Key] = Environment.TickCount;
-                            kvp.Value.Invoke();
-                        }
-                    }
+                    bool keyHasBeenPressedBefore = keyTimers.TryGetValue(kvp.Key, out KeyTiming whenItWasPressed);
+                    keyTimers[kvp.Key] = new KeyTiming(keyHasBeenPressedBefore ? whenItWasPressed.whenKeyWasPressed : 0, 0);
                 }
             }
         }
