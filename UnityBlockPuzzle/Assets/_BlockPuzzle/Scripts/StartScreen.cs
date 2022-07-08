@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Piece
 {
@@ -30,6 +31,17 @@ namespace Piece
 
         public void StartMultiplayer() => startGame(whatToDoOnMultiplayer);
 
+        public void changeLevel()
+        {
+            int lvl = (int)GameObject.Find("Slider").GetComponent<Slider>().value;
+            PlayerPrefs.SetInt("Level", lvl);
+        }
+        public void changeText()
+        {
+            // Debug.Log(GameObject.Find("slidertext").GetComponent<Text>().text);
+            GameObject.Find("slidertext").GetComponent<Text>().text = "Level: " + (int)GameObject.Find("Slider").GetComponent<Slider>().value;
+        }
+
         public void Stats()
         {
             Debug.Log("no worky");
@@ -44,6 +56,7 @@ namespace Piece
         {
             Noisy.PlaySound("Start noise");
         }
+
     }
 }
 

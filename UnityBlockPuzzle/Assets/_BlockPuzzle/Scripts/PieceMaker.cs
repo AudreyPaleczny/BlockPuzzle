@@ -315,6 +315,7 @@ namespace Piece
                 player2.makeAnotherOne();
             }
             player1.makeAnotherOne();
+            Debug.Log(PlayerPrefs.GetInt("Level"));
         }
 
         bool SpecialCollisionLogic(PieceInfo currentPieceInfo, int rotationRuleIndex, PieceInfo.RotationRule[] rulesSet = null)
