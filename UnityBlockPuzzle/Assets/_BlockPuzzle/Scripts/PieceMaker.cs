@@ -414,8 +414,8 @@ namespace Piece
                     bool keyWasPressedRecently = keyHasBeenPressedBefore && whenItWasPressed.whenKeyWasPressed > Environment.TickCount - keyDelay;
                     if (!keyWasPressedRecently)
                     {
-                        Debug.Log(whenItWasPressed.whenKeyWasPressed - Environment.TickCount);
-                        if (whenItWasPressed.consecutivePresses < 1 || whenItWasPressed.consecutivePresses > 3)
+                        //Debug.Log(whenItWasPressed.whenKeyWasPressed - Environment.TickCount);
+                        if (whenItWasPressed.consecutivePresses < 1 || whenItWasPressed.consecutivePresses > 4)
                         {
                             kvp.Value.Invoke();
                         }
