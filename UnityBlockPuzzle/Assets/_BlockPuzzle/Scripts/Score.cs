@@ -38,6 +38,7 @@ public class Score : MonoBehaviour
             _score = value;
             if (isNewValue) PlayerPrefs.SetInt("Score", _score);
             scoreText.text = "Score: " + _score.ToString();
+            GameObject.Find("LevelText").GetComponent<Text>().text = "Level: " + PlayerPrefs.GetInt("Level");
         }
     }
 

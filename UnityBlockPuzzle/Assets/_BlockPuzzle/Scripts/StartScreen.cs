@@ -55,6 +55,7 @@ namespace Piece
         public void Start()
         {
             Noisy.PlaySound("Start noise");
+            PlayerPrefs.SetInt("Level", 0);
         }
 
     }
