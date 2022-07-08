@@ -112,11 +112,17 @@ namespace Piece
 
         public void makeGhost(GameObject newOne)
         {
+            MrV_Mino.Tighten(newOne.transform);
             GameObject ghostPiece = Instantiate(newOne);
+            MrV_Mino.Loosen(newOne.transform);
             ghostPiece.transform.position = startingPos;
             for (int i = 0; i < ghostPiece.transform.childCount; i++)
             {
                 Transform ghostMino = ghostPiece.transform.GetChild(i);
+                MrV_Mino mm = ghostMino.GetComponent<MrV_Mino>();
+                if (mm != null) {
+                    mm.enabled = false;
+				}
                 Transform minoModel = ghostMino.GetChild(0);
                 Color ghostMinoColor = minoModel.GetComponent<Renderer>().material.color;
                 ghostMinoColor.a = 0.25f;
@@ -178,6 +184,7 @@ namespace Piece
 
             checkIfGameOver();
 
+            MrV_Mino.Tighten(currentPiece.transform);
             while (currentPiece.transform.childCount > 0)
             {
                 Transform mino = currentPiece.transform.GetChild(0);
