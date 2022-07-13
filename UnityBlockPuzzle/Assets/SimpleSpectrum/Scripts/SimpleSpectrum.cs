@@ -588,7 +588,7 @@ public class SimpleSpectrum : MonoBehaviour {
 #if UNITY_WEBGL
         Debug.LogError("Error from SimpleSpectrum: Spectrum data cannot be retrieved from a single AudioSource in WebGL!");
         return null;
-#endif
+#else
         float[] spectrum = new float[spectrumSize];
 
         channelUsed = Mathf.Clamp(channelUsed, 0, 1);
@@ -620,6 +620,7 @@ public class SimpleSpectrum : MonoBehaviour {
             spectrum[i] = value;
         }
         return spectrum;
+#endif
     }
 
     /// <summary>

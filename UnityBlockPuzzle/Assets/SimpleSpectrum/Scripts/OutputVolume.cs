@@ -270,8 +270,7 @@ public class OutputVolume : MonoBehaviour
 #if UNITY_WEBGL
         Debug.LogError("Error from SimpleSpectrum: You can't use OutputVolume.GetRMS against a single AudioSource in WebGL!");
         return 0;
-#endif
-
+#else
         sampleSize = Mathf.ClosestPowerOfTwo(sampleSize);
         float[] outputSamples = new float[sampleSize];
         aSource.GetOutputData(outputSamples, channelUsed);
@@ -282,6 +281,7 @@ public class OutputVolume : MonoBehaviour
             rms += f * f; //sum of squares
         }
         return Mathf.Sqrt(rms / (outputSamples.Length)); //mean and root
+#endif
     }
 
     /// <summary>

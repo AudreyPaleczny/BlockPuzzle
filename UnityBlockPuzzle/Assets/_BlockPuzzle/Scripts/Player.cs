@@ -184,7 +184,7 @@ namespace Piece
 
             checkIfGameOver();
 
-            MrV_Mino.Tighten(currentPiece.transform);
+            MrV_Mino.TightenDownAnimationFinally(currentPiece.transform);
             while (currentPiece.transform.childCount > 0)
             {
                 Transform mino = currentPiece.transform.GetChild(0);
