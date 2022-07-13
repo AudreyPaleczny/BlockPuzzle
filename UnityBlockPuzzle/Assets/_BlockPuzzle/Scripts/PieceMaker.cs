@@ -136,6 +136,11 @@ namespace Piece
                             board.objectMatrix[shiftRow][shiftCol] = board.objectMatrix[shiftRow - 1][shiftCol];
                             if (board.objectMatrix[shiftRow][shiftCol])
                             {
+                                MrV_Mino mm = board.objectMatrix[shiftRow][shiftCol].GetComponent<MrV_Mino>();
+                                if (mm != null) {
+                                    mm.enabled = true;
+                                    mm.graphic.SetParent(null);
+                                }
                                 board.objectMatrix[shiftRow][shiftCol].transform.position += Vector3.down;
                             }
                         }
