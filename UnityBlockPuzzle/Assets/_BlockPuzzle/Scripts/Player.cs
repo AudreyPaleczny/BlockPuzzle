@@ -213,7 +213,7 @@ namespace Piece
             // double iterationDelay = ((11 - level) * 0.1) * 1000;  // [seconds] used to be 0.05
             if (currentPiece == null) return;
 
-            iterationDelay = pieceFalltimeList[PlayerPrefs.GetInt("Level")];
+            iterationDelay = pieceFalltimeList[Score.Level];
             if (fallCounter >= iterationDelay)
             {
                 currentPiece.transform.position += Vector3.down;

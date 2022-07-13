@@ -38,7 +38,6 @@ public class Score : MonoBehaviour
             _score = value;
             if (isNewValue) PlayerPrefs.SetInt("Score", _score);
             scoreText.text = "Score: " + _score.ToString();
-            GameObject.Find("LevelText").GetComponent<Text>().text = "Level: " + PlayerPrefs.GetInt("Level");
         }
     }
 
@@ -54,6 +53,7 @@ public class Score : MonoBehaviour
             bool isNewValue = _level != value;
             _level = value;
             if (isNewValue) PlayerPrefs.SetInt("Level", _level);
+            GameObject.Find("LevelText").GetComponent<Text>().text = "Level: " + _level.ToString();
         }
     }
 
@@ -93,6 +93,7 @@ public class Score : MonoBehaviour
     void Awake()
     {
         _score = PlayerPrefs.GetInt("Score");
+        _level = PlayerPrefs.GetInt("Level");
     }
 
     // Update is called once per frame

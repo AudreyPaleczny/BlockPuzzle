@@ -66,6 +66,7 @@ namespace Piece
             int linesInTheNextLevel;
             switch (Score.Level)
             {
+                case 0: linesInTheNextLevel = 10; break;
                 case 1: linesInTheNextLevel = 20; break;
                 case 2: linesInTheNextLevel = 30; break;
                 case 3: linesInTheNextLevel = 40; break;
@@ -97,12 +98,17 @@ namespace Piece
                 case 29: linesInTheNextLevel = 200; break;
                 default: linesInTheNextLevel = 200; break;
             }
+            // Debug.Log("Linescleared: " + Score.LinesCleared);
+            // Debug.Log("Level: " + Score.Level);
+            // Debug.Log("lines needed: " + linesNeededToLevelUp);
+            // Debug.Log("lines in next : " + linesInTheNextLevel);
 
             if (Score.LinesCleared >= linesNeededToLevelUp)
             {
+                // Score.Level += 1;
                 Score.Level += 1;
+                linesNeededToLevelUp += linesInTheNextLevel;
             }
-            linesNeededToLevelUp += linesInTheNextLevel;
         }
 
         public void ClearLines()
@@ -177,6 +183,7 @@ namespace Piece
 
             rowsClearedLastTurn = rowsCleared;
             Score.LinesCleared += rowsCleared;
+            // PlayerPrefs.SetInt("LinesCleared", PlayerPrefs.GetInt("LinesCleared") + rowsClearedLastTurn);
             SetLevel();
         }
 
@@ -305,6 +312,7 @@ namespace Piece
 
         void Start()
         {
+            Score.Level = PlayerPrefs.GetInt("Level");
             //numberOfPlayers = 1;
             then = UTCMS();
             debugText = GameObject.Find("Debug Text")?.GetComponent<Text>();
@@ -333,6 +341,7 @@ namespace Piece
             }
             player1.makeAnotherOne();
             Debug.Log(PlayerPrefs.GetInt("Level"));
+            Debug.Log(Score.Level);
         }
 
         bool SpecialCollisionLogic(PieceInfo currentPieceInfo, int rotationRuleIndex, PieceInfo.RotationRule[] rulesSet = null)
