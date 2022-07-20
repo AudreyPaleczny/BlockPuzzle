@@ -426,6 +426,8 @@ namespace Piece
                     player2.pieceFallOnTime(this);
                 }
             }
+
+            
             
             currentKey = KeyCode.None;
             Dictionary<KeyCode, Action> currentControls = (numberOfPlayers == 2) ? coopcontrols : controls;

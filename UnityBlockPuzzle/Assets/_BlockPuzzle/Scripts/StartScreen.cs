@@ -39,7 +39,7 @@ namespace Piece
         public void changeText()
         {
             // Debug.Log(GameObject.Find("slidertext").GetComponent<Text>().text);
-            GameObject.Find("slidertext").GetComponent<Text>().text = "Level: " + (int)GameObject.Find("Slider").GetComponent<Slider>().value;
+            GameObject.Find("slidertext_").GetComponent<TMPro.TMP_Text>().text = "Level: " + (int)GameObject.Find("Slider").GetComponent<Slider>().value;
         }
 
         public void Stats()
@@ -55,7 +55,7 @@ namespace Piece
         public void Start()
         {
             Noisy.PlaySound("Start noise");
-            PlayerPrefs.SetInt("Level", 0);
+            //PlayerPrefs.SetInt("Level", 0);
         }
 
     }

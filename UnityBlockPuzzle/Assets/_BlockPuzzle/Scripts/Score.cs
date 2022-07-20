@@ -52,7 +52,7 @@ public class Score : MonoBehaviour
         {
             bool isNewValue = _level != value;
             _level = value;
-            if (isNewValue) PlayerPrefs.SetInt("Level", _level);
+            //if (isNewValue) PlayerPrefs.SetInt("Level", _level);
             GameObject.Find("LevelText").GetComponent<Text>().text = "Level: " + _level.ToString();
         }
     }

@@ -54,7 +54,7 @@ public class Board : MonoBehaviour
     void StartGame()
     { 
         Score.Value = 0;
-        Score.Level = 0;
+        Score.Level = PlayerPrefs.GetInt("Level");
         Score.LinesCleared = 0;
         objectMatrix = new GameObject[height][];
 
