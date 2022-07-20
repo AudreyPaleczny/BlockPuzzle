@@ -1391,7 +1391,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <#99ff66>st<#66ff66>a<#00ff00>ts
+  m_text: <#99ff66>lev<#66ff66>el sel<#00ff00>ect
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 90536a64b0aee4a3fa01be507c7e68e9, type: 2}
   m_sharedMaterial: {fileID: 8978706171308048633, guid: 90536a64b0aee4a3fa01be507c7e68e9, type: 2}
@@ -1418,8 +1418,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
-  m_fontSizeBase: 100
+  m_fontSize: 90
+  m_fontSizeBase: 90
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
