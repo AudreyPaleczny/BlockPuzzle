@@ -111,6 +111,8 @@ namespace Piece
             }
         }
 
+        public ParticleSystem clearParticles;
+
         public void ClearLines()
         {
             int rowsCleared = 0;
@@ -130,10 +132,17 @@ namespace Piece
                 {
                     clearRow = row;
                     rowsCleared++;
-                    for (int col = 0; col < board.width; ++col)
+                    for (int pr = clearRow; pr > 0; --pr)
                     {
-                        Destroy(board.objectMatrix[row][col]);
+                        for (int col = 0; col < board.width; ++col)
+                        {
+                            clearParticles.Stop();
+                            clearParticles.transform.position = board.objectMatrix[row][col].transform.position;
+                            clearParticles.Emit(3);
+                            Destroy(board.objectMatrix[row][col]);
+                        }
                     }
+                    
 
                     for (int shiftRow = clearRow; shiftRow > 0; --shiftRow)
                     {
