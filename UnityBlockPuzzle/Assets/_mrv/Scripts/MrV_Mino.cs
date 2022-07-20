@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MrV_Mino : MonoBehaviour
 {
-	public Vector3 targetPosition;
+	public Vector3 whereImGoing;
 	public Quaternion targetRotation;
 	Vector3 lastPosition;
 	Quaternion lastRotation;
@@ -62,13 +62,13 @@ public class MrV_Mino : MonoBehaviour
 	}
 
 	public void FixedUpdate() {
-		Vector3 newPos = GetGridPosition(transform.position) + new Vector3(0.5f, 0.5f, 0);
-		Vector3 delta = newPos - targetPosition;
+		Vector3 PositionIWantToBeAtRightNow = GetGridPosition(transform.position) + new Vector3(0.5f, 0.5f, 0);
+		Vector3 delta = PositionIWantToBeAtRightNow - whereImGoing;
 		if (delta != Vector3.zero || transform.rotation != targetRotation) {
 			needsToShift = true;
 			lastPosition = graphic.position;
 			lastRotation = graphic.rotation;
-			targetPosition = newPos;
+			whereImGoing = PositionIWantToBeAtRightNow;
 			targetRotation = transform.rotation;
 			timer = 0;
 			//NonStandard.Lines.Make("move " + name).Arrow(lastPosition, targetPosition, Color.red, 1f/32);
@@ -85,7 +85,7 @@ public class MrV_Mino : MonoBehaviour
 		if (needsToShift) {
 			timer += Time.deltaTime;
 			if (timer > shiftTime) {
-				graphic.position = targetPosition;
+				graphic.position = whereImGoing;
 				graphic.rotation = targetRotation;
 				needsToShift = false;
 				if (finalAnimation) {
@@ -93,7 +93,7 @@ public class MrV_Mino : MonoBehaviour
 					enabled = false;
 				}
 			} else {
-				graphic.position = Vector3.Lerp(lastPosition, targetPosition, timer / shiftTime);
+				graphic.position = Vector3.Lerp(lastPosition, whereImGoing, timer / shiftTime);
 				graphic.rotation = Quaternion.Lerp(lastRotation, targetRotation, timer / shiftTime);
 			}
 		}
