@@ -7096,8 +7096,8 @@ MonoBehaviour:
     activeAudioSource: {fileID: 0}
   - name: Lines1
     sounds:
-    - {fileID: 8300000, guid: 23aeaa8ec539c29418de84148fa44c9a, type: 3}
-    volumeReduce: 0
+    - {fileID: 8300000, guid: e8e6dbc0783954a4396b366a71223303, type: 3}
+    volumeReduce: 0.75
     backgroundMusic: 0
     playOnStart: 0
     is2D: 1
@@ -7111,7 +7111,7 @@ MonoBehaviour:
   - name: Lines2
     sounds:
     - {fileID: 8300000, guid: 41787ec506cf140478f8d7d39367a82c, type: 3}
-    volumeReduce: 0
+    volumeReduce: 0.5
     backgroundMusic: 0
     playOnStart: 0
     is2D: 1
