@@ -136,9 +136,11 @@ namespace Piece
                     {
                         for (int col = 0; col < board.width; ++col)
                         {
-                            clearParticles.Stop();
-                            clearParticles.transform.position = board.objectMatrix[row][col].transform.position;
-                            clearParticles.Emit(3);
+                            if (clearParticles) {
+                                clearParticles.Stop();
+                                clearParticles.transform.position = board.objectMatrix[row][col].transform.position;
+                                clearParticles.Emit(3);
+                            }
                             Destroy(board.objectMatrix[row][col]);
                         }
                     }

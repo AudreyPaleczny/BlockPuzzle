@@ -238,7 +238,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0673b42d0429ba94da40faeb0ce608c2, type: 2}
+  - {fileID: 2100000, guid: f0676ac0f058bc442b358bfcc62ddca6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1836,6 +1836,7 @@ MonoBehaviour:
   player1: {fileID: 319881815}
   player2: {fileID: 105860168}
   linesNeededToLevelUp: 10
+  clearParticles: {fileID: 0}
   currentKey: 0
   debugPosition: 
 --- !u!4 &1441315622
