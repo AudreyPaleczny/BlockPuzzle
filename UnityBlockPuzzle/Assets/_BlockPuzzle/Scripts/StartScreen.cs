@@ -8,6 +8,8 @@ namespace Piece
 {
     public class StartScreen : MonoBehaviour
     {
+        public TMPro.TMP_Text level_label;
+        public Slider level_slider;
         private void whatToDoOnClassic(AsyncOperation a)
         {
             PieceMaker p = FindObjectOfType<PieceMaker>();
@@ -39,7 +41,7 @@ namespace Piece
         public void changeText()
         {
             // Debug.Log(GameObject.Find("slidertext").GetComponent<Text>().text);
-            GameObject.Find("slidertext_").GetComponent<TMPro.TMP_Text>().text = "Level: " + (int)GameObject.Find("Slider").GetComponent<Slider>().value;
+            level_label.text = "Level: " + (int)level_slider.value;
         }
 
         public void Stats()
@@ -50,6 +52,11 @@ namespace Piece
         public void Themes()
         {
             Debug.Log("no worky");
+        }
+
+        public void ChangeToPastelScene()
+        {
+            SceneManager.LoadScene("PastelStart");
         }
 
         public void Start()
