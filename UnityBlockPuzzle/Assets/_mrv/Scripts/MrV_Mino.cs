@@ -41,6 +41,22 @@ public class MrV_Mino : MonoBehaviour
 		//graphic.localPosition = Vector3.zero;
 	}
 
+	public static void EnableParticles(Transform t, bool enabled) {
+		for (int i = 0; i < t.childCount; ++i) {
+			MrV_Mino mm = t.GetChild(i).GetComponent<MrV_Mino>();
+			if (mm == null || mm.graphic == null) { continue; }
+			ParticleSystem[] particleSystems = mm.graphic.gameObject.GetComponentsInChildren<ParticleSystem>();
+			System.Array.ForEach(particleSystems, ps => {
+				if (enabled) {
+					Debug.Log("ON!" + ps);
+					ps.Play();
+				} else {
+					ps.Stop();
+				}
+			});
+		}
+	}
+
 	public static void Loosen(Transform t) {
 		for (int i = 0; i < t.childCount; ++i) {
 			MrV_Mino mm = t.GetChild(i).GetComponent<MrV_Mino>();

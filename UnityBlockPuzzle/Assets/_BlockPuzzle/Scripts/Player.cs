@@ -170,8 +170,8 @@ namespace Piece
                     dirtyGhost = true;
                     //placeGhostPiece();
                     canPieceBeHeld = false;
+                    MrV_Mino.EnableParticles(currentPiece.transform, true);
                 }
-
                 Noisy.PlaySound("Pop");
             }
         }
@@ -185,6 +185,7 @@ namespace Piece
             checkIfGameOver();
 
             MrV_Mino.TightenDownAnimationFinally(currentPiece.transform);
+            MrV_Mino.EnableParticles(currentPiece.transform, false);
             while (currentPiece.transform.childCount > 0)
             {
                 Transform mino = currentPiece.transform.GetChild(0);
