@@ -23,7 +23,7 @@ public class Score : MonoBehaviour
     }
 
     public Text scoreText;
-    private int _score, _level, _linesCleared;
+    private int _score, _level, _linesCleared, _combo;
 
     public int value
     {
@@ -71,6 +71,20 @@ public class Score : MonoBehaviour
         }
     }
 
+    public int combo
+    {
+        get
+        {
+            return _combo;
+        }
+        set
+        {
+            bool isNewValue = _combo != value;
+            _combo = value;
+            if (isNewValue) PlayerPrefs.SetInt("Combo", _combo);
+        }
+    }
+
     public static int Level
     {
         get => Instance.level;
@@ -87,6 +101,12 @@ public class Score : MonoBehaviour
     {
         get => Instance.value;
         set => Instance.value = value;
+    }
+
+    public static int Combo
+    {
+        get => Instance.combo;
+        set => Instance.combo = value;
     }
 
     // Awake called right after add component

@@ -98,16 +98,13 @@ namespace Piece
                 case 29: linesInTheNextLevel = 200; break;
                 default: linesInTheNextLevel = 200; break;
             }
-            // Debug.Log("Linescleared: " + Score.LinesCleared);
-            // Debug.Log("Level: " + Score.Level);
-            // Debug.Log("lines needed: " + linesNeededToLevelUp);
-            // Debug.Log("lines in next : " + linesInTheNextLevel);
 
             if (Score.LinesCleared >= linesNeededToLevelUp)
             {
                 // Score.Level += 1;
                 Score.Level += 1;
                 linesNeededToLevelUp += linesInTheNextLevel;
+                if (PlayerPrefs.GetInt("MaxLevel") < Score.Level) PlayerPrefs.SetInt("MaxLevel", Score.Level);
             }
         }
 
@@ -180,13 +177,16 @@ namespace Piece
                 countColumns = 0;
             }
 
-            if (rowsClearedLastTurn == rowsCleared && rowsCleared != 0)
+            if (rowsClearedLastTurn != 0 && rowsCleared != 0)
             {
                 timesClearedinaRow++;
                 if (timesClearedinaRow >= 2) { comboScore(rowsCleared, Score.Level, timesClearedinaRow); }
+                Score.Combo++;
+                if (PlayerPrefs.GetInt("MaxCombo") < Score.Combo) PlayerPrefs.SetInt("MaxCombo", Score.Combo);
             }
             else
             {
+                Score.Combo = 1;
                 timesClearedinaRow = 1;
                 lineScore(rowsCleared, Score.Level);
             }
@@ -194,7 +194,7 @@ namespace Piece
 
             rowsClearedLastTurn = rowsCleared;
             Score.LinesCleared += rowsCleared;
-            // PlayerPrefs.SetInt("LinesCleared", PlayerPrefs.GetInt("LinesCleared") + rowsClearedLastTurn);
+            PlayerPrefs.SetInt("TotalLinesCleared", PlayerPrefs.GetInt("TotalLinesCleared") + rowsCleared);
             SetLevel();
         }
 
@@ -225,6 +225,7 @@ namespace Piece
                 default:
                     Score.Instance.value += (800 * lvl);
                     Noisy.PlaySound("Lines4");
+                    PlayerPrefs.SetInt("TetrisCount", PlayerPrefs.GetInt("TetrisCount") + 1); 
                     break;
             }
 
@@ -353,6 +354,7 @@ namespace Piece
             player1.makeAnotherOne();
             Debug.Log(PlayerPrefs.GetInt("Level"));
             Debug.Log(Score.Level);
+            Score.Combo = 1;
         }
 
         bool SpecialCollisionLogic(PieceInfo currentPieceInfo, int rotationRuleIndex, PieceInfo.RotationRule[] rulesSet = null)

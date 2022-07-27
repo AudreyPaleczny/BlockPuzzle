@@ -46,7 +46,29 @@ namespace Piece
 
         public void Stats()
         {
-            Debug.Log("no worky");
+        // stats:
+
+        //    - # of tetris
+        //    - # of lines cleared
+        //     - # of deaths
+        //     -highest combo ?
+        //     -highest lvl
+        //     - high score
+
+            int highScore = PlayerPrefs.GetInt("HighScore");
+            int tetrisCount = PlayerPrefs.GetInt("TetrisCount");
+            int maxLevel = PlayerPrefs.GetInt("MaxLevel");
+            int maxCombo = PlayerPrefs.GetInt("MaxCombo");
+            int totalLinesCleared = PlayerPrefs.GetInt("TotalLinesCleared");
+            int deathCount = PlayerPrefs.GetInt("DeathCount");
+
+            GameObject.Find("statsText").GetComponent<TMPro.TMP_Text>().text = 
+                "High Score: " + highScore.ToString() + "\n" +
+                "Tetris Count: " + tetrisCount.ToString() + "\n" +
+                "Highest Level: " + maxLevel.ToString() + "\n" +
+                "Max Combo: " + maxCombo.ToString() + "\n" +
+                "Total Lines Cleared: " + totalLinesCleared.ToString() + "\n" +
+                "Death Count: " + deathCount.ToString() + "\n";
         }
 
         public void Themes()
