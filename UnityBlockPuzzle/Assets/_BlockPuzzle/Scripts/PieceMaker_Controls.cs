@@ -149,6 +149,11 @@ namespace Piece
                     {
                         player1.currentPiece.transform.Rotate(0, 0, -180);
                         player1.currentGhostPiece.transform.Rotate(0, 0, -180);
+                        if(player1.isPieceOOB(player1.currentPiece) || isColliding(player1.currentPiece))
+                        {
+                            player1.currentPiece.transform.Rotate(0, 0, 180);
+                            player1.currentGhostPiece.transform.Rotate(0, 0, 180);
+                        }
                         player1.dirtyGhost = true;
                     },
                     [KeyCode.Space] = () => {
@@ -212,6 +217,11 @@ namespace Piece
                     {
                         player1.currentPiece.transform.Rotate(0, 0, -180);
                         player1.currentGhostPiece.transform.Rotate(0, 0, -180);
+                        if (player1.isPieceOOB(player1.currentPiece) || isColliding(player1.currentPiece))
+                        {
+                            player1.currentPiece.transform.Rotate(0, 0, 180);
+                            player1.currentGhostPiece.transform.Rotate(0, 0, 180);
+                        }
                         player1.dirtyGhost = true;
                     },
                     [KeyCode.Space] = () => {
@@ -270,6 +280,11 @@ namespace Piece
                     {
                         player2.currentPiece.transform.Rotate(0, 0, -180);
                         player2.currentGhostPiece.transform.Rotate(0, 0, -180);
+                        if (player2.isPieceOOB(player2.currentPiece) || isColliding(player2.currentPiece))
+                        {
+                            player2.currentPiece.transform.Rotate(0, 0, 180);
+                            player2.currentGhostPiece.transform.Rotate(0, 0, 180);
+                        }
                         player2.dirtyGhost = true;
                     },
                     [KeyCode.Period] = () => {
