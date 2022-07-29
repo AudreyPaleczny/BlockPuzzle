@@ -173,6 +173,8 @@ namespace Piece
                     MrV_Mino.EnableParticles(currentPiece.transform, true);
                 }
                 Noisy.PlaySound("Pop");
+            } else {
+                MrV_Mino.EmitParticles(holdPiece.transform, 3);
             }
         }
 

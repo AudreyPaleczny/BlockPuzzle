@@ -42,19 +42,27 @@ public class MrV_Mino : MonoBehaviour
 	}
 
 	public static void EnableParticles(Transform t, bool enabled) {
+		ForEachParticleSystem(t, ps => {
+			if (enabled) {
+				Debug.Log("ON!" + ps);
+				ps.Play();
+			} else {
+				ps.Stop();
+			}
+		});
+	}
+
+	public static void ForEachParticleSystem(Transform t, System.Action<ParticleSystem> particleSystemAction) {
 		for (int i = 0; i < t.childCount; ++i) {
 			MrV_Mino mm = t.GetChild(i).GetComponent<MrV_Mino>();
 			if (mm == null || mm.graphic == null) { continue; }
 			ParticleSystem[] particleSystems = mm.graphic.gameObject.GetComponentsInChildren<ParticleSystem>();
-			System.Array.ForEach(particleSystems, ps => {
-				if (enabled) {
-					Debug.Log("ON!" + ps);
-					ps.Play();
-				} else {
-					ps.Stop();
-				}
-			});
+			System.Array.ForEach(particleSystems, particleSystemAction);
 		}
+	}
+
+	public static void EmitParticles(Transform t, int count) {
+		ForEachParticleSystem(t, ps => ps.Emit(count));
 	}
 
 	public static void Loosen(Transform t) {
@@ -107,6 +115,11 @@ public class MrV_Mino : MonoBehaviour
 				if (finalAnimation) {
 					Tighten();
 					enabled = false;
+					ParticleSystem[] particleSystems = graphic.gameObject.GetComponentsInChildren<ParticleSystem>();
+					System.Array.ForEach(particleSystems, ps => {
+						ps.transform.SetParent(null);
+						ps.Emit(3);
+					});
 				}
 			} else {
 				graphic.position = Vector3.Lerp(lastPosition, whereImGoing, timer / shiftTime);
