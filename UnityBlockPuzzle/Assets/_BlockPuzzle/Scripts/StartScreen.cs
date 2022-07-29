@@ -81,6 +81,16 @@ namespace Piece
             SceneManager.LoadScene("PastelStart");
         }
 
+        public void ChangeToMinimalScene()
+        {
+            SceneManager.LoadScene("RetroStart");
+        }
+
+        public void ChangeToTreeScene()
+        {
+            SceneManager.LoadScene("TreeStart");
+        }
+
         public void Start()
         {
             Noisy.PlaySound("Start noise");
