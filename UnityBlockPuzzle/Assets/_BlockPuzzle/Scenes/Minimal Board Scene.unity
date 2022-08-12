@@ -7206,6 +7206,20 @@ MonoBehaviour:
     onTrigger: 0
     lastNoisePlayed: -1
     activeAudioSource: {fileID: 0}
+  - name: LevelUp
+    sounds:
+    - {fileID: 8300000, guid: 8342c9f348b594ebe8531b981290b3fa, type: 3}
+    volumeReduce: 0.5
+    backgroundMusic: 0
+    playOnStart: 0
+    is2D: 1
+    followsObject: 0
+    loop: 0
+    onePlayAtATime: 0
+    onCollision: 0
+    onTrigger: 0
+    lastNoisePlayed: -1
+    activeAudioSource: {fileID: 0}
 --- !u!4 &1585359244
 Transform:
   m_ObjectHideFlags: 0
