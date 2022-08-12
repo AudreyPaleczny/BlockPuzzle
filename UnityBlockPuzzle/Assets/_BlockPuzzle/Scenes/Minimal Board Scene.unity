@@ -7096,7 +7096,7 @@ MonoBehaviour:
     activeAudioSource: {fileID: 0}
   - name: Lines1
     sounds:
-    - {fileID: 8300000, guid: e8e6dbc0783954a4396b366a71223303, type: 3}
+    - {fileID: 8300000, guid: d9c468b4dd75a46808434df33d2af117, type: 3}
     volumeReduce: 0.75
     backgroundMusic: 0
     playOnStart: 0
@@ -7110,7 +7110,7 @@ MonoBehaviour:
     activeAudioSource: {fileID: 0}
   - name: Lines2
     sounds:
-    - {fileID: 8300000, guid: 41787ec506cf140478f8d7d39367a82c, type: 3}
+    - {fileID: 8300000, guid: 7470465bc1c79407299d0a7154a1005a, type: 3}
     volumeReduce: 0.5
     backgroundMusic: 0
     playOnStart: 0
@@ -7124,7 +7124,7 @@ MonoBehaviour:
     activeAudioSource: {fileID: 0}
   - name: Lines3
     sounds:
-    - {fileID: 8300000, guid: cf04da140d1bc804c8f8f363eeef5831, type: 3}
+    - {fileID: 8300000, guid: 20b9732d568804e2aba797508c73a87f, type: 3}
     volumeReduce: 0
     backgroundMusic: 0
     playOnStart: 0
@@ -7138,7 +7138,7 @@ MonoBehaviour:
     activeAudioSource: {fileID: 0}
   - name: Lines4
     sounds:
-    - {fileID: 8300000, guid: 2190e6b1b7909e34cacc0ff315c30fe4, type: 3}
+    - {fileID: 8300000, guid: 9569ab739b7a54b5ba54561b3f1c5de2, type: 3}
     volumeReduce: 0
     backgroundMusic: 0
     playOnStart: 0
