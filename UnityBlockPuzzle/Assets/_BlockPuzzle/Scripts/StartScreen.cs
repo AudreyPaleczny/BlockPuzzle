@@ -10,6 +10,8 @@ namespace Piece
     {
         public TMPro.TMP_Text level_label;
         public Slider level_slider;
+        public Slider volume_slider;
+
         private void whatToDoOnClassic(AsyncOperation a)
         {
             PieceMaker p = FindObjectOfType<PieceMaker>();
@@ -42,6 +44,12 @@ namespace Piece
         {
             // Debug.Log(GameObject.Find("slidertext").GetComponent<Text>().text);
             level_label.text = "Level: " + (int)level_slider.value;
+        }
+
+        public void changeVoume()
+        {
+            PlayerPrefs.SetInt("Volume", (int)volume_slider.value);
+            AudioListener.volume = PlayerPrefs.GetInt("Volume");
         }
 
         public void Stats()
@@ -93,6 +101,12 @@ namespace Piece
 
         public void Start()
         {
+            if (PlayerPrefs.GetInt("Volume") != 0)
+            {
+                volume_slider.value = PlayerPrefs.GetInt("Volume");
+            }
+            else PlayerPrefs.SetInt("Volume", 100);
+            AudioListener.volume = (float)(PlayerPrefs.GetInt("Volume")/100.0);
             Noisy.PlaySound("Start noise");
             //PlayerPrefs.SetInt("Level", 0);
         }
