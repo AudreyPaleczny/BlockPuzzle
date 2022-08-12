@@ -7,8 +7,8 @@ using UnityEngine;
 // latest version at: https://pastebin.com/raw/hGU8et8s -- added: using volume defined in editor by default (2020/11/13)
 public class Noisy : MonoBehaviour
 {
-
 	public Noise[] noises = new Noise[1];
+	public bool removeNoisesWhenDestroyed = true;
 
 	/// <summary>used for getting a random noise from a list of noises, without getting the one that was just played</summary>
 	/// <param name="minInclusive"></param>
@@ -183,6 +183,16 @@ public class Noisy : MonoBehaviour
 			{
 				Noisy.OnTriggerAdvancedSettings oc = CreateHandler<OnTriggerAdvancedSettings>(n.name);
 				oc.noise = n;
+			}
+		}
+	}
+
+	private void OnDestroy() {
+		if (!removeNoisesWhenDestroyed) { return; }
+		for (int i = 0; i < noises.Length; ++i) {
+			int index = Global.allNoises.BinarySearch(noises[i], Noise.compare);
+			if (index >= 0) {
+				Global.allNoises.RemoveAt(index);
 			}
 		}
 	}
