@@ -23,4 +23,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_BlockPuzzle/Scenes/TreeStart.unity
     guid: 5ee083f3ce9ac6d4195dddbbbe55bc89
+  - enabled: 1
+    path: Assets/_mrv/MrVStart.unity
+    guid: 8a59841f884e78d4593c30ed122477f3
+  - enabled: 1
+    path: Assets/_mrv/MrV Board Scene.unity
+    guid: ab4c201d3e749f34e8df1b67ed285abb
   m_configObjects: {}

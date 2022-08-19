@@ -11,6 +11,9 @@ namespace Piece
         public TMPro.TMP_Text level_label;
         public Slider level_slider;
         public Slider volume_slider;
+        public string levelToLoad = "Minimal Board Scene";
+
+        public string LevelToLoad { get => levelToLoad; set => levelToLoad = value; }
 
         private void whatToDoOnClassic(AsyncOperation a)
         {
@@ -27,7 +30,7 @@ namespace Piece
 
         private void startGame(System.Action<AsyncOperation> f)
         {
-            AsyncOperation a = SceneManager.LoadSceneAsync("Minimal Board Scene");
+            AsyncOperation a = SceneManager.LoadSceneAsync(levelToLoad);
             a.completed += f;
         }
 
@@ -101,7 +104,7 @@ namespace Piece
 
         public void Start()
         {
-            if (PlayerPrefs.GetInt("Volume") != 0)
+            if (PlayerPrefs.GetInt("Volume") != 0 && volume_slider != null)
             {
                 volume_slider.value = PlayerPrefs.GetInt("Volume");
             }

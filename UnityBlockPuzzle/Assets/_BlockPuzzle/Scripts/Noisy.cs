@@ -192,7 +192,9 @@ public class Noisy : MonoBehaviour
 		for (int i = 0; i < noises.Length; ++i) {
 			int index = Global.allNoises.BinarySearch(noises[i], Noise.compare);
 			if (index >= 0) {
+				Debug.Log("removing " + noises[i].name + " @" + index);
 				Global.allNoises.RemoveAt(index);
+				s_soundsByCategory.Remove(noises[i].name);
 			}
 		}
 	}
@@ -241,34 +243,27 @@ public class Noisy : MonoBehaviour
 	/// <param name="isLooped">If set to <c>true</c> is looped.</param>
 	/// <param name="soundCategory">If non-null, prevents multiple sounds with the same soundCategory from playing simultaneously. If null, each instance of the sound will be independent.</param>
 	/// <param name="volume"></param>
-	public static AudioSource PlaySound(AudioClip noise, Vector3 p, bool is3D, bool isLooped, string soundCategory, float volume)
-	{
+	public static AudioSource PlaySound(AudioClip noise, Vector3 p, bool is3D, bool isLooped, string soundCategory, float volume) {
 		if (noise == null) return null;
 		AudioSource asrc = null;
-		if (soundCategory != null && soundCategory.Length > 0)
-		{
+		if (soundCategory != null && soundCategory.Length > 0) {
 			s_soundsByCategory.TryGetValue(soundCategory, out asrc);
 		}
-		if (asrc == null)
-		{
+		if (asrc == null) {
 			string noiseName = (soundCategory != null) ? "(" + soundCategory + ")" : "<Noise: " + noise.name + ">";
 			GameObject go = new GameObject(noiseName);
 			asrc = go.AddComponent<AudioSource>();
-			if (soundCategory != null)
-			{
+			if (soundCategory != null) {
 				s_soundsByCategory[soundCategory] = asrc;
 			}
 			asrc.transform.SetParent(Global.Instance().transform);
-		}
-		else
-		{
+		} else {
 			asrc.Stop();
 		}
 		asrc.clip = noise;
 		asrc.spatialBlend = is3D ? 1 : 0;
 		asrc.transform.position = p;
-		if (soundCategory == null && !isLooped)
-		{
+		if (soundCategory == null && !isLooped) {
 			Destroy(asrc.gameObject, noise.length); // destroy the noise after it is done playing if not looped
 		}
 		asrc.loop = isLooped;

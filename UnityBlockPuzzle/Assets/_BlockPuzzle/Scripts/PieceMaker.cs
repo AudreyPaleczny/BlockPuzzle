@@ -324,7 +324,9 @@ namespace Piece
 
         void Start()
         {
-            AudioListener.volume = (float)(PlayerPrefs.GetInt("Volume") / 100.0);
+            if (PlayerPrefs.HasKey("Volume")) {
+                AudioListener.volume = (float)(PlayerPrefs.GetInt("Volume") / 100.0);
+            }
             Debug.Log(PlayerPrefs.GetInt("Volume"));
             Score.Level = PlayerPrefs.GetInt("Level");
             //numberOfPlayers = 1;
