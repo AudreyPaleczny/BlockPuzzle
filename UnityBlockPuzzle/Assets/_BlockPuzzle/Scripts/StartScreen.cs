@@ -102,6 +102,11 @@ namespace Piece
             SceneManager.LoadScene("TreeStart");
         }
 
+        public void ChangeToMrVScene()
+        {
+            SceneManager.LoadScene("MrVStart");
+        }
+
         public void Start()
         {
             if (PlayerPrefs.GetInt("Volume") != 0 && volume_slider != null)
