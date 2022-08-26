@@ -1841,12 +1841,52 @@ PrefabInstance:
       value: 119
       objectReference: {fileID: 0}
     - target: {fileID: 900502418031900101, guid: 293a20bb98c8249ba9413e4b343eb15c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 900502418031900101, guid: 293a20bb98c8249ba9413e4b343eb15c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 900502418031900101, guid: 293a20bb98c8249ba9413e4b343eb15c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 900502418031900101, guid: 293a20bb98c8249ba9413e4b343eb15c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 555259657}
     - target: {fileID: 900502418031900101, guid: 293a20bb98c8249ba9413e4b343eb15c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 555259657}
+    - target: {fileID: 900502418031900101, guid: 293a20bb98c8249ba9413e4b343eb15c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 900502418031900101, guid: 293a20bb98c8249ba9413e4b343eb15c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: set_LevelToLoad
+      objectReference: {fileID: 0}
+    - target: {fileID: 900502418031900101, guid: 293a20bb98c8249ba9413e4b343eb15c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: StartMultiplayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 900502418031900101, guid: 293a20bb98c8249ba9413e4b343eb15c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: Piece.StartScreen, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 900502418031900101, guid: 293a20bb98c8249ba9413e4b343eb15c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: MrV Board Scene
+      objectReference: {fileID: 0}
+    - target: {fileID: 900502418031900101, guid: 293a20bb98c8249ba9413e4b343eb15c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 900502418031900101, guid: 293a20bb98c8249ba9413e4b343eb15c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1885188191698451503, guid: 293a20bb98c8249ba9413e4b343eb15c, type: 3}
       propertyPath: m_fontColor.b

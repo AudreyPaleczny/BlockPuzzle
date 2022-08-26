@@ -192,7 +192,6 @@ public class Noisy : MonoBehaviour
 		for (int i = 0; i < noises.Length; ++i) {
 			int index = Global.allNoises.BinarySearch(noises[i], Noise.compare);
 			if (index >= 0) {
-				Debug.Log("removing " + noises[i].name + " @" + index);
 				Global.allNoises.RemoveAt(index);
 				s_soundsByCategory.Remove(noises[i].name);
 			}
