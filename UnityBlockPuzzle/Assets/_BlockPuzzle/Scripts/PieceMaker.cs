@@ -444,7 +444,9 @@ namespace Piece
                 if (Input.GetKey(kvp.Key))
                 {
                     bool keyHasBeenPressedBefore = keyTimers.TryGetValue(kvp.Key, out KeyTiming whenItWasPressed);
-                    bool keyWasPressedRecently = keyHasBeenPressedBefore && whenItWasPressed.whenKeyWasPressed > Environment.TickCount - keyDelay;
+                    bool timeToAcceptTheKey = Environment.TickCount < whenItWasPressed.whenKeyWasPressed ||
+                      whenItWasPressed.whenKeyWasPressed > Environment.TickCount - keyDelay;
+                    bool keyWasPressedRecently = keyHasBeenPressedBefore && timeToAcceptTheKey;
                     if (!keyWasPressedRecently)
                     {
                         //Debug.Log(whenItWasPressed.whenKeyWasPressed - Environment.TickCount);
@@ -459,7 +461,7 @@ namespace Piece
                 else
                 {
                     bool keyHasBeenPressedBefore = keyTimers.TryGetValue(kvp.Key, out KeyTiming whenItWasPressed);
-                    keyTimers[kvp.Key] = new KeyTiming(keyHasBeenPressedBefore ? whenItWasPressed.whenKeyWasPressed : 0, 0);
+                    keyTimers[kvp.Key] = new KeyTiming(keyHasBeenPressedBefore ? whenItWasPressed.whenKeyWasPressed : Environment.TickCount, 0);
                 }
             }
         }
