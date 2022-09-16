@@ -19,6 +19,7 @@ namespace Piece
         public GameObject previousGhostPiece;
         public long then;
         public GameObject pauseMenu;
+        public GameObject secondPlayerHoldSlot;
         public Image singlePlayerControlsImage;
         public Image coopControlsImage;
 
@@ -340,7 +341,10 @@ namespace Piece
 
             //Random.InitState(System.Environment.TickCount);
             player1.blockQueue.initNums(7);
+            
             player1.blockQueue.initialPosition = new Vector3(14, -1, 4);
+            if (numberOfPlayers == 2) player1.blockQueue.initialPosition = new Vector3(-10, -1, 4);
+                
             player1.startingPos = transform.position;
 
             player1.blockQueue.makeQueue();
@@ -348,12 +352,15 @@ namespace Piece
             if (numberOfPlayers == 2)
             {
                 player1.startingPos = transform.position + Vector3.left * 2;
-                player1.holdPosition = new Vector3(-10, 0.5f, 4);
+                player1.holdPosition = new Vector3(-4, -1, 4);
                 player2.startingPos = transform.position + Vector3.right * 2;
-                player2.blockQueue.initialPosition = new Vector3(20, -1, 4);
+                player2.blockQueue.initialPosition = new Vector3(18, -1, 4);
+                player2.holdPosition = new Vector3(12, -1, 4);
                 player2.blockQueue.initNums(7);
                 player2.blockQueue.makeQueue();
                 player2.makeAnotherOne();
+
+                secondPlayerHoldSlot.SetActive(true);
             }
             player1.makeAnotherOne();
             Debug.Log(PlayerPrefs.GetInt("Level"));

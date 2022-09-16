@@ -18,6 +18,7 @@ namespace Piece
         public BlockQueue blockQueue;
         public List<GameObject> listOfObjects = new List<GameObject>();
         public Light[] pieceLight = new Light[4];
+        public ParticleSystem[] particles = new ParticleSystem[4];
         public bool dirtyGhost = true;
 
         public Vector3 startingPos;
