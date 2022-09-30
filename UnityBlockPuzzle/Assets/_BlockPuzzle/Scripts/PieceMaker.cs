@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -271,7 +272,7 @@ namespace Piece
             for (int i = 0; i < pieceTransform.childCount; ++i)
             {
                 Transform mino = pieceTransform.GetChild(i);
-                if (!mino.GetComponent<Light>())
+                if (!mino.GetComponent<Light>() && !mino.GetComponent<ParticleSystem>() && !mino.GetComponent<TextMeshPro>())
                 {
                     int boardXPos = (int)Mathf.Round(mino.position.x - 0.5f), boardYPos = (int)Mathf.Round((mino.position.y - 3.5f) * -1);
                     coords[index++] = new Vector2Int(boardXPos, boardYPos);
@@ -353,16 +354,20 @@ namespace Piece
             {
                 player1.startingPos = transform.position + Vector3.left * 2;
                 player1.holdPosition = new Vector3(-4, -1, 4);
+
                 player2.startingPos = transform.position + Vector3.right * 2;
                 player2.blockQueue.initialPosition = new Vector3(18, -1, 4);
                 player2.holdPosition = new Vector3(12, -1, 4);
                 player2.blockQueue.initNums(7);
                 player2.blockQueue.makeQueue();
+                player2.nameswitch = true;
                 player2.makeAnotherOne();
-
                 secondPlayerHoldSlot.SetActive(true);
+
+                player1.nameswitch = true;
             }
             player1.makeAnotherOne();
+
             Debug.Log(PlayerPrefs.GetInt("Level"));
             Debug.Log(Score.Level);
             Score.Combo = 1;

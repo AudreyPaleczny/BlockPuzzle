@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -22,6 +23,7 @@ namespace Piece
         public bool dirtyGhost = true;
 
         public Vector3 startingPos;
+        public bool nameswitch = false;
 
         public long fallCounter = 0;
 
@@ -36,9 +38,10 @@ namespace Piece
             for (int i = 0; i < pieceTransform.childCount; ++i)
             {
                 Transform mino = pieceTransform.GetChild(i);
-                if (!mino.GetComponent<Light>())
+                if (!mino.GetComponent<Light>() && !mino.GetComponent<ParticleSystem>() && !mino.GetComponent <TextMeshPro>())
                 {
                     int boardXPos = (int)Mathf.Round(mino.position.x - 0.5f), boardYPos = (int)Mathf.Round((mino.position.y - 3.5f) * -1);
+                    // Debug.Log(index);
                     coords[index++] = new Vector2Int(boardXPos, boardYPos);
                 }
             }
@@ -107,8 +110,36 @@ namespace Piece
             }
 
             currentPiece = newOne;
+            //alignParticles();
+            if (nameswitch) alignName();
             blockQueue.updateQueue();
             blockQueue.printQueue();
+        }
+
+        public GameObject tag;
+        public void alignParticles()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                particles[i].transform.SetParent(currentPiece.transform.GetChild(i));
+                particles[i].transform.localPosition = Vector3.zero;
+                particles[i].transform.SetParent(currentPiece.transform);
+                particles[i].Stop();
+            }
+        }
+
+        public void alignName()
+        {
+            tag.transform.SetParent(currentPiece.transform);
+            tag.transform.localPosition = new Vector3(9, 1, -1);
+        }
+
+        public void enableParticles()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                particles[i].Play();
+            }
         }
 
         public void makeGhost(GameObject newOne)
