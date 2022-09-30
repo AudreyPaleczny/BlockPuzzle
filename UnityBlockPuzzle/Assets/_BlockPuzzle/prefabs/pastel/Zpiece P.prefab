@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3931688169107807427}
   - component: {fileID: -3139008573337600395}
   m_Layer: 0
-  m_Name: Zpiece
+  m_Name: Zpiece P
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
