@@ -352,6 +352,12 @@ namespace Piece
 
             if (numberOfPlayers == 2)
             {
+                // disable lights on player 1's piece
+                for (int i = 0; i < 4; i++)
+                {
+                    player1.pieceLight[i].gameObject.SetActive(false);
+                }
+
                 player1.startingPos = transform.position + Vector3.left * 2;
                 player1.holdPosition = new Vector3(-4, -1, 4);
 
