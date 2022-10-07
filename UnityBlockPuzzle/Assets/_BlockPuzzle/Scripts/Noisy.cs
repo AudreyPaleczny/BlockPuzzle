@@ -4,8 +4,14 @@ using UnityEngine;
 
 // author: mvaganov@hotmail.com
 // license: Copyfree, Unlicense, public domain.
-public class Noisy : MonoBehaviour
-{
+
+/// <summary>
+/// puts sounds into a globally accessible space, accessible with <see cref="Noisy.PlaySound(string)"/>.
+/// the most recent noise groups of a given name get priority.
+/// removing an object with a Noisy removes it from the global space, which may reveal a previously added named noise.
+/// enabled workflow: default noises can load early, be overriden with new noisy, and revert if the noisy leaves.
+/// </summary>
+public class Noisy : MonoBehaviour {
 	public Noise[] noises = new Noise[1];
 	public bool removeNoisesWhenDestroyed = true;
 
@@ -53,10 +59,13 @@ public class Noisy : MonoBehaviour
 		[ContextMenuItem("advanced trigger settings... (create component)", nameof(CreateOnTrigger)),
 		 Tooltip("play when an object enters this trigger? (eg: ambient noise, reactions to movement through space)")]
 		public bool onTrigger = false;
+		public PlayFromSoundbankBehavior playFromSoundbankBehavior = PlayFromSoundbankBehavior.RandomNoRepeat;
 		[HideInInspector]
 		/// The last noise played, used to prevent duplicate repetition
 		public int lastNoisePlayed = -1;
 		[HideInInspector] public AudioSource activeAudioSource;
+
+		public enum PlayFromSoundbankBehavior { RandomNoRepeat, RandomAllowRepeat, InOrder }
 
 		/// Plays the sound. Cannot have the sound follow the object because a position is given, not a transform
 		/// <returns>The sound.</returns>
@@ -80,7 +89,17 @@ public class Noisy : MonoBehaviour
 
 		public AudioClip GetSoundToPlay(ref int indexNotToPlayNext) {
 			if (sounds != null && sounds.Length > 0) {
-				indexNotToPlayNext = RandomNumberThatIsnt(0, sounds.Length, indexNotToPlayNext);
+				switch (playFromSoundbankBehavior) {
+					case PlayFromSoundbankBehavior.RandomNoRepeat:
+						indexNotToPlayNext = RandomNumberThatIsnt(0, sounds.Length, indexNotToPlayNext);
+						break;
+					case PlayFromSoundbankBehavior.RandomAllowRepeat:
+						indexNotToPlayNext = RandomNumberThatIsnt(0, sounds.Length);
+						break;
+					case PlayFromSoundbankBehavior.InOrder:
+						if (++indexNotToPlayNext >= sounds.Length) { indexNotToPlayNext = 0; }
+						break;
+				}
 				return sounds[indexNotToPlayNext];
 			}
 			return null;
@@ -96,78 +115,120 @@ public class Noisy : MonoBehaviour
 	void Awake() {
 		// sort noises for faster access later
 		System.Array.Sort(noises, Noise.compare);
+		EnsureNoisesInGlobalSpace();
+	}
+
+	public void EnsureNoisesInGlobalSpace() {
 		// add all named noises to a single static (global) listing, for easy scripted access later
 		for (int i = 0; i < noises.Length; ++i) {
-			if (noises[i].name != null && noises[i].name.Length > 0) {
-				int index = Global.allNoises.BinarySearch(noises[i], Noise.compare);
-				bool isAlreadyKnown = index >= 0;
-				bool hasSoundsFilledOut = noises[i].sounds != null && noises[i].sounds.Length > 0;
-				if (!isAlreadyKnown && hasSoundsFilledOut) {
-					Global.allNoises.Insert(~index, noises[i]);
-				}
-			}
+			if (noises[i].name == null || noises[i].name.Length == 0) { continue; }
+			EnsureNoiseInGlobalSpace(noises[i], this);
+		}
+	}
+
+	public void RemoveNoisesFromGlobalSpace() {
+		for (int i = 0; i < noises.Length; ++i) {
+			bool hasSoundsFilledOut = noises[i].sounds != null && noises[i].sounds.Length > 0;
+			if (!hasSoundsFilledOut) { continue; }
+			RemoveNoiseFromGlobalSpace(noises[i], this);
+		}
+	}
+
+	public static void EnsureNoiseInGlobalSpace(Noise noise, Noisy src) {
+		Global.NoiseSet whatToFind = new Global.NoiseSet(noise.name);
+		int index = Global.allNoises.BinarySearch(whatToFind, Global.NoiseSet.compare);
+		bool isAlreadyKnown = index >= 0;
+		bool hasSoundsFilledOut = noise.sounds != null && noise.sounds.Length > 0;
+		if (!hasSoundsFilledOut) { return; }
+		// if this is the first time a noise has been added
+		if (!isAlreadyKnown) {
+			whatToFind.Add(noise, src);
+			Global.allNoises.Insert(~index, whatToFind);
+		} else {
+			Global.allNoises[index].ExistingInsertLogic(noise, src);
+		}
+	}
+
+	public static void RemoveNoiseFromGlobalSpace(Noise noise, Noisy src) {
+		Global.NoiseSet noiseSet = new Global.NoiseSet(noise.name);
+		int index = Global.allNoises.BinarySearch(noiseSet, Global.NoiseSet.compare);
+		if (index < 0) { return; }
+		noiseSet = Global.allNoises[index];
+		noiseSet.RemoveNoisesFrom(src);
+		if (noiseSet.entries.Count != 0) { return; }
+		Global.allNoises.RemoveAt(index);
+		bool found = s_soundPlayersByCategory.TryGetValue(noise.name, out AudioSource asrc);
+		if (!found) { return; }
+		if (asrc == null || !asrc.isPlaying) {
+			s_soundPlayersByCategory.Remove(noise.name);
+		} else {
+			WhenDonePlaying whenDone = src.gameObject.AddComponent<WhenDonePlaying>();
+			whenDone.asrc = asrc;
+			whenDone.whatElseToDoWhenFinished = () => { s_soundPlayersByCategory.Remove(noise.name); };
+		}
+	}
+
+	public class WhenDonePlaying : MonoBehaviour {
+		public AudioSource asrc;
+		public System.Action whatElseToDoWhenFinished;
+		private void Update() {
+			if (asrc != null && asrc.isPlaying) { return; }
+			whatElseToDoWhenFinished.Invoke();
+			Destroy(this);
 		}
 	}
 
 	/// plays the first sound in the noises list
 	public void DoActivateTrigger() {
-		if (noises.Length > 0 && noises[0] != null) { noises[0].PlaySound(transform.position); }
+		if (noises.Length == 0 || noises[0] == null) { return; }
+		noises[0].PlaySound(transform.position);
 	}
 
 	/// plays the first sound in the noises list
 	public void DoDeactivateTrigger() {
-		if (noises.Length > 0 && noises[0] != null && noises[0].activeAudioSource != null) {
-			noises[0].activeAudioSource.Stop();
-		}
+		if (noises.Length == 0 || noises[0] == null || noises[0].activeAudioSource == null) { return; }
+		noises[0].activeAudioSource.Stop();
 	}
 
 	/// returns the Noise that was created someplace in the scene with the given name
 	/// <returns>The sound.</returns>
 	/// <param name="name">Name.</param>
 	public static Noise GetSound(string name) {
-		searched.name = name;
-		int i = Global.allNoises.BinarySearch(searched, Noise.compare);
-		if (i >= 0) { return Global.allNoises[i]; }
+		Global.NoiseSet searched = new Global.NoiseSet(name);
+		int i = Global.allNoises.BinarySearch(searched, Global.NoiseSet.compare);
+		if (i >= 0) { return Global.allNoises[i].entries[0].noise; }
 		Debug.LogError("Could not find noise named \"" + name + "\". Valid names include:\n\""
 			+ string.Join("\", \"", Global.AllNoiseNames) + "\"");
 		return null;
 	}
 
 	void Start() {
-		Noise n;
-		for (int i = 0; i < noises.Length; ++i) {
-			n = noises[i];
-			// use the global noise catalog if this Noisy hasn't filled in it's named noise.
-			if (n.sounds == null || n.sounds.Length == 0) {
-				Noise existing = GetSound(n.name);
-				if (existing != null) { n.sounds = existing.sounds; }
-			}
-			if (n.playOnStart || n.backgroundMusic) {
-				n.PlaySound(transform.position);
-			}
-			if (n.onCollision) {
-				Noisy.OnCollisionAdvancedSettings oc = CreateHandler<OnCollisionAdvancedSettings>(n.name);
-				oc.noise = n;
-			}
-			if (n.onTrigger) {
-				Noisy.OnTriggerAdvancedSettings oc = CreateHandler<OnTriggerAdvancedSettings>(n.name);
-				oc.noise = n;
-			}
+		System.Array.ForEach(noises, InitialProcessFor);
+	}
+
+	private void InitialProcessFor(Noise n) {
+		if (n.sounds == null || n.sounds.Length == 0) {
+			Noise existing = GetSound(n.name);
+			if (existing != null) { n.sounds = existing.sounds; }
+		}
+		if (n.playOnStart || n.backgroundMusic) {
+			n.PlaySound(transform.position);
+		}
+		if (n.onCollision) {
+			Noisy.OnCollisionAdvancedSettings oc = CreateHandler<OnCollisionAdvancedSettings>(n.name);
+			oc.noise = n;
+		}
+		if (n.onTrigger) {
+			Noisy.OnTriggerAdvancedSettings oc = CreateHandler<OnTriggerAdvancedSettings>(n.name);
+			oc.noise = n;
 		}
 	}
 
 	private void OnDestroy() {
 		if (!removeNoisesWhenDestroyed) { return; }
-		for (int i = 0; i < noises.Length; ++i) {
-			int index = Global.allNoises.BinarySearch(noises[i], Noise.compare);
-			if (index >= 0) {
-				Global.allNoises.RemoveAt(index);
-				s_soundsByCategory.Remove(noises[i].name);
-			}
-		}
+		RemoveNoisesFromGlobalSpace();
 	}
 
-	private static Noise searched = new Noise();
 	/// Plays the named sound (as a 2D sound, full volume)
 	public static AudioSource PlaySound(string name) {
 		Noise n = GetSound(name);
@@ -196,7 +257,10 @@ public class Noisy : MonoBehaviour
 		return (n != null) ? n.PlaySound(t) : null;
 	}
 
-	private static Dictionary<string, AudioSource> s_soundsByCategory = new Dictionary<string, AudioSource>();
+	/// <summary>
+	/// every sound has it's own AudioSource. this allows overlapping sounds but only of different types.
+	/// </summary>
+	private static Dictionary<string, AudioSource> s_soundPlayersByCategory = new Dictionary<string, AudioSource>();
 
 	/// Plays the sound.
 	/// <returns>Component where the sound is playing from.</returns>
@@ -210,14 +274,14 @@ public class Noisy : MonoBehaviour
 		if (noise == null) return null;
 		AudioSource asrc = null;
 		if (soundCategory != null && soundCategory.Length > 0) {
-			s_soundsByCategory.TryGetValue(soundCategory, out asrc);
+			s_soundPlayersByCategory.TryGetValue(soundCategory, out asrc);
 		}
 		if (asrc == null) {
 			string noiseName = (soundCategory != null) ? "(" + soundCategory + ")" : "<Noise: " + noise.name + ">";
 			GameObject go = new GameObject(noiseName);
 			asrc = go.AddComponent<AudioSource>();
 			if (soundCategory != null) {
-				s_soundsByCategory[soundCategory] = asrc;
+				s_soundPlayersByCategory[soundCategory] = asrc;
 			}
 			asrc.transform.SetParent(Global.Instance().transform);
 		} else {
@@ -247,8 +311,62 @@ public class Noisy : MonoBehaviour
 
 	/// creates an accessible listing to all sounds being used by Noisy, visible in the hierarchy & inspector. also handles some static logic.
 	public class Global : MonoBehaviour {
+		[System.Serializable] public class NoiseSet {
+			public string name;
+
+			public List<NoiseSource> entries;
+
+			[System.Serializable] public struct NoiseSource {
+				public Noise noise; public Noisy src;
+				public NoiseSource(Noise noise, Noisy src) { this.noise = noise; this.src = src; }
+			}
+
+			public void Add(Noise noise, Noisy src) => Insert(-1, noise, src);
+
+			public void Insert(int index, Noise noise, Noisy src) {
+				if (entries == null) { entries = new List<NoiseSource>(); }
+				if (index == -1) {
+					index = entries.Count;
+				}
+				entries.Insert(index, new NoiseSource(noise, src));
+			}
+
+			public void ExistingInsertLogic(Noise noise, Noisy noisy) {
+				int inSet = entries.FindIndex(e => e.src == noisy);
+				if (inSet != -1) {
+					Insert(0, noise, noisy);
+				} else {
+					if (entries[inSet].noise == noise) { return; } // ignore duplicate calls
+					Debug.LogError($"{this} already has an entry for {noise.name}, " +
+						$"replacing old entry {entries[inSet].noise.name} with new entry {noise.name}");
+					entries[inSet] = new NoiseSource(noise, noisy);
+				}
+			}
+
+			public int RemoveNoisesFrom(Noisy src) {
+				int removed = -1;
+				for (int i = entries.Count - 1; i >= 0; --i) {
+					NoiseSource noiseSource = entries[i];
+					if (noiseSource.src == src) {
+						entries.RemoveAt(i);
+						removed = i;
+					}
+				}
+				return removed;
+			}
+
+			public NoiseSet(string name) {
+				this.name = name;
+				entries = new List<NoiseSource>();
+			}
+			/// <summary>comparer, used to sort Noise objects into the list</summary>
+			public class Comparer : IComparer<NoiseSet> {
+				public int Compare(NoiseSet x, NoiseSet y) { return x.name.CompareTo(y.name); }
+			}
+			public static Comparer compare = new Comparer();
+		}
 		/// All Noise objects with unique names and actual data in the 'sounds' array.
-		public static List<Noise> allNoises = new List<Noise>();
+		public static List<NoiseSet> allNoises = new List<NoiseSet>();
 
 		private static Noisy.Global instance;
 		public static Noisy.Global Instance() {
@@ -261,10 +379,10 @@ public class Noisy : MonoBehaviour
 			return instance;
 		}
 		/// <summary>local members alias showing all noises (can be seen in the inspector, static members cannot)</summary>
-		[SerializeField] private List<Noise> _allTheNoises;
+		[SerializeField] private List<NoiseSet> _allTheNoises;
 
 		/// <summary>the names of all of the noises in a List</summary>
-		public static List<string> AllNoiseNames { get { return allNoises.ConvertAll(n => n.name); } }
+		public static List<string> AllNoiseNames { get { return allNoises.ConvertAll(set => set.name); } }
 
 		void Start() { _allTheNoises = allNoises; }
 	}
