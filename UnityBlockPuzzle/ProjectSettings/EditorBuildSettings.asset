@@ -8,9 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_BlockPuzzle/Scenes/RetroStart.unity
     guid: 73e262c15f061402f94164ab7410bfb1
-  - enabled: 0
-    path: Assets/_BlockPuzzle/Scenes/Board Scene.unity
-    guid: 33468854c6dd94c0a8ec413abbcdec13
+  - enabled: 1
+    path: Assets/_BlockPuzzle/Scenes/Minimal Board Scene.unity
+    guid: 17aa38075054b46a5b7ef2db0ee16387
   - enabled: 1
     path: Assets/_BlockPuzzle/Scenes/GameOverScreen.unity
     guid: 981e407da35e04423ad91a46fa215916
