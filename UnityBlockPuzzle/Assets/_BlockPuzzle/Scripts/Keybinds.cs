@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -63,6 +64,17 @@ public class Keybinds : MonoBehaviour
         new keyBinding(Piece.playerActions.SingleRotateLeft.ToString(), KeyCode.Z.ToString()),
         new keyBinding(Piece.playerActions.SingleRotateRight.ToString(), KeyCode.X.ToString()),
         new keyBinding(Piece.playerActions.SingleHold.ToString(), KeyCode.C.ToString())
+    };
+
+    private static keyBinding[] coop1ControlNames = new keyBinding[]
+    {
+        new keyBinding(Piece.playerActions.Coop1MoveLeft.ToString(), KeyCode.LeftArrow.ToString()),
+        new keyBinding(Piece.playerActions.Coop1MoveRight.ToString(), KeyCode.RightArrow.ToString()),
+        new keyBinding(Piece.playerActions.Coop1SoftDrop.ToString(), KeyCode.DownArrow.ToString()),
+        new keyBinding(Piece.playerActions.Coop1HardDrop.ToString(), KeyCode.Space.ToString()),
+        new keyBinding(Piece.playerActions.Coop1RotateLeft.ToString(), KeyCode.Z.ToString()),
+        new keyBinding(Piece.playerActions.Coop1RotateRight.ToString(), KeyCode.X.ToString()),
+        new keyBinding(Piece.playerActions.Coop1Hold.ToString(), KeyCode.C.ToString())
     };
 
     public static Dictionary<Piece.playerActions, KeyCode> loadControls()
@@ -155,6 +167,11 @@ public class Keybinds : MonoBehaviour
             yield return null;
         }
         button_label.text = keyPressed.ToString();
+    }
+
+    public void ChangeToStartScreen()
+    {
+        SceneManager.LoadScene("RetroStart");
     }
 
     // Update is called once per frame

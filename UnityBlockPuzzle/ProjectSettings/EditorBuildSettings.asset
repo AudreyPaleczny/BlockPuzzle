@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/_BlockPuzzle/Scenes/TreeStart.unity
     guid: 5ee083f3ce9ac6d4195dddbbbe55bc89
   - enabled: 1
+    path: Assets/_BlockPuzzle/Scenes/KeybindSwitcher.unity
+    guid: 2dd95291f6b7a47e5a916df230c70cac
+  - enabled: 1
     path: Assets/_mrv/MrVStart.unity
     guid: 8a59841f884e78d4593c30ed122477f3
   - enabled: 1

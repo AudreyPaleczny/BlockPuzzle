@@ -205,6 +205,7 @@ namespace Piece
         }
         public void singleMoveLeft()
         {
+            Debug.Log(";alskjdfas");
             player1.currentPiece.transform.position += Vector3.left;
             if (player1.isPieceOOB(player1.currentPiece) || isColliding(player1.currentPiece)) player1.currentPiece.transform.position += Vector3.right;
             player1.dirtyGhost = true;

@@ -107,6 +107,11 @@ namespace Piece
             SceneManager.LoadScene("MrVStart");
         }
 
+        public void ChangeToKeybindsScene()
+        {
+            SceneManager.LoadScene("KeybindSwitcher");
+        }
+
         public void Start()
         {
             if (PlayerPrefs.GetInt("Volume") != 0 && volume_slider != null)

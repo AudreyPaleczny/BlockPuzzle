@@ -470,6 +470,7 @@ namespace Piece
                         //Debug.Log(whenItWasPressed.whenKeyWasPressed - Environment.TickCount);
                         if (whenItWasPressed.consecutivePresses < 1 || whenItWasPressed.consecutivePresses > 4)
                         {
+                            Debug.Log(whenItWasPressed.consecutivePresses + " " + Environment.TickCount);
                             kvp.Value.Invoke();
                         }
                         keyTimers[kvp.Key] = new KeyTiming(Environment.TickCount, whenItWasPressed.consecutivePresses + 1);
