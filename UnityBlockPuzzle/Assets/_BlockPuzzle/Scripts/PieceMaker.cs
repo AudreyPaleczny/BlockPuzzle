@@ -450,6 +450,8 @@ namespace Piece
                     player2.fallCounter += passed;
                     //player2.pieceFallOnTime(this);
                     player2.pieceFallOnTime(this);
+                    player1.tag.transform.position = player1.currentPiece.transform.position + new Vector3(8,1,0);
+                    player2.tag.transform.position = player2.currentPiece.transform.position + new Vector3(8, 1, 0);
                 }
             }
 

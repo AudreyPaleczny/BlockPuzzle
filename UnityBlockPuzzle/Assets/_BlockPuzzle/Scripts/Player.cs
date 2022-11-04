@@ -130,8 +130,7 @@ namespace Piece
 
         public void alignName()
         {
-            tag.transform.SetParent(currentPiece.transform);
-            tag.transform.localPosition = new Vector3(9, 1, -1);
+            tag.transform.SetParent(currentPiece.transform.parent);
         }
 
         public void enableParticles()

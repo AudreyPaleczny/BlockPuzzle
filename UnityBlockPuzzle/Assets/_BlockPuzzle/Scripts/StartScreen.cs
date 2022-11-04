@@ -52,7 +52,7 @@ namespace Piece
         public void changeVoume()
         {
             PlayerPrefs.SetInt("Volume", (int)volume_slider.value);
-            AudioListener.volume = PlayerPrefs.GetInt("Volume");
+            AudioListener.volume = (float)(PlayerPrefs.GetInt("Volume") / 100.0);
         }
 
         public void Stats()
