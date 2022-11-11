@@ -14,6 +14,7 @@ public class Board : MonoBehaviour
     public bool isGameLoaded = false;
     public TMP_Text countdownText;
     public UnityEvent onStart;
+    public GameObject audioSource;
 
     char[][] array;
     [TextArea(10, 20)]
@@ -71,7 +72,11 @@ public class Board : MonoBehaviour
 
 
     void StartGame()
-    { 
+    {
+        if (PlayerPrefs.GetInt("Music") == 0)
+        {
+            audioSource.SetActive(true);
+        }
         Score.Value = 0;
         Score.Level = PlayerPrefs.GetInt("Level");
         Score.LinesCleared = 0;
@@ -141,6 +146,11 @@ public class Board : MonoBehaviour
                 kvp.Value();
             }
         }
+
+        if (PlayerPrefs.GetInt("Music") == 0)
+        {
+            audioSource.SetActive(true);
+        } else audioSource.SetActive(false);
     }
 }
 

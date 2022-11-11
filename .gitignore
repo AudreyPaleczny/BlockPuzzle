@@ -72,3 +72,5 @@ crashlytics-build.properties
 UnityBlockPuzzle/ProjectSettings/ProjectVersion.txt
 UnityBlockPuzzle/Packages/packages-lock.json
 UnityBlockPuzzle/UserSettings/Layouts/default-2021.dwlt
+UnityBlockPuzzle/UserSettings/EditorUserSettings.asset
+*.asset
