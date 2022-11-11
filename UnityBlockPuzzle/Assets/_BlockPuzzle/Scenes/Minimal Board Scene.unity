@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4381991, g: 0.48621583, b: 0.56649154, a: 1}
+  m_IndirectSpecularColor: {r: 0.4510616, g: 0.50088626, b: 0.57416093, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -31756,7 +31756,7 @@ GameObject:
   - component: {fileID: 1312277509}
   - component: {fileID: 1312277508}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: noisesText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37523,7 +37523,7 @@ MonoBehaviour:
     sounds:
     - {fileID: 8300000, guid: 5c802b305f263544b86fd08ca81a5a51, type: 3}
     - {fileID: 8300000, guid: 52a318cfcf2072f438106fe810f449cb, type: 3}
-    volumeReduce: 0
+    volume: 1
     backgroundMusic: 0
     playOnStart: 0
     is2D: 1
@@ -37532,12 +37532,13 @@ MonoBehaviour:
     onePlayAtATime: 0
     onCollision: 0
     onTrigger: 0
+    playFromSoundbankBehavior: 0
     lastNoisePlayed: -1
     activeAudioSource: {fileID: 0}
   - name: Music
     sounds:
     - {fileID: 8300000, guid: cc3ccdd31fd1cdd41bcd284e738d0725, type: 3}
-    volumeReduce: 0
+    volume: 1
     backgroundMusic: 0
     playOnStart: 0
     is2D: 0
@@ -37546,12 +37547,13 @@ MonoBehaviour:
     onePlayAtATime: 0
     onCollision: 0
     onTrigger: 0
+    playFromSoundbankBehavior: 0
     lastNoisePlayed: -1
     activeAudioSource: {fileID: 0}
   - name: Lines1
     sounds:
     - {fileID: 8300000, guid: d9c468b4dd75a46808434df33d2af117, type: 3}
-    volumeReduce: 0.75
+    volume: 1
     backgroundMusic: 0
     playOnStart: 0
     is2D: 1
@@ -37560,12 +37562,13 @@ MonoBehaviour:
     onePlayAtATime: 0
     onCollision: 0
     onTrigger: 0
+    playFromSoundbankBehavior: 0
     lastNoisePlayed: -1
     activeAudioSource: {fileID: 0}
   - name: Lines2
     sounds:
     - {fileID: 8300000, guid: 7470465bc1c79407299d0a7154a1005a, type: 3}
-    volumeReduce: 0.5
+    volume: 1
     backgroundMusic: 0
     playOnStart: 0
     is2D: 1
@@ -37574,12 +37577,13 @@ MonoBehaviour:
     onePlayAtATime: 0
     onCollision: 0
     onTrigger: 0
+    playFromSoundbankBehavior: 0
     lastNoisePlayed: -1
     activeAudioSource: {fileID: 0}
   - name: Lines3
     sounds:
     - {fileID: 8300000, guid: 20b9732d568804e2aba797508c73a87f, type: 3}
-    volumeReduce: 0
+    volume: 1
     backgroundMusic: 0
     playOnStart: 0
     is2D: 1
@@ -37588,12 +37592,13 @@ MonoBehaviour:
     onePlayAtATime: 0
     onCollision: 0
     onTrigger: 0
+    playFromSoundbankBehavior: 0
     lastNoisePlayed: -1
     activeAudioSource: {fileID: 0}
   - name: Lines4
     sounds:
     - {fileID: 8300000, guid: 9569ab739b7a54b5ba54561b3f1c5de2, type: 3}
-    volumeReduce: 0
+    volume: 1
     backgroundMusic: 0
     playOnStart: 0
     is2D: 1
@@ -37602,12 +37607,13 @@ MonoBehaviour:
     onePlayAtATime: 0
     onCollision: 0
     onTrigger: 0
+    playFromSoundbankBehavior: 0
     lastNoisePlayed: -1
     activeAudioSource: {fileID: 0}
   - name: startgame
     sounds:
     - {fileID: 8300000, guid: dcfbdccab31014733b0e0baed515af3a, type: 3}
-    volumeReduce: 0.5
+    volume: 1
     backgroundMusic: 0
     playOnStart: 0
     is2D: 1
@@ -37616,12 +37622,13 @@ MonoBehaviour:
     onePlayAtATime: 0
     onCollision: 0
     onTrigger: 0
+    playFromSoundbankBehavior: 0
     lastNoisePlayed: -1
     activeAudioSource: {fileID: 0}
   - name: place block
     sounds:
     - {fileID: 8300000, guid: 8b5ef55e0ff4d44a8968fe2563ceffdf, type: 3}
-    volumeReduce: 0.5
+    volume: 1
     backgroundMusic: 0
     playOnStart: 0
     is2D: 1
@@ -37630,12 +37637,13 @@ MonoBehaviour:
     onePlayAtATime: 0
     onCollision: 0
     onTrigger: 0
+    playFromSoundbankBehavior: 0
     lastNoisePlayed: -1
     activeAudioSource: {fileID: 0}
   - name: lowerStartgame
     sounds:
     - {fileID: 8300000, guid: c40ded0377e894adabe6fee62a71d973, type: 3}
-    volumeReduce: 0.5
+    volume: 1
     backgroundMusic: 0
     playOnStart: 0
     is2D: 1
@@ -37644,12 +37652,13 @@ MonoBehaviour:
     onePlayAtATime: 0
     onCollision: 0
     onTrigger: 0
+    playFromSoundbankBehavior: 0
     lastNoisePlayed: -1
     activeAudioSource: {fileID: 0}
   - name: Double Tetris
     sounds:
     - {fileID: 8300000, guid: 4e16581ab00dd43ec8f8645403e19b07, type: 3}
-    volumeReduce: 0.5
+    volume: 1
     backgroundMusic: 0
     playOnStart: 0
     is2D: 1
@@ -37658,12 +37667,13 @@ MonoBehaviour:
     onePlayAtATime: 0
     onCollision: 0
     onTrigger: 0
+    playFromSoundbankBehavior: 0
     lastNoisePlayed: -1
     activeAudioSource: {fileID: 0}
   - name: LevelUp
     sounds:
     - {fileID: 8300000, guid: 8342c9f348b594ebe8531b981290b3fa, type: 3}
-    volumeReduce: 0.5
+    volume: 1
     backgroundMusic: 0
     playOnStart: 0
     is2D: 1
@@ -37672,6 +37682,7 @@ MonoBehaviour:
     onePlayAtATime: 0
     onCollision: 0
     onTrigger: 0
+    playFromSoundbankBehavior: 0
     lastNoisePlayed: -1
     activeAudioSource: {fileID: 0}
   removeNoisesWhenDestroyed: 1
@@ -44325,7 +44336,7 @@ GameObject:
   - component: {fileID: 2124168847}
   - component: {fileID: 2124168846}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: particlesText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

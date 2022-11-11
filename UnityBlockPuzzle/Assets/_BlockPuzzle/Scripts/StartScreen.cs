@@ -120,7 +120,8 @@ namespace Piece
             }
             else PlayerPrefs.SetInt("Volume", 100);
             AudioListener.volume = (float)(PlayerPrefs.GetInt("Volume")/100.0);
-            Noisy.PlaySound("Start noise");
+
+            if (PlayerPrefs.GetInt("Noise") == 0) Noisy.PlaySound("Start noise");
             //PlayerPrefs.SetInt("Level", 0);
         }
 

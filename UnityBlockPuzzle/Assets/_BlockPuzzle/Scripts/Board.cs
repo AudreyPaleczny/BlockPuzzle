@@ -30,24 +30,43 @@ public class Board : MonoBehaviour
 
     public IEnumerator StartGameCountdown()
     {
-        Debug.Log("3");
-        Noisy.PlaySound("lowerStartgame");
-        yield return new WaitForSeconds(1);
-        Debug.Log("2");
-        Noisy.PlaySound("lowerStartgame");
-        countdownText.text = "2";
-        yield return new WaitForSeconds(1);
-        Debug.Log("1");
-        Noisy.PlaySound("lowerStartgame");
-        countdownText.text = "1";
-        yield return new WaitForSeconds(1);
-        Debug.Log("boomshakalaka");
-        countdownText.text = "Start!";
-        Noisy.PlaySound("startgame");
-        onStart.Invoke();
-        yield return new WaitForSeconds(0.5f);
-        countdownText.text = "";
-        StartGame();
+        if (PlayerPrefs.GetInt("Noise") == 1)
+        {
+            Debug.Log("3"); 
+            yield return new WaitForSeconds(1);
+            Debug.Log("2"); 
+            countdownText.text = "2";
+            yield return new WaitForSeconds(1);
+            Debug.Log("1");
+            countdownText.text = "1";
+            yield return new WaitForSeconds(1);
+            Debug.Log("boomshakalaka");
+            countdownText.text = "Start!";
+            onStart.Invoke();
+            yield return new WaitForSeconds(0.5f);
+            countdownText.text = "";
+            StartGame();
+        } else
+        {
+            Debug.Log("3");
+            Noisy.PlaySound("lowerStartgame");
+            yield return new WaitForSeconds(1);
+            Debug.Log("2");
+            Noisy.PlaySound("lowerStartgame");
+            countdownText.text = "2";
+            yield return new WaitForSeconds(1);
+            Debug.Log("1");
+            Noisy.PlaySound("lowerStartgame");
+            countdownText.text = "1";
+            yield return new WaitForSeconds(1);
+            Debug.Log("boomshakalaka");
+            countdownText.text = "Start!";
+            Noisy.PlaySound("startgame");
+            onStart.Invoke();
+            yield return new WaitForSeconds(0.5f);
+            countdownText.text = "";
+            StartGame();
+        }
     }
 
 

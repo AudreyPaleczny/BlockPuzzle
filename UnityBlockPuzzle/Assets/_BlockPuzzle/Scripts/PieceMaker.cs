@@ -135,7 +135,7 @@ namespace Piece
                     {
                         for (int col = 0; col < board.width; ++col)
                         {
-                            if (clearParticles) {
+                            if (clearParticles && (PlayerPrefs.GetInt("Particle") == 0)) {
                                 clearParticles.Stop();
                                 clearParticles.transform.position = board.objectMatrix[row][col].transform.position;
                                 clearParticles.Emit(3);
@@ -202,6 +202,7 @@ namespace Piece
 
         private void lineScore(int rowsCleared, int level)
         {
+            if (PlayerPrefs.GetInt("Noise") == 1) return;
             int lvl = level;
             if (level == 0) lvl = 1;
             switch (rowsCleared)
@@ -253,7 +254,7 @@ namespace Piece
                     break;
 
                 default:
-                    Noisy.PlaySound("Double Tetris");
+                    if (PlayerPrefs.GetInt("Noise") == 0) Noisy.PlaySound("Double Tetris");
                     Score.Instance.value += (int)((1200 * (level + 1)) * (times));
                     break;
             }

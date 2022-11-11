@@ -203,7 +203,7 @@ namespace Piece
                     canPieceBeHeld = false;
                     MrV_Mino.EnableParticles(currentPiece.transform, true);
                 }
-                Noisy.PlaySound("Pop");
+                if (PlayerPrefs.GetInt("Noise") == 0) Noisy.PlaySound("Pop");
             } else {
                 MrV_Mino.EmitParticles(holdPiece.transform, 3);
             }
