@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/_BlockPuzzle/Scenes/RetroStart.unity
     guid: 73e262c15f061402f94164ab7410bfb1
   - enabled: 1
+    path: Assets/_BlockPuzzle/Scenes/Retro Board.unity
+    guid: a5dd57a6e78f848239d526c9a39e5528
+  - enabled: 1
     path: Assets/_BlockPuzzle/Scenes/Minimal Board Scene.unity
     guid: 17aa38075054b46a5b7ef2db0ee16387
   - enabled: 1
