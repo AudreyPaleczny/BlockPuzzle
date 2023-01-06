@@ -73,9 +73,12 @@ public class Board : MonoBehaviour
 
     void StartGame()
     {
-        if (PlayerPrefs.GetInt("Music") == 0)
+        if (audioSource != null)
         {
-            audioSource.SetActive(true);
+            if (PlayerPrefs.GetInt("Music") == 0)
+            {
+                audioSource.SetActive(true);
+            }
         }
         Score.Value = 0;
         Score.Level = PlayerPrefs.GetInt("Level");
@@ -126,7 +129,7 @@ public class Board : MonoBehaviour
         {
             Application.Quit();
 #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;//this is how you quit in the editor
+            UnityEditor.EditorApplication.isPlaying = false;//this is how you quit in the editor
 #endif
 
         };
@@ -147,13 +150,16 @@ public class Board : MonoBehaviour
             }
         }
 
-        if (PlayerPrefs.GetInt("Music") == 0)
+        if (audioSource != null)
         {
-            audioSource.SetActive(true);
-        } else audioSource.SetActive(false);
+            if (PlayerPrefs.GetInt("Music") == 0)
+            {
+                audioSource.SetActive(true);
+            }
+            else
+            {
+                audioSource.SetActive(false);
+            }
+        }
     }
 }
-
-    
-
-
