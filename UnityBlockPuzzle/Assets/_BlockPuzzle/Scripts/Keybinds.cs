@@ -55,6 +55,51 @@ public class Keybinds : MonoBehaviour
             }
         }
     }
+
+    private static Dictionary<Piece.playerActions, KeyCode> defaultKeyBinding = new Dictionary<Piece.playerActions, KeyCode>() {
+        [Piece.playerActions.SingleMoveLeft] = KeyCode.LeftArrow,
+        [Piece.playerActions.SingleMoveRight] = KeyCode.RightArrow,
+        [Piece.playerActions.SingleSoftDrop] = KeyCode.DownArrow,
+        [Piece.playerActions.SingleHardDrop] = KeyCode.Space,
+        [Piece.playerActions.SingleRotateLeft] = KeyCode.Z,
+        [Piece.playerActions.SingleRotateRight] = KeyCode.X,
+        [Piece.playerActions.SingleHold] = KeyCode.C,
+
+        [Piece.playerActions.Coop1MoveLeft] = KeyCode.A,
+        [Piece.playerActions.Coop1MoveRight] = KeyCode.D,
+        [Piece.playerActions.Coop1SoftDrop] = KeyCode.S,
+        [Piece.playerActions.Coop1HardDrop] = KeyCode.Space,
+        [Piece.playerActions.Coop1RotateLeft] = KeyCode.Q,
+        [Piece.playerActions.Coop1RotateRight] = KeyCode.E,
+        [Piece.playerActions.Coop1Hold] = KeyCode.C,
+
+        [Piece.playerActions.Coop2MoveLeft] = KeyCode.LeftArrow,
+        [Piece.playerActions.Coop2MoveRight] = KeyCode.RightArrow,
+        [Piece.playerActions.Coop2SoftDrop] = KeyCode.DownArrow,
+        [Piece.playerActions.Coop2HardDrop] = KeyCode.Period,
+        [Piece.playerActions.Coop2RotateLeft] = KeyCode.K,
+        [Piece.playerActions.Coop2RotateRight] = KeyCode.L,
+        [Piece.playerActions.Coop2Hold] = KeyCode.Comma
+    };
+
+    /*
+     * Coop1RotateLeft,
+        Coop1RotateRight,
+        Coop1HardDrop,
+        Coop1Hold,
+        Coop1SoftDrop,
+        Coop1MoveLeft,
+        Coop1MoveRight,
+
+        Coop2RotateLeft,
+        Coop2RotateRight,
+        Coop2HardDrop,
+        Coop2Hold,
+        Coop2SoftDrop,
+        Coop2MoveLeft,
+        Coop2MoveRight,
+     */
+
     private static keyBinding[] singleControlNames = new keyBinding[]
     {
         new keyBinding(Piece.playerActions.SingleMoveLeft.ToString(), KeyCode.LeftArrow.ToString()),
@@ -85,6 +130,8 @@ public class Keybinds : MonoBehaviour
             string controlName = ((Piece.playerActions)i).ToString();
             if (!PlayerPrefs.HasKey(controlName))
             {
+                //defaults
+                result[(Piece.playerActions)i] = defaultKeyBinding[(Piece.playerActions)i];
                 continue;
             }
             string keyname = PlayerPrefs.GetString(controlName);
